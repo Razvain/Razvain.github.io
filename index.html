@@ -1,7 +1,111 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <title>CodeAssist</title>
+    <style>
+      body {
+        background-color: #ebebeb;
+      }
+
+      .paper_title {
+        font-size: 36px;
+        padding-bottom: 30px;
+      }
+
+      .container {
+        background-color: white;
+        border: 1px solid #d7d7d7;
+        border-radius: 5px;
+        text-align: center;
+        padding: 50px;
+        margin-top: 50px;
+      }
+
+      .abstract {
+        max-width: 1000px;
+        margin: auto;
+        font-size: 19px;
+        text-align: justify;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">CodeAssist</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Labeling Results</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Taxonomy</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <h1 class="paper_title">
+        Language Models for Code Completion: A Practical Evaluation
+      </h1>
+      <p class="abstract">
+        Transformer-based Language Models (LM) for automatic code completion
+        have shown great promise so far, yet the evaluation of these models
+        rarely uses real data. This study provides both quantitative and
+        qualitative assessments of three public code LMs when completing
+        real-world code. We first developed an open-source IDE extension,
+        <b>CodeAssist</b>, for the online evaluation of the models. We collected real
+        auto-completion usage data for over a year from over 1,200 users,
+        resulting in 2M completion requests. These models were then evaluated
+        using six standard metrics across twelve programming languages. Next, we
+        conducted a qualitative study of 2K actual completion requests to
+        identify the reasons behind poor model performance. A comparative
+        analysis of the models’ performance in online and offline settings was
+        also performed, using benchmark synthetic datasets and two masking
+        strategies.<br><br>
+        
+        Our findings suggest that while developers utilize
+        auto-completion across various languages, the best results are achieved
+        for mainstream languages such as Python and Java. InCoder outperformed
+        the other models across all programming languages, highlighting the
+        significance of training data and objectives. Our study also revealed
+        that offline evaluations do not accurately reflect real-world scenarios.
+        Upon qualitative analysis of the models’ predictions, we found that 66%
+        of failures were due to models’ limitations, 25% occurred due to
+        inappropriate model usage in a development con- text, and 9% were valid
+        requests that developers overwrote. Given these findings, we propose
+        several strategies to overcome the current limitations. These include
+        refining training objectives, improving resilience to typographical
+        errors, adopting hybrid approaches, and enhancing implementations and
+        usability.
+      </p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </body>
 </html>
