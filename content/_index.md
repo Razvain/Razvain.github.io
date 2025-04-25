@@ -3,8 +3,7 @@ title: "Behind the Screen: That's Me!"
 draft: false
 ---
 
-Hey there! I'm **Razvan**, a **23**-year-old **PhD student** specializing in **AI-Enabled Software Engineering**, as part of the [AISE](https://malihehizadi.github.io/people/) @ [TUDelft](https://se.ewi.tudelft.nl/), under the supervision of [Dr. Maliheh Izadi](https://malihehizadi.github.io). My research explores the intersection of **Large Language Models** and **Software Engineering**, with a focus on developing **reliable evaluation techniques** for Large Language Models for **coding tasks**. Additionally, I'm interested in expanding my knowledge of **AI Agents** and how they can be used to improve Software Engineering practices. 
-
+I am a **PhD student** in the [AISE](https://malihehizadi.github.io/people/) lab at [Delft University of Technology](https://se.ewi.tudelft.nl/). My research explores the intersection of **Large Language Models** and **Software Engineering**, with a focus on developing **reliable evaluation techniques** for Large Language Models for **coding tasks**. Additionally, I'm interested in expanding my knowledge of **AI Agents** and how they can be used to improve Software Engineering practices. 
 
 \#LLM4SE, \#AI4SE, \#Agents4SE, \#LLM4Code, \#Evaluation, \#Datasets, \#Benchmarking
 
