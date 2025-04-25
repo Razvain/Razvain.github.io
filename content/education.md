@@ -4,7 +4,7 @@ draft: false
 ---
 
 <div style="display: flex; justify-content: space-between;">
-  <span><b>Delft University of Technology</b> <br> PhD in AI-Enabled SE, Evaluation of LLMs4Code </span>
+  <span><b>Delft University of Technology</b> <br> PhD in AI-Enabled SE, Evaluation of LLMs4Code <br> Supervisor: <a href="https://malihehizadi.github.io">Dr. Maliheh Izadi </a><br></span>
   <span>Delft, NL <br> Mar. 2025 - Present</span>
 </div>
 
