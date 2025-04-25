@@ -1,0 +1,49 @@
+# [[main]]
+   # identifier = "home"
+   # name = "Home"
+   # url = "/"
+   # weight = 1
+
+[[main]]
+    identifier = "education"
+    name = "Education"
+    url = "/education"
+    weight = 4
+
+[[main]]
+    identifier = "research"
+    name = "Research"
+    url = "/research"
+    weight = 2
+
+[[main]]
+    identifier = "Experience"
+    name = "Experience"
+    url = "/experience"
+    weight = 3
+
+[[main]]
+    identifier = "personal"
+    name = "Personal"
+    url = "/personal"
+    weight = 5
+    
+# Social Media Configuration
+
+[[social]]
+    identifier = "twitter"
+    name = "Twitter"
+    url = "#"
+    weight = 1
+
+[[social]]
+    identifier = "instagram"
+    name = "Instagram"
+    url = "#"
+    weight = 2
+
+[[social]]
+    identifier = "github"
+    name = "GitHub"
+    url = "#"
+    weight = 3

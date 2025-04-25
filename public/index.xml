@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Behind the Screen: That&#39;s Me! on Razvan Mihai Popescu</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content in Behind the Screen: That&#39;s Me! on Razvan Mihai Popescu</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <copyright>2025</copyright>
+    <lastBuildDate>Sat, 27 Aug 2022 09:16:45 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Markdown Cheat Sheet</title>
+      <link>http://localhost:1313/posts/markdown-cheat-sheet/</link>
+      <pubDate>Sat, 27 Aug 2022 09:16:45 +0000</pubDate>
+      <guid>http://localhost:1313/posts/markdown-cheat-sheet/</guid>
+      <description>&lt;p&gt;This Markdown cheat sheet &lt;strong&gt;provides&lt;/strong&gt; a quick overview of all the Markdown syntax elements. It can’t cover every edge case, so if you need more information about any of these elements, refer to the reference guides for basic &lt;em&gt;syntax&lt;/em&gt; and extended syntax.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Education</title>
+      <link>http://localhost:1313/education/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/education/</guid>
+      <description>&lt;div style=&#34;display: flex; justify-content: space-between;&#34;&gt;&#xA;  &lt;span&gt;&lt;b&gt;Delft University of Technology&lt;/b&gt; &lt;br&gt; PhD in AI-Enabled SE, Evaluation of LLMs4Code &lt;/span&gt;&#xA;  &lt;span&gt;Delft, NL &lt;br&gt; Mar. 2025 - Present&lt;/span&gt;&#xA;&lt;/div&gt;&#xA;&lt;br&gt;&#xA;&lt;div style=&#34;display: flex; justify-content: space-between;&#34;&gt;&#xA;  &lt;span&gt;&lt;b&gt;Delft University of Technology&lt;/b&gt; &lt;br&gt; MSc of Computer Science, SE &amp; AI Track  &lt;/span&gt;&#xA;  &lt;span&gt;Delft, NL &lt;br&gt; Sept. 2023 - Feb. 2025&lt;/span&gt;&#xA;&lt;/div&gt;&#xA;&lt;br&gt; &#xA;&lt;div style=&#34;display: flex; justify-content: space-between;&#34;&gt;&#xA;  &lt;span&gt;&lt;b&gt;Delft University of Technology&lt;/b&gt; &lt;br&gt; Minor in Biomedical Engineering &lt;/span&gt;&#xA;  &lt;span&gt;Delft, NL &lt;br&gt; Sept. 2022 - Feb. 2023&lt;/span&gt;&#xA;&lt;/div&gt;&#xA;&lt;br&gt; &#xA;&lt;div style=&#34;display: flex; justify-content: space-between;&#34;&gt;&#xA;  &lt;span&gt;&lt;b&gt;Delft University of Technology&lt;/b&gt; &lt;br&gt; BSc of Computer Science, Data Track &lt;/span&gt;&#xA;  &lt;span&gt;Delft, NL &lt;br&gt; Sept. 2020 - Jul. 2023&lt;/span&gt;&#xA;&lt;/div&gt;</description>
+    </item>
+    <item>
+      <title>Life Outside the Screen</title>
+      <link>http://localhost:1313/personal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/personal/</guid>
+      <description>&lt;p&gt;Soon&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Research</title>
+      <link>http://localhost:1313/research/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/research/</guid>
+      <description>&lt;div&gt;&#xA;&lt;p&gt;&lt;span&gt;&lt;b&gt;Automated Attention Pattern Discovery at Scale in Large Language Models&lt;/b&gt;&lt;/span&gt;&lt;br&gt;&#xA;&lt;span&gt;Under Review&lt;span&gt;&lt;/p&gt;&#xA;&lt;/div&gt;&#xA;&lt;br&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://arxiv.org/abs/2501.09653&#34;&gt;&lt;b&gt;The Heap: A Contamination-Free Multilingual Code Dataset for Evaluating Large Language Models&lt;/b&gt;&lt;/a&gt;&lt;br&gt;&#xA;&lt;span&gt;Jonathan Katzy, &lt;u&gt;Razvan Mihai Popescu&lt;/u&gt;, Arie van Deursen, Maliheh Izadi&lt;/span&gt;&lt;br&gt;&#xA;&lt;span&gt;FORGE 2025&lt;span&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Work Experience</title>
+      <link>http://localhost:1313/experience/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/experience/</guid>
+      <description>&lt;h3 id=&#34;technical-skills--languages&#34;&gt;Technical Skills &amp;amp; Languages&lt;/h3&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;&lt;strong&gt;Programming Languages:&lt;/strong&gt; Python, Java, C++, JavaScript, Scala, SQL &lt;br&gt;&#xA;&lt;strong&gt;Technologies &amp;amp; Frameworks:&lt;/strong&gt; Git, Docker, AWS, HuggingFace, PyTorch, Scikit-learn &lt;br&gt;&#xA;&lt;strong&gt;Languages Spoken:&lt;/strong&gt; Romanian (Native), English (C2), German (A2)&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
