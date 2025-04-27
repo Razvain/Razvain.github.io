@@ -11,7 +11,7 @@ draft: false
 **Languages Spoken:** Romanian (Native), English (C2), German (A2)
 
 
-### PhD Supervisor
+### Research Project Supervisor
 ---
 
 <div style="display: flex; justify-content: space-between;">
