@@ -313,7 +313,7 @@
   };
 
   const relatedAnchors = (tid) =>
-    [...document.querySelectorAll(".attn-anchor")]
+    [...document.querySelectorAll("#sheet .attn-anchor")]
       .filter(el => (el.dataset.topics || "").split(" ").includes(tid));
 
   function drawTopicArcs(tid, sourceEl) {
@@ -355,18 +355,18 @@
       }
     });
 
-    document.querySelectorAll(".attn-item").forEach(el =>
+    document.querySelectorAll("#sheet .attn-item").forEach(el =>
       el.classList.toggle("related", (el.dataset.topics || "").split(" ").includes(tid)));
-    document.querySelectorAll("a.cite").forEach(c =>
-      c.classList.toggle("lit", pubs[+c.dataset.ref].topics.includes(tid)));
+    document.querySelectorAll("#sheet a.cite").forEach(c =>
+      c.classList.toggle("lit", !!pubs[+c.dataset.ref]?.topics.includes(tid)));
     document.body.classList.add("attention-active");
     setFigureLit(tid);
   }
 
   function clearTopicArcs() {
     arcSvg.innerHTML = "";
-    document.querySelectorAll(".attn-item.related").forEach(el => el.classList.remove("related"));
-    document.querySelectorAll("a.cite.lit").forEach(c => c.classList.remove("lit"));
+    document.querySelectorAll("#sheet .attn-item.related").forEach(el => el.classList.remove("related"));
+    document.querySelectorAll("#sheet a.cite.lit").forEach(c => c.classList.remove("lit"));
     document.body.classList.remove("attention-active");
     setFigureLit(null);
     activeTopic = null;
