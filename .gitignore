@@ -1,0 +1,13 @@
+# OS / editor cruft
+.DS_Store
+**/.DS_Store
+
+# Local dev tooling (not needed for the static site)
+.claude/
+
+# Archived alternative designs — kept locally, not published
+_archive/
+
+# Camera originals — the site serves the .jpeg/.png conversions, not these
+*.heic
+*.HEIC

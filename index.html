@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Razvan Mihai Popescu — a manuscript</title>
+  <meta name="description" content="Researcher in AI for Software Engineering. A personal page, typeset as the paper it always wanted to be." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>§</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="transitions.js"></script>
+  <script src="scroll-focus.js"></script>
+  <script src="protect.js"></script>
+  <script src="print-bundle.js"></script>
+</head>
+<body>
+
+  <div class="desk">
+    <div class="paper">
+    <div class="stack" aria-hidden="true"></div>
+    <article class="sheet" id="sheet">
+
+      <div class="running-head">
+        <span id="runningName"></span>
+        <span class="running-status">preprint — perpetually under revision</span>
+        <span>p. 1 / 3</span>
+      </div>
+
+      <!-- Title block -->
+      <header class="titleblock">
+        <h1 class="paper-title" id="paperTitle"></h1>
+        <p class="paper-author" id="paperAuthor"></p>
+        <p class="paper-affil" id="paperAffil"></p>
+        <nav class="paper-links" id="paperLinks"></nav>
+      </header>
+
+      <!-- Abstract (with author photo) -->
+      <section class="abstract">
+        <h2 class="abstract-head">Abstract</h2>
+        <div class="abstract-body">
+          <span class="photo-frame">
+            <img id="abstractPhoto" alt="" />
+            <span class="photo-notes" aria-hidden="true">
+              <span class="pnote pnote-1">the author<svg class="parrow" viewBox="0 0 40 34"><path d="M2 3 C 12 9, 22 15, 31 26"/><path d="M31 26 l -8 -1 M31 26 l 0 -8"/></svg></span>
+              <span class="pnote pnote-2">n&nbsp;=&nbsp;1</span>
+            </span>
+          </span>
+          <p id="abstractText"></p>
+        </div>
+        <p class="keywords" id="keywords"></p>
+      </section>
+
+      <!-- 1. Introduction -->
+      <section class="paper-section">
+        <h2 class="sec-head"><span class="sec-no">1</span>Introduction</h2>
+        <div id="intro"></div>
+      </section>
+
+      <!-- Figure 1 -->
+      <figure class="fig" id="fig1">
+        <div id="figMount"></div>
+        <figcaption><strong>Figure 1:</strong> The author’s research interests,
+          plotted with unjustified confidence.</figcaption>
+      </figure>
+
+      <!-- 2. Notes added in proof (news) -->
+      <section class="paper-section">
+        <h2 class="sec-head"><span class="sec-no">2</span>Notes Added in Proof</h2>
+        <ul class="proof-notes" id="newsList"></ul>
+      </section>
+
+      <!-- 3. Software artifacts -->
+      <section class="paper-section">
+        <h2 class="sec-head"><span class="sec-no">3</span>Software Artifacts</h2>
+        <dl class="artifacts" id="artifacts"></dl>
+      </section>
+
+      <!-- 4. Acknowledgments -->
+      <section class="paper-section">
+        <h2 class="sec-head"><span class="sec-no">4</span>Acknowledgments</h2>
+        <p id="acks"></p>
+      </section>
+
+      <!-- References -->
+      <section class="paper-section refs-section" id="referencesSec">
+        <h2 class="sec-head">References</h2>
+        <ol class="refs" id="refs"></ol>
+      </section>
+
+      <nav class="page-nav">
+        <span></span>
+        <a href="page-2.html" data-nav="fwd">continued on p. 2 — teaching &amp; miscellany →</a>
+      </nav>
+
+      <p class="colophon" id="colophon"></p>
+
+      <!-- Margin notes injected here by main.js -->
+    </article>
+    </div>
+  </div>
+
+  <!-- Citation hover preview -->
+  <div class="cite-card" id="citeCard" hidden></div>
+
+  <div class="fixed-ui">
+    <button class="ui-btn" id="themeToggle" aria-label="Toggle dark mode">◐</button>
+  </div>
+
+  <script src="content.js"></script>
+  <script src="main.js"></script>
+
+  <!-- Analytics: GoatCounter (privacy-friendly, cookieless, no consent banner needed). -->
+  <script>if (window.self !== window.top) window.goatcounter = { no_onload: true };</script>
+  <script data-goatcounter="https://razvan27.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

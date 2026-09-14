@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="220" viewBox="0 0 320 220">
+  <!-- Placeholder travel photo (coastline) — replace with real photos -->
+  <rect width="320" height="220" fill="#EDE7DA"/>
+  <g stroke="#6B655A" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- sea horizon and waves -->
+    <path d="M18 120 h284"/>
+    <path d="M40 150 q10 -7 20 0 q10 7 20 0 M120 164 q10 -7 20 0 q10 7 20 0 M210 152 q10 -7 20 0 q10 7 20 0"/>
+    <!-- sail boat -->
+    <path d="M150 118 l16 -34 v34 z M142 120 h34 l-6 9 h-22 z"/>
+    <!-- gulls -->
+    <path d="M64 60 q5 -6 10 0 q5 -6 10 0 M232 74 q4 -5 8 0 q4 -5 8 0"/>
+    <!-- sun low on the horizon -->
+    <path d="M262 120 a14 14 0 0 1 28 0"/>
+  </g>
+  <text x="160" y="200" text-anchor="middle" font-family="monospace" font-size="11" fill="#97907F">photo pending peer review</text>
+</svg>

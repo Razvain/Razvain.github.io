@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Razvan Mihai Popescu — a manuscript, p. 3</title>
+  <meta name="description" content="Appendices: ports of call (an interactive travel map) and other declared interests." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>§</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="transitions.js"></script>
+  <script src="scroll-focus.js"></script>
+  <script src="protect.js"></script>
+  <script src="print-bundle.js"></script>
+</head>
+<body>
+
+  <div class="desk">
+    <div class="paper">
+    <div class="stack" aria-hidden="true"></div>
+    <article class="sheet" id="sheet">
+
+      <div class="running-head">
+        <span id="runningName"></span>
+        <span class="running-status">appendices, cont.</span>
+        <span>p. 3 / 3</span>
+      </div>
+
+      <!-- Appendix F: Ports of Call (travel map) -->
+      <section class="paper-section" id="fieldworkSec">
+        <h2 class="sec-head"><span class="sec-no">F</span>Ports of Call</h2>
+        <p>The author’s largest ongoing side project is the world itself.
+        Countries shaded below have been visited, for conferences, mountains,
+        or no defensible reason at all.</p>
+
+        <div class="fieldwork-stats" id="fieldStats" aria-hidden="true"></div>
+
+        <figure class="fig map-fig">
+          <div class="map-mount" id="mapMount"></div>
+          <div class="map-legend">
+            <span><span class="swatch visited-sw"></span>visited</span>
+            <span><span class="swatch rest-sw"></span>under review</span>
+          </div>
+          <figcaption><strong>Figure F.1:</strong> Ports of call, to date.
+            An opportunistic sample of the planet; generalize with caution.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- Appendix G: Other hobbies -->
+      <section class="paper-section" id="hobbiesSec">
+        <h2 class="sec-head"><span class="sec-no">G</span>Declared Interests Beyond §1</h2>
+        <figure class="fig interests-fig">
+          <div class="interests-grid" id="hobbyList"></div>
+          <figcaption><strong>Figure G.1:</strong> A partial inventory of
+            interests declared beyond §1. Non-exhaustive; effort allocation varies by season.
+          </figcaption>
+        </figure>
+      </section>
+
+      <div class="closing" id="closing">
+        <div class="closing-mark" aria-hidden="true">⁂</div>
+        <p class="closing-line" id="signoff"></p>
+      </div>
+
+      <nav class="page-nav">
+        <a href="page-2.html" data-nav="back">← p. 2 · appendices</a>
+        <span></span>
+      </nav>
+
+      <p class="colophon" id="colophon"></p>
+
+    </article>
+    </div>
+  </div>
+
+  <!-- Travel hover card -->
+  <div class="cite-card travel-card" id="travelCard" hidden></div>
+
+  <div class="fixed-ui">
+    <button class="ui-btn" id="themeToggle" aria-label="Toggle dark mode">◐</button>
+  </div>
+
+  <script src="content.js"></script>
+  <script src="page3.js"></script>
+
+  <!-- Analytics: GoatCounter (privacy-friendly, cookieless, no consent banner needed). -->
+  <script>if (window.self !== window.top) window.goatcounter = { no_onload: true };</script>
+  <script data-goatcounter="https://razvan27.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

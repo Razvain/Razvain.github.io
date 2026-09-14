@@ -1,0 +1,1205 @@
+/* =========================================================================
+   Design 3 — "The Manuscript"
+   A personal page typeset as an academic paper: LaTeX-ish serif, justified
+   text, numbered sections, live citations, pencil marginalia.
+   ========================================================================= */
+
+:root {
+  --desk:    #E9E4D8;
+  --paper:   #FDFCF8;
+  --ink:     #191713;
+  --muted:   #5F5A4E;
+  --faint:   #97907F;
+  --rule:    #DCD6C6;
+  --accent:  #B42318;          /* annotation red — used sparingly, like a pen */
+  --accent-soft: rgba(180, 35, 24, 0.08);
+  --pencil:  #6B655A;
+  --shadow:  0 1px 3px rgba(30, 26, 18, 0.12), 0 18px 50px -18px rgba(30, 26, 18, 0.35);
+  --serif: "STIX Two Text", "Iowan Old Style", Georgia, serif;
+  --mono:  "JetBrains Mono", "SF Mono", Menlo, monospace;
+  --hand:  "Caveat", cursive;
+}
+
+[data-theme="dark"] {
+  --desk:    #12100D;
+  --paper:   #1C1915;
+  --ink:     #E8E2D4;
+  --muted:   #A29A88;
+  --faint:   #6E6759;
+  --rule:    #322D25;
+  --accent:  #E05B4D;
+  --accent-soft: rgba(224, 91, 77, 0.1);
+  --pencil:  #8D8676;
+  --shadow:  0 1px 3px rgba(0, 0, 0, 0.5), 0 18px 50px -18px rgba(0, 0, 0, 0.8);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 16.5px;
+  line-height: 1.58;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.4s ease;
+}
+
+::selection { background: var(--accent-soft); color: var(--accent); }
+
+a { color: inherit; }
+
+/* ============ The sheet of paper ============ */
+
+.desk {
+  padding: 56px 16px 96px;
+}
+
+/* .paper is the fixed spot on the desk: the stack stays put here while
+   the top sheet (.sheet) is the only thing that ever moves. */
+.paper {
+  position: relative;
+  max-width: 860px;
+  margin: 0 auto;
+  perspective: 1600px;
+}
+
+.sheet {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  padding: 64px 84px 56px;
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+  /* NOTE: no transform-style: preserve-3d here — in a 3D rendering context
+     stacked layers ignore z-index and swallow clicks. */
+  will-change: transform;
+  transition: background 0.4s ease;
+}
+
+/* sheets remaining on the desk, beneath the moving one */
+.stack {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.stack::before, .stack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+  transition: background 0.4s ease;
+}
+.stack::before { transform: rotate(-0.6deg) translate(-3px, 4px); opacity: 0.7; }
+.stack::after  { transform: rotate(0.5deg) translate(4px, 7px); opacity: 0.45; }
+
+.running-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 10px;
+  margin-bottom: 48px;
+}
+
+/* ============ Title block ============ */
+
+.titleblock { text-align: center; margin-bottom: 40px; }
+
+.paper-title {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 14px;
+}
+
+.paper-author { font-size: 17px; margin-bottom: 4px; }
+.paper-author em { font-style: italic; }
+
+.paper-affil {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.paper-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.paper-links a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--faint);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.paper-links a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ============ Abstract ============ */
+
+.abstract { margin: 0 58px 40px 0; }
+
+.abstract-head {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.abstract p { font-size: 15px; line-height: 1.6; text-align: justify; hyphens: auto; }
+
+.abstract-body { display: flow-root; } /* contains the float without clipping */
+
+.photo-frame {
+  position: relative;
+  float: left;
+  width: 120px;
+  margin: 3px 18px 6px 0;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+.photo-frame img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+/* Pencil annotations, scribbled onto the photo when you hover it. */
+.photo-notes { position: absolute; inset: 0; pointer-events: none; }
+
+.pnote {
+  position: absolute;
+  font-family: var(--hand);
+  font-size: 15px;
+  line-height: 1;
+  color: var(--accent);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pnote-1 { top: -13px; left: 2px; transform: translateY(6px) rotate(-4deg); }
+.pnote-2 { top: -11px; right: 4px; transform: translateY(6px) rotate(4deg); transition-delay: 0.1s; }
+
+.photo-frame:hover .pnote-1,
+.photo-frame:focus-within .pnote-1 { opacity: 1; transform: rotate(-4deg); }
+.photo-frame:hover .pnote-2,
+.photo-frame:focus-within .pnote-2 { opacity: 1; transform: rotate(4deg); }
+
+.parrow {
+  position: absolute;
+  top: 12px;
+  left: 33px;
+  width: 34px;
+  height: 30px;
+  overflow: visible;
+}
+.parrow path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pnote { transition: opacity 0.4s ease; }
+  .pnote-1 { transform: rotate(-4deg); }
+  .pnote-2 { transform: rotate(4deg); }
+}
+
+.keywords {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 11.5px !important;
+  color: var(--muted);
+  text-align: left !important;
+}
+.keywords b { font-weight: 500; color: var(--ink); }
+
+/* ============ Sections ============ */
+
+.paper-section { margin-bottom: 36px; }
+
+.sec-head {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.sec-no { display: inline-block; min-width: 34px; }
+
+.paper-section p, #intro p {
+  text-align: justify;
+  hyphens: auto;
+}
+#intro p + p { text-indent: 1.5em; }
+
+/* ============ Citations ============ */
+
+.cite-group { white-space: nowrap; }
+
+a.cite {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.95em;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.15s ease;
+}
+a.cite:hover, a.cite.lit { background: var(--accent-soft); }
+
+.cite-card {
+  position: fixed;
+  z-index: 90;
+  max-width: 340px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  padding: 12px 14px;
+  font-family: var(--serif);
+  font-size: 13.5px;
+  line-height: 1.5;
+  pointer-events: none;
+}
+.cite-card .cc-title { font-weight: 600; }
+.cite-card .cc-meta { font-style: italic; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+
+/* ============ Figure 1 ============ */
+
+.fig { margin: 34px 20px 44px; text-align: center; }
+
+.fig svg { max-width: 100%; height: auto; overflow: visible; }
+
+.fig .axis { stroke: var(--pencil); stroke-width: 1.1; fill: none; }
+.fig .axis-label { font-family: var(--serif); font-style: italic; font-size: 12.5px; fill: var(--muted); }
+.fig .mark { stroke: var(--accent); stroke-width: 2; cursor: pointer; }
+.fig .mark-label {
+  font-family: var(--serif);
+  font-size: 13.5px;
+  fill: var(--ink);
+  cursor: pointer;
+}
+.fig .mark-hit { fill: transparent; cursor: pointer; }
+.fig g.topic.lit .mark-label { font-weight: 700; fill: var(--accent); }
+.fig g.topic.dim { opacity: 0.3; }
+
+/* ---- Attention arcs (Figure 1 → related work) ---- */
+
+#arcs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 40;
+  overflow: visible;
+}
+#arcs path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  opacity: 0.72;
+}
+#arcs circle { fill: var(--accent); }
+
+/* Highlighted phrases in the intro read as clickable */
+.topic-mention {
+  cursor: pointer;
+  border-bottom: 1px dotted var(--faint);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.topic-mention:hover { color: var(--accent); border-color: var(--accent); }
+
+/* While a topic is active: dim the unrelated, highlight the related */
+body.attention-active .attn-item {
+  transition: opacity 0.35s ease, background 0.3s ease;
+}
+body.attention-active .attn-item:not(.related) { opacity: 0.28; }
+
+.attn-item.related { background: var(--accent-soft); border-radius: 3px; }
+.refs li.attn-item.related::before { color: var(--accent); }
+
+/* ---- One-time scroll reveal (blocks below the fold) ---- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+figcaption {
+  margin-top: 14px;
+  font-size: 13.5px;
+  color: var(--muted);
+  text-align: center;
+}
+.fig-hint { color: var(--faint); font-style: italic; }
+
+/* ============ Notes added in proof (news) ============ */
+
+.proof-notes { list-style: none; }
+
+.proof-notes li {
+  display: grid;
+  grid-template-columns: 86px 1fr;
+  gap: 14px;
+  padding: 7px 0;
+  font-size: 15px;
+  border-bottom: 1px dotted var(--rule);
+}
+.proof-notes li:last-child { border-bottom: none; }
+.proof-date { font-family: var(--mono); font-size: 11.5px; color: var(--faint); padding-top: 3px; }
+
+/* Small external-link markers on each note. */
+.proof-links { white-space: nowrap; }
+.proof-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-decoration: none;
+  color: var(--faint);
+  padding: 0 2px;
+  transition: color 0.15s ease;
+}
+.proof-link:hover { color: var(--accent); }
+
+/* ============ Software artifacts ============ */
+
+.artifacts dt {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  font-weight: 500;
+  margin-top: 14px;
+}
+.artifacts dt a { color: var(--ink); text-decoration: none; }
+.artifacts dt a .aname { border-bottom: 1px dotted var(--faint); }
+.artifacts dt a:hover { color: var(--accent); }
+.artifacts dt a:hover .aname { border-color: var(--accent); }
+.artifact-icon {
+  width: 13px;
+  height: 13px;
+  vertical-align: -1px;
+  margin-right: 6px;
+  color: var(--muted);
+}
+.artifact-icon.hf { width: 17px; height: 16px; vertical-align: -3px; }
+.artifacts dt a:hover .artifact-icon { color: var(--accent); }
+.artifacts dt .tech { color: var(--faint); font-weight: 400; font-size: 11.5px; margin-left: 10px; }
+.artifacts dd { margin-left: 0; font-size: 15px; color: var(--muted); text-align: justify; }
+
+/* ============ References ============ */
+
+.refs { list-style: none; counter-reset: ref; }
+
+.refs li {
+  counter-increment: ref;
+  position: relative;
+  padding: 6px 0 6px 44px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  border-radius: 4px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.refs li::before {
+  content: "[" counter(ref) "]";
+  position: absolute;
+  left: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  padding-top: 2px;
+}
+.refs li.lit { background: var(--accent-soft); }
+.refs li.flash {
+  background: color-mix(in srgb, var(--accent) 13%, transparent);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.refs li.flash::before { color: var(--accent); }
+
+.refs .r-title { font-weight: 600; }
+.refs .r-venue { font-style: italic; color: var(--accent); }
+.refs .r-year { color: var(--accent); }
+.refs .me { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+
+.ref-links { display: inline-flex; gap: 2px; margin-left: 0; }
+/* When the button row wraps to its own line, align it with the text above. */
+.ref-links > :first-child { padding-left: 0; }
+
+.ref-link, .bib-btn, .tldr-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1px 5px;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+}
+.ref-link:hover, .bib-btn:hover, .tldr-btn:hover { color: var(--accent); background: var(--accent-soft); }
+.bib-btn.copied { color: var(--accent); }
+
+/* The publication-page link reads as the primary action. */
+.ref-page { color: var(--accent); }
+.ref-page:hover { background: var(--accent-soft); }
+
+/* TL;DR panel revealed by the tl;dr button. */
+.tldr-btn.open { color: var(--accent); background: var(--accent-soft); }
+.ref-tldr {
+  margin: 9px 0 3px;
+  padding: 8px 13px;
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  background: var(--accent-soft);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+}
+
+/* ============ Margin notes (pencil) ============ */
+
+.margin-note {
+  position: absolute;
+  left: calc(100% + 22px);
+  width: 168px;
+  font-family: var(--hand);
+  font-size: 17px;
+  line-height: 1.25;
+  color: var(--pencil);
+  transform: rotate(-1.6deg);
+  opacity: 0;
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.margin-note.in { opacity: 1; transform: rotate(-1.6deg) translateY(0); }
+.margin-note:not(.in) { transform: rotate(-1.6deg) translateY(10px); }
+.margin-note .tick { color: var(--accent); }
+
+/* Hide marginalia until the desk is wide enough to hold them without
+   pushing the page into horizontal scroll. */
+@media (max-width: 1260px) { .margin-note { display: none; } }
+
+/* ============ Page navigation & appendices (p. 2) ============ */
+
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 44px;
+  font-size: 14.5px;
+  font-style: italic;
+}
+.page-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--faint);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.page-nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+.appendix-list dt {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 14px;
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 12px;
+}
+.appendix-list dt .period {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 11.5px;
+  color: var(--faint);
+  padding-top: 3px;
+}
+/* Grouping header, e.g. “2 × MSc Thesis”: its label sits in the title column
+   (inline with the other entry titles), and its entries nest one step in. */
+.appendix-list dt.sup-group { margin-top: 18px; }
+.appendix-list dt.sup-item { margin-top: 8px; }
+.appendix-list dt.sup-item .sup-name { padding-left: 22px; }
+.appendix-list dt.sup-item .sup-name.sup-desc {
+  font-weight: 400;
+  color: var(--muted);
+  text-align: justify;
+  hyphens: auto;
+}
+.appendix-list dd {
+  margin: 0 0 2px 110px;
+  font-size: 15px;
+  color: var(--muted);
+  text-align: justify;
+  hyphens: auto;
+}
+.appendix-list dd.sup-dd { margin-left: 132px; }
+/* Experience: role on the left, location pinned right in the date's style. */
+.appendix-list dt .exp-role {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+}
+.appendix-list dt .exp-role .exp-loc {
+  flex: none;
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 11.5px;
+  color: var(--faint);
+}
+/* Stacked entry title: headline on top, a small grey sub-line beneath it
+   (used for the institution under a degree, and the course under a position). */
+.appendix-list dt .stack-body { display: flex; flex-direction: column; }
+.appendix-list dt .subline {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 11px;
+  color: color-mix(in srgb, var(--muted) 65%, var(--ink));
+  margin-top: 0;
+  line-height: 1.3;
+}
+/* Teaching: course shown inline after the position, dot-separated, secondary. */
+.appendix-list dt .t-course { font-weight: 400; color: color-mix(in srgb, var(--muted) 65%, var(--ink)); }
+@media (max-width: 700px) {
+  .appendix-list dt { grid-template-columns: 1fr; gap: 0; }
+  .appendix-list dd, .appendix-list dd.sup-dd { margin-left: 0; }
+  .appendix-list dt.sup-item .sup-name { padding-left: 12px; }
+}
+
+/* ============ Page 3: world map & hobbies ============ */
+
+/* Section G rendered as a figure: a catalogue grid of interests */
+.interests-fig { margin: 26px 0 34px; text-align: left; }
+
+.interests-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 34px;
+  row-gap: 0;
+}
+.interests-grid .interest {
+  margin: 0;
+  padding: 14px 0 15px;
+  border-top: 1px solid var(--rule);
+}
+/* Let the two columns share their top edge without a double rule stack:
+   the first row's cells keep the rule; nothing else special needed since
+   every cell carries its own top border, forming a clean ledger. */
+.interests-grid .interest-idx {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--accent) 60%, var(--faint));
+  margin-bottom: 5px;
+}
+.interests-grid .interest-name {
+  margin: 0 0 3px;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 15.5px;
+  letter-spacing: 0.01em;
+}
+.interests-grid .interest-note {
+  margin: 0;
+  font-size: 14.5px;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* An odd last entry spans the full width and centers, so it never sits
+   alone in a half-empty row. */
+.interests-grid .interest.interest-centered {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+.interests-grid .interest.interest-centered .interest-note {
+  max-width: 34em;
+  margin: 0 auto;
+}
+
+@media (max-width: 560px) {
+  .interests-grid { grid-template-columns: 1fr; column-gap: 0; }
+  .interests-grid .interest.interest-centered { text-align: left; }
+  .interests-grid .interest.interest-centered .interest-note { margin: 0; }
+}
+
+/* Subtle "sample size" readout above the map */
+.fieldwork-stats {
+  margin: 20px 0 4px;
+  font-family: var(--mono);
+}
+.fieldwork-stats .fw-headline {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--faint);
+}
+.fieldwork-stats .fw-stat b {
+  color: var(--accent);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.fieldwork-stats .fw-sep { opacity: 0.45; }
+
+/* Distribution bar — the breakdown by continent, as a real figure */
+.fieldwork-stats .fw-dist {
+  max-width: 440px;
+  margin: 12px auto 0;
+}
+.fieldwork-stats .fw-bar {
+  display: flex;
+  height: 8px;
+  border: 1px solid color-mix(in srgb, var(--rule) 80%, transparent);
+  border-radius: 1px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--ink) 5%, var(--paper));
+}
+.fieldwork-stats .fw-seg {
+  flex-basis: 0;
+  min-width: 2px;
+  background: color-mix(in srgb, var(--accent) calc(78% - var(--i) * 13%), var(--paper));
+  border-right: 1px solid var(--paper);
+}
+.fieldwork-stats .fw-seg:last-child { border-right: 0; }
+.fieldwork-stats .fw-key {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 10px;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: var(--faint);
+}
+.fieldwork-stats .fw-kv {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  /* reset button chrome — it stays a plain key entry until hovered */
+  border: 0;
+  background: none;
+  padding: 2px 3px;
+  margin: -2px -3px;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.fieldwork-stats .fw-kv:hover,
+.fieldwork-stats .fw-kv:focus-visible {
+  color: var(--muted);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  outline: none;
+}
+.fieldwork-stats .fw-kv i {
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--accent) calc(78% - var(--i) * 13%), var(--paper));
+}
+.fieldwork-stats .fw-kv b {
+  color: color-mix(in srgb, var(--muted) 70%, var(--ink));
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tooltip listing the countries visited within a continent */
+.fw-tip { max-width: 220px; }
+.fw-tip .cc-title {
+  font-family: var(--serif);
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.fw-tip .fw-tip-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2;
+  column-gap: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+.fw-tip .fw-tip-list li {
+  break-inside: avoid;
+  padding: 1px 0;
+}
+
+.map-fig { margin: 14px 0 10px; }
+
+.map-mount { position: relative; }
+.map-mount svg { width: 100%; height: auto; display: block; }
+
+.map-mount .country {
+  fill: color-mix(in srgb, var(--ink) 9%, var(--paper));
+  stroke: var(--paper);
+  stroke-width: 0.4;
+  transition: fill 0.2s ease;
+}
+.map-mount .country:hover {
+  fill: color-mix(in srgb, var(--ink) 24%, var(--paper));
+}
+.map-mount .country.visited {
+  fill: color-mix(in srgb, var(--accent) 30%, var(--paper));
+  cursor: pointer;
+}
+.map-mount .country.visited:hover,
+.map-mount .country.visited.pinned {
+  fill: color-mix(in srgb, var(--accent) 52%, var(--paper));
+}
+/* Micro-states: a thick round stroke turns a 1px country into a visible dot. */
+.map-mount .country.visited.tiny {
+  stroke: color-mix(in srgb, var(--accent) 30%, var(--paper));
+  stroke-width: 5;
+  stroke-linejoin: bevel;
+  paint-order: stroke;
+  transition: stroke 0.2s ease;
+}
+.map-mount .country.visited.tiny:hover,
+.map-mount .country.visited.tiny.pinned {
+  stroke: color-mix(in srgb, var(--accent) 52%, var(--paper));
+}
+/* Scattered-island nations (e.g. Fiji): thicken the islands a touch so they
+   read, but keep angular joins so the archipelago's form shows, not a dot. */
+.map-mount .country.visited.tiny-form {
+  stroke: color-mix(in srgb, var(--accent) 30%, var(--paper));
+  stroke-width: 3;
+  stroke-linejoin: bevel;
+  paint-order: stroke;
+  transition: stroke 0.2s ease;
+}
+.map-mount .country.visited.tiny-form:hover,
+.map-mount .country.visited.tiny-form.pinned {
+  stroke: color-mix(in srgb, var(--accent) 52%, var(--paper));
+}
+
+/* Entrance: visited countries fade from the "under review" grey into accent
+   each time the page loads, rather than appearing already-red. */
+@keyframes mapCountryLit {
+  from {
+    transform: scale(1.22);
+    fill: color-mix(in srgb, var(--ink) 9%, var(--paper));
+  }
+}
+@keyframes mapMarkLit {
+  /* Micro-states are scattered islands (Fiji) or 1px dots — scaling spreads
+     them apart instead of zooming, so they only colour-fade, no scale.
+     Start expressed as the same color-mix() form as the resting stroke (0%
+     accent == paper) so the fade stays in-gamut and never flashes an
+     oversaturated red the way animating from a raw color does. */
+  from {
+    fill: color-mix(in srgb, var(--accent) 0%, var(--paper));
+    stroke: color-mix(in srgb, var(--accent) 0%, var(--paper));
+  }
+}
+/* Each visited piece scales down into place around its own centre as it
+   colours in — like a puzzle piece settling into the map. */
+.map-mount .country.visited {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mapCountryLit 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.map-mount .country.visited.tiny,
+.map-mount .country.visited.tiny-form {
+  animation: mapMarkLit 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-mount .country.visited,
+  .map-mount .country.visited.tiny,
+  .map-mount .country.visited.tiny-form { animation: none; }
+}
+
+.map-legend {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+}
+.map-legend .swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 6px;
+  vertical-align: -1px;
+}
+.swatch.visited-sw { background: color-mix(in srgb, var(--accent) 30%, var(--paper)); }
+.swatch.rest-sw { background: color-mix(in srgb, var(--ink) 9%, var(--paper)); }
+
+/* Travel hover card (extends .cite-card look) */
+.travel-card .tc-when {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.travel-card .tc-note { margin-top: 3px; }
+.travel-card .tc-photos { display: flex; gap: 6px; margin-top: 8px; overflow: hidden; }
+.travel-card .tc-photos img {
+  flex: none;
+  width: 72px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+.travel-card .tc-photos .tc-vid {
+  flex: none;
+  width: 72px;
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+.travel-card .tc-photos .tc-more {
+  flex: none;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  padding: 0 11px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+
+/* ============ Photo plate (click a visited country) ============ */
+
+.plate-overlay[hidden] { display: none; } /* `hidden` must beat display:flex */
+
+.plate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(24, 20, 14, 0.45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.plate-overlay.open { opacity: 1; }
+
+.plate {
+  width: min(600px, 94vw);
+  background: var(--paper);
+  border-radius: 3px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 40px 90px -20px rgba(0, 0, 0, 0.45);
+  padding: 26px 30px 22px;
+  transform: translateY(14px) scale(0.97);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.plate-overlay.open .plate { transform: none; }
+
+.plate-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+.plate-title { font-size: 19px; font-weight: 700; }
+.plate-title .plate-no { color: var(--accent); font-weight: 600; margin-right: 10px; }
+.plate-when {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.plate-photo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  background: color-mix(in srgb, var(--ink) 5%, var(--paper));
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.plate-photo img,
+.plate-photo video {
+  display: block;
+  max-width: 100%;
+  max-height: 62vh;
+  object-fit: contain;
+}
+/* Light deterrent: prevents drag-to-save and selection on photos (speed bump only). */
+.plate-photo img,
+.tc-photos img,
+.photo-frame img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.plate-photo video { width: min(100%, 62vh); background: #000; }
+.plate-photo img[hidden],
+.plate-photo video[hidden],
+.plate-photo .no-photos[hidden] { display: none; }
+.plate-photo .no-photos {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  font-style: italic;
+  color: var(--faint);
+  font-size: 14.5px;
+  padding: 20px;
+  text-align: center;
+}
+
+.plate-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.plate-nav:hover { color: var(--accent); border-color: var(--accent); }
+.plate-nav.prev { left: 10px; }
+.plate-nav.next { right: 10px; }
+.plate-nav[disabled] { opacity: 0; pointer-events: none; }
+
+.plate-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+}
+.plate-counter {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 11px;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.plate-close {
+  border: none;
+  background: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--faint);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+}
+.plate-close:hover { color: var(--accent); background: var(--accent-soft); }
+
+@media (prefers-reduced-motion: reduce) {
+  .plate-overlay, .plate { transition: none; }
+}
+
+/* ============ Colophon & fixed UI ============ */
+
+/* Closing beat — an end-mark and a hand-written last line */
+.closing {
+  margin-top: 44px;
+  text-align: center;
+}
+.closing-mark {
+  font-family: var(--serif);
+  font-size: 17px;
+  letter-spacing: 0.5em;
+  text-indent: 0.5em; /* re-center despite trailing letter-spacing */
+  color: color-mix(in srgb, var(--accent) 55%, var(--faint));
+  margin-bottom: 14px;
+}
+.closing-line {
+  max-width: 34em;
+  margin: 0 auto;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.colophon {
+  margin-top: 40px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+  text-align: center !important;
+}
+
+.fixed-ui {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 80;
+  display: flex;
+  gap: 8px;
+}
+
+.ui-btn {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 8px 13px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+}
+.ui-btn:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+
+/* ============ Page transitions ============
+   A quiet cross-fade with a slight upward settle. The exit is opacity-only, so
+   it never fights the paper-tilt transform; the entrance briefly owns the
+   transform, then its class is removed so the tilt can resume. */
+
+/* Incoming page hides its sheet pre-paint; the entrance takes over from there. */
+html[data-enter] .sheet { opacity: 0; }
+
+.sheet.is-leaving {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.sheet.is-entering {
+  animation: sheetIn 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+@keyframes sheetIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ Responsive / print / motion ============ */
+
+@media (max-width: 700px) {
+  .sheet { padding: 40px 26px 40px; }
+  .abstract { margin: 0 0 32px; }
+  .running-head .running-status { display: none; }
+  body { font-size: 15.5px; }
+}
+
+@media print {
+  .fixed-ui, .fig-hint, .stack, .margin-note { display: none; }
+  body { background: white; }
+  .desk { padding: 0; }
+  /* The 3D perspective + the sheet's tilt transform stop the content from
+     paginating (a transformed element is rasterised as one unit, so only the
+     first page prints and the rest come out blank). Clear them for print. */
+  .paper { perspective: none; max-width: none; }
+  .sheet {
+    box-shadow: none;
+    max-width: none;
+    padding: 4mm 6mm;      /* small inner padding; @page provides the page margin */
+    will-change: auto;
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  /* The live sheet (only printed as a fallback) clears its paper-tilt. */
+  .paper .sheet { transform: none !important; }
+  .sheet::before, .sheet::after { display: none; }
+  /* Scroll-reveal blocks that were never scrolled into view stay opacity:0 —
+     force every one visible so the whole document prints, not just page 1. */
+  .reveal { opacity: 1 !important; transform: none !important; }
+  /* Freeze the map at its final coloured state (no mid-fade in a printout). */
+  .map-mount .country.visited { animation: none !important; }
+  /* Keep colours (map shading, accents) and don't split figures awkwardly. */
+  .sheet, .map-mount, .fig { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .fig, .map-fig, figure, .refs li { break-inside: avoid; }
+
+  /* All-three-pages print bundle. When it is ready, print it instead of the
+     live page; otherwise fall back to printing just the current page. */
+  .print-src-frame { display: none !important; }
+  html.print-bundle-ready .desk { display: none !important; }
+  html.print-bundle-ready #print-bundle { display: block !important; }
+  /* Each manuscript page prints at normal A4 size and flows naturally across
+     as many pages as it needs; the next one starts on a fresh page. */
+  #print-bundle .print-sheet + .print-sheet { break-before: page; }
+  #print-bundle .page-nav { display: none; }
+}
+
+/* Normal A4 page margins. */
+@page { size: A4 portrait; margin: 18mm 20mm; }
+
+/* Off-screen render frames + the bundle itself never show on screen. */
+#print-bundle { display: none; }
+.print-src-frame {
+  position: absolute;
+  left: -99999px;
+  top: 0;
+  width: 1000px;
+  height: 1400px;
+  border: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .margin-note { transition: none; opacity: 1; }
+  * { transition-duration: 0.01ms !important; }
+}
