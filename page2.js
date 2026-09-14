@@ -16,8 +16,6 @@
 
   const stored = localStorage.getItem("theme");
   if (stored) document.documentElement.dataset.theme = stored;
-  else if (matchMedia("(prefers-color-scheme: dark)").matches)
-    document.documentElement.dataset.theme = "dark";
   $("#themeToggle").addEventListener("click", () => {
     const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;

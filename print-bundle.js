@@ -16,7 +16,7 @@
   if (window.top !== window.self) return;
   if (!("closest" in Element.prototype)) return;
 
-  const PAGES = ["index.html", "page-2.html", "page-3.html"];
+  const PAGES = ["index.html", "appendices.html", "ports-of-call.html"];
   const path = location.pathname;
   let current = path.slice(path.lastIndexOf("/") + 1);
   if (!current) current = "index.html";
@@ -59,7 +59,7 @@
       if (page === current) {
         // Clone the live page, but wait first so its own async content (the
         // page-3 map) has rendered before we snapshot it.
-        const wait = /page-3/.test(page) ? 900 : 120;
+        const wait = /ports-of-call/.test(page) ? 900 : 120;
         setTimeout(() => {
           const live = document.getElementById("sheet");
           if (live) slot.appendChild(cleanClone(live));
@@ -75,7 +75,7 @@
       frame.src = page;
       frame.addEventListener("load", () => {
         // Give the page's own scripts time to render (the map SVG on page 3).
-        const wait = /page-3/.test(page) ? 800 : 350;
+        const wait = /ports-of-call/.test(page) ? 800 : 350;
         setTimeout(() => {
           try {
             const s = frame.contentDocument &&
