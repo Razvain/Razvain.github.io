@@ -411,28 +411,28 @@ const CONTENT = {
   travels: [
     { id: "ro", when: "origin",
       note: "Where the story starts. A pink evening sky over the old town.",
-      photos: ["assets/romania/romania2.jpeg", "assets/romania/romania1.jpeg"] },
+      photos: ["assets/romania/romania2.webp", "assets/romania/romania1.webp"] },
     { id: "nl", when: "2020–",
       note: "Home base: Delft, through BSc, MSc, and now the PhD at TU Delft. In Amsterdam, the SEN Symposium ’25 and a Meta office visit for the TU Delft–Meta collaboration, plus nights out there and in Rotterdam.",
-      photos: ["assets/netherlands/nl-sen.jpg", "assets/netherlands/nl-meta.webp", "assets/netherlands/delft3.jpeg", "assets/netherlands/delft5.jpeg", "assets/netherlands/delft6.jpeg", "assets/netherlands/delft4.jpeg", "assets/netherlands/delft.jpeg", "assets/netherlands/delft1.jpeg", "assets/netherlands/delft2.jpeg", "assets/netherlands/netherlands1.jpeg", "assets/netherlands/ams.jpeg", "assets/netherlands/rotterdam.jpeg"] },
+      photos: ["assets/netherlands/nl-sen.webp", "assets/netherlands/nl-meta.webp", "assets/netherlands/delft3.webp", "assets/netherlands/delft5.webp", "assets/netherlands/delft6.webp", "assets/netherlands/delft4.webp", "assets/netherlands/delft.webp", "assets/netherlands/delft1.webp", "assets/netherlands/delft2.webp", "assets/netherlands/netherlands1.webp", "assets/netherlands/ams.webp", "assets/netherlands/rotterdam.webp"] },
     { id: "br", when: "2026",
       note: "MSR ’26 and ICSE ’26 in Rio de Janeiro, presenting agent activity in the wild, plus an Amazon getaway.",
-      photos: ["assets/brazil/brazil1.jpeg", "assets/brazil/brazil11.jpeg", "assets/brazil/brazil6.jpeg", "assets/brazil/brazil3.jpeg", "assets/brazil/brazil5.jpeg", "assets/brazil/brazil7.jpeg", "assets/brazil/brazil9.jpeg", "assets/brazil/brazil10.jpeg"] },
+      photos: ["assets/brazil/brazil1.webp", "assets/brazil/brazil11.webp", "assets/brazil/brazil6.webp", "assets/brazil/brazil3.webp", "assets/brazil/brazil5.webp", "assets/brazil/brazil7.webp", "assets/brazil/brazil9.webp", "assets/brazil/brazil10.webp"] },
     { id: "ca", when: "2025 & 2026",
       note: "The FSE ’26 Doctoral Symposium in Montreal and FORGE at ICSE ’25 in Ottawa, with Toronto and Niagara Falls in between.",
-      photos: ["assets/canada/canada1.jpeg", "assets/canada/canada7.jpeg", "assets/canada/canada8.jpeg", "assets/canada/canada5.jpeg", "assets/canada/canada4.jpeg", "assets/canada/canada6.jpeg", "assets/canada/canada2.jpeg", "assets/canada/canada12.jpeg", "assets/canada/canada11.jpeg", "assets/canada/canada9.jpeg", "assets/canada/canada10.jpeg"] },
+      photos: ["assets/canada/canada1.webp", "assets/canada/canada7.webp", "assets/canada/canada8.webp", "assets/canada/canada5.webp", "assets/canada/canada4.webp", "assets/canada/canada6.webp", "assets/canada/canada2.webp", "assets/canada/canada12.webp", "assets/canada/canada11.webp", "assets/canada/canada9.webp", "assets/canada/canada10.webp"] },
     { id: "de", when: "2026",
       note: "Dagstuhl Seminar on evaluating AI models for software engineering, Cologne Cathedral, and a few days in Berlin.",
-      photos: ["assets/germany/dagsthul.jpg", "assets/germany/germany1.jpeg", "assets/germany/berlin1.jpeg", "assets/germany/berlin2.jpeg", "assets/germany/berlin3.jpeg", "assets/germany/berlin4.jpg", "assets/germany/berlin6.jpg"] },
+      photos: ["assets/germany/dagsthul.webp", "assets/germany/germany1.webp", "assets/germany/berlin1.webp", "assets/germany/berlin2.webp", "assets/germany/berlin3.webp", "assets/germany/berlin4.webp", "assets/germany/berlin6.webp"] },
     { id: "us", when: "2026",
       note: "Machine Learning Summer School at Columbia University, New York.",
-      photos: ["assets/us/us8.jpeg", "assets/us/us15.jpeg", "assets/us/us23.jpeg", "assets/us/us6.jpeg", "assets/us/us9.jpeg", "assets/us/us1.jpeg", "assets/us/us2.jpeg", "assets/us/us3.jpeg", "assets/us/us4.jpeg", "assets/us/us11.jpeg", "assets/us/us12.jpeg", "assets/us/us13.jpeg", "assets/us/us14.jpeg", "assets/us/us18.jpeg", "assets/us/us20.jpeg", "assets/us/us21.jpeg", "assets/us/us22.jpeg"] },
+      photos: ["assets/us/us8.webp", "assets/us/us15.webp", "assets/us/us23.webp", "assets/us/us6.webp", "assets/us/us9.webp", "assets/us/us1.webp", "assets/us/us2.webp", "assets/us/us3.webp", "assets/us/us4.webp", "assets/us/us11.webp", "assets/us/us12.webp", "assets/us/us13.webp", "assets/us/us14.webp", "assets/us/us18.webp", "assets/us/us20.webp", "assets/us/us21.webp", "assets/us/us22.webp"] },
     { id: "au", when: "2026",
       note: "Machine Learning Summer School in Melbourne, then the Great Ocean Road, the Australian Open Women’s Final, Sydney, Brisbane, the Gold Coast, and Tasmania.",
-      photos: ["assets/australia_tasmania/australia_tasmania40.jpeg", "assets/australia_tasmania/australia_tasmania35.jpeg", "assets/australia_tasmania/australia_tasmania34.jpeg", "assets/australia_tasmania/australia_tasmania43.jpeg", "assets/australia_tasmania/australia_tasmania39.jpeg", "assets/australia_tasmania/australia_tasmania38.jpeg", "assets/australia_tasmania/australia_tasmania9.jpeg", "assets/australia_tasmania/australia_tasmania8.jpeg", "assets/australia_tasmania/australia_tasmania4.jpeg", "assets/australia_tasmania/australia_tasmania3.jpeg", "assets/australia_tasmania/australia_tasmania2.jpeg", "assets/australia_tasmania/australia_tasmania1.jpeg", "assets/australia_tasmania/australia_tasmania10.jpeg", "assets/australia_tasmania/australia_tasmania7.jpeg", "assets/australia_tasmania/aus55.jpeg", "assets/australia_tasmania/aus59.jpeg", "assets/australia_tasmania/aus58.jpeg", "assets/australia_tasmania/aus60.jpeg", "assets/australia_tasmania/australia_tasmania19.jpeg", "assets/australia_tasmania/australia_tasmania18.jpeg", "assets/australia_tasmania/australia_tasmania27.jpeg", "assets/australia_tasmania/australia_tasmania24.jpeg", "assets/australia_tasmania/australia_tasmania13.jpeg"] },
+      photos: ["assets/australia_tasmania/australia_tasmania40.webp", "assets/australia_tasmania/australia_tasmania35.webp", "assets/australia_tasmania/australia_tasmania34.webp", "assets/australia_tasmania/australia_tasmania43.webp", "assets/australia_tasmania/australia_tasmania39.webp", "assets/australia_tasmania/australia_tasmania38.webp", "assets/australia_tasmania/australia_tasmania9.webp", "assets/australia_tasmania/australia_tasmania8.webp", "assets/australia_tasmania/australia_tasmania4.webp", "assets/australia_tasmania/australia_tasmania3.webp", "assets/australia_tasmania/australia_tasmania2.webp", "assets/australia_tasmania/australia_tasmania1.webp", "assets/australia_tasmania/australia_tasmania10.webp", "assets/australia_tasmania/australia_tasmania7.webp", "assets/australia_tasmania/aus55.webp", "assets/australia_tasmania/aus59.webp", "assets/australia_tasmania/aus58.webp", "assets/australia_tasmania/aus60.webp", "assets/australia_tasmania/australia_tasmania19.webp", "assets/australia_tasmania/australia_tasmania18.webp", "assets/australia_tasmania/australia_tasmania27.webp", "assets/australia_tasmania/australia_tasmania24.webp", "assets/australia_tasmania/australia_tasmania13.webp"] },
     { id: "fr", when: "2022",
       note: "The International Astronautical Congress with Lunar Zebro, and later Paris itself: the Eiffel Tower, Versailles, and Montmartre.",
-      photos: ["assets/france/lunarz.jpg", "assets/france/france7.jpg", "assets/france/france1.jpeg", "assets/france/france5.jpeg", "assets/france/france2.jpeg", "assets/france/france3.jpeg", "assets/france/france4.jpeg", "assets/france/france6.jpeg"] },
+      photos: ["assets/france/lunarz.webp", "assets/france/france7.webp", "assets/france/france1.webp", "assets/france/france5.webp", "assets/france/france2.webp", "assets/france/france3.webp", "assets/france/france4.webp", "assets/france/france6.webp"] },
 
     /* More visited countries. TODO: add a `when` and `note` (and photos)
        to any of these when you want them to tell a story on hover/click.
@@ -440,70 +440,70 @@ const CONTENT = {
        United Kingdom (gb) below. */
     { id: "ge", when: "",
       note: "Tbilisi from above: the old town, the winding river, and the hills beyond.",
-      photos: ["assets/georgia/georgia12.jpeg", "assets/georgia/georgia15.jpeg", "assets/georgia/georgia19.jpeg", "assets/georgia/georgia28.jpeg", "assets/georgia/georgia31.jpeg", "assets/georgia/georgia34.jpeg", "assets/georgia/georgia38.jpeg"] },   // Georgia
+      photos: ["assets/georgia/georgia12.webp", "assets/georgia/georgia15.webp", "assets/georgia/georgia19.webp", "assets/georgia/georgia28.webp", "assets/georgia/georgia31.webp", "assets/georgia/georgia34.webp", "assets/georgia/georgia38.webp"] },   // Georgia
     { id: "qa", when: "",
       note: "Doha: the National Museum, the Museum of Islamic Art, and Katara.",
-      photos: ["assets/qatar/qatar2.jpeg", "assets/qatar/qatar3.jpeg", "assets/qatar/qatar1.jpeg", "assets/qatar/qatar4.jpeg"] },   // Qatar
+      photos: ["assets/qatar/qatar2.webp", "assets/qatar/qatar3.webp", "assets/qatar/qatar1.webp", "assets/qatar/qatar4.webp"] },   // Qatar
     { id: "sg", when: "",
       note: "Marina Bay: the Supertrees at Gardens by the Bay, the skyline, and Marina Bay Sands.",
-      photos: ["assets/singapore/singapore1.jpeg", "assets/singapore/singapore3.jpeg", "assets/singapore/singapore2.jpeg", "assets/singapore/singapore4.jpeg", "assets/singapore/singapore5.jpeg"] },   // Singapore
+      photos: ["assets/singapore/singapore1.webp", "assets/singapore/singapore3.webp", "assets/singapore/singapore2.webp", "assets/singapore/singapore4.webp", "assets/singapore/singapore5.webp"] },   // Singapore
     { id: "tr", when: "",
       note: "Istanbul on the Bosphorus, waterside mosques and old wooden houses at golden hour.",
-      photos: ["assets/turkey/turkey8.jpeg", "assets/turkey/turkey1.jpeg", "assets/turkey/turkey2.jpeg", "assets/turkey/turkey3.jpeg", "assets/turkey/turkey4.jpeg", "assets/turkey/turkey6.jpeg", "assets/turkey/turkey7.jpeg", "assets/turkey/turkey11.jpeg", "assets/turkey/turkey13.jpeg", "assets/turkey/turkey14.jpeg"] },   // Turkey
+      photos: ["assets/turkey/turkey8.webp", "assets/turkey/turkey1.webp", "assets/turkey/turkey2.webp", "assets/turkey/turkey3.webp", "assets/turkey/turkey4.webp", "assets/turkey/turkey6.webp", "assets/turkey/turkey7.webp", "assets/turkey/turkey11.webp", "assets/turkey/turkey13.webp", "assets/turkey/turkey14.webp"] },   // Turkey
     { id: "al", when: "",
       note: "Gjirokastër's stone old town and castle, and the Ionian coast near Saranda.",
-      photos: ["assets/albania/albania1.jpeg", "assets/albania/albania4.jpeg", "assets/albania/albania2.jpeg", "assets/albania/albania3.jpeg", "assets/albania/albania5.jpeg", "assets/albania/albania6.jpeg"] },   // Albania
+      photos: ["assets/albania/albania1.webp", "assets/albania/albania4.webp", "assets/albania/albania2.webp", "assets/albania/albania3.webp", "assets/albania/albania5.webp", "assets/albania/albania6.webp"] },   // Albania
     { id: "at", when: "",
       note: "Hallstatt on its lake, Salzburg's old town, Zell am See, and the Grossglockner High Alpine Road.",
-      photos: ["assets/austria/austria6.jpeg", "assets/austria/austria9.jpg", "assets/austria/austria1.jpeg", "assets/austria/austria4.jpeg", "assets/austria/austria10.jpeg", "assets/austria/austria8.jpeg", "assets/austria/austria5.jpeg", "assets/austria/austria2.jpeg", "assets/austria/austria3.jpeg"] },   // Austria
+      photos: ["assets/austria/austria6.webp", "assets/austria/austria9.webp", "assets/austria/austria1.webp", "assets/austria/austria4.webp", "assets/austria/austria10.webp", "assets/austria/austria8.webp", "assets/austria/austria5.webp", "assets/austria/austria2.webp", "assets/austria/austria3.webp"] },   // Austria
     { id: "be", when: "",
       note: "Dinant, on the Meuse, below its cliffside citadel.",
-      photos: ["assets/belgium/belgium1.jpeg", "assets/belgium/belgium2.jpeg"] },   // Belgium
+      photos: ["assets/belgium/belgium1.webp", "assets/belgium/belgium2.webp"] },   // Belgium
     { id: "ba", when: "",
       note: "Mostar and its Old Bridge over the Neretva.",
-      photos: ["assets/bosnia/bosnia2.jpeg", "assets/bosnia/bosnia1.jpeg", "assets/bosnia/bosnia3.jpeg"] },   // Bosnia and Herzegovina
+      photos: ["assets/bosnia/bosnia2.webp", "assets/bosnia/bosnia1.webp", "assets/bosnia/bosnia3.webp"] },   // Bosnia and Herzegovina
     { id: "bg", when: "visited",
       note: "Visited, though from before the camera roll; no photographs survived.",
       photos: [] },   // Bulgaria
     { id: "hr", when: "",
       note: "The Adriatic coast off Dalmatia, and the waterfalls and turquoise lakes of Plitvice.",
-      photos: ["assets/croatia/croatia55.jpeg", "assets/croatia/croatia59.jpeg", "assets/croatia/croatia61.jpeg", "assets/croatia/croatia62.jpeg", "assets/croatia/croatia70.jpeg", "assets/croatia/croatia73.jpeg", "assets/croatia/croatia75.jpeg", "assets/croatia/croatia76.jpeg", "assets/croatia/croatia78.jpeg", "assets/croatia/croatia79.jpeg", "assets/croatia/croatia80.jpeg"] },   // Croatia
+      photos: ["assets/croatia/croatia55.webp", "assets/croatia/croatia59.webp", "assets/croatia/croatia61.webp", "assets/croatia/croatia62.webp", "assets/croatia/croatia70.webp", "assets/croatia/croatia73.webp", "assets/croatia/croatia75.webp", "assets/croatia/croatia76.webp", "assets/croatia/croatia78.webp", "assets/croatia/croatia79.webp", "assets/croatia/croatia80.webp"] },   // Croatia
     { id: "gr", when: "",
       note: "Symi's pastel harbour in the Dodecanese, and sunsets over the sea toward Mount Athos.",
-      photos: ["assets/greece/greece1.jpeg", "assets/greece/greece2.jpeg", "assets/greece/greece3.jpeg"] },   // Greece
+      photos: ["assets/greece/greece1.webp", "assets/greece/greece2.webp", "assets/greece/greece3.webp"] },   // Greece
     { id: "hu", when: "",
       note: "Budapest on the Danube: the Chain Bridge at blue hour and the Parliament lit at night.",
-      photos: ["assets/hungary/budapesta.png", "assets/hungary/hungary2.jpeg"] },   // Hungary
+      photos: ["assets/hungary/budapesta.webp", "assets/hungary/hungary2.webp"] },   // Hungary
     { id: "is", when: "",
       note: "Iceland end to end: the Jökulsárlón glacier lagoon, black-sand coasts, waterfalls, and empty highland roads.",
-      photos: ["assets/iceland/iceland1.jpeg", "assets/iceland/iceland2.jpeg", "assets/iceland/iceland4.jpeg", "assets/iceland/iceland6.jpeg", "assets/iceland/iceland10.jpeg", "assets/iceland/iceland11.jpeg", "assets/iceland/iceland12.jpeg", "assets/iceland/iceland13.jpeg", "assets/iceland/iceland14.jpeg", "assets/iceland/iceland15.jpeg", "assets/iceland/iceland16.jpeg", "assets/iceland/iceland17.jpeg"] },   // Iceland
+      photos: ["assets/iceland/iceland1.webp", "assets/iceland/iceland2.webp", "assets/iceland/iceland4.webp", "assets/iceland/iceland6.webp", "assets/iceland/iceland10.webp", "assets/iceland/iceland11.webp", "assets/iceland/iceland12.webp", "assets/iceland/iceland13.webp", "assets/iceland/iceland14.webp", "assets/iceland/iceland15.webp", "assets/iceland/iceland16.webp", "assets/iceland/iceland17.webp"] },   // Iceland
     { id: "it", when: "",
       note: "The Dolomites: pale limestone walls rising straight out of the pine line.",
-      photos: ["assets/italy/italy58.jpeg", "assets/italy/italy55.jpeg", "assets/italy/italy56.jpeg", "assets/italy/italy57.jpeg", "assets/italy/italy59.jpeg", "assets/italy/italy60.jpeg", "assets/italy/italy61.jpeg", "assets/italy/italy62.jpeg", "assets/italy/italy63.jpeg", "assets/italy/italy65.jpeg"] },   // Italy
+      photos: ["assets/italy/italy58.webp", "assets/italy/italy55.webp", "assets/italy/italy56.webp", "assets/italy/italy57.webp", "assets/italy/italy59.webp", "assets/italy/italy60.webp", "assets/italy/italy61.webp", "assets/italy/italy62.webp", "assets/italy/italy63.webp", "assets/italy/italy65.webp"] },   // Italy
     { id: "md", when: "",
       note: "Cricova's endless underground wine cellars, and a glass or two along the way.",
-      photos: ["assets/moldova/moldova59.jpeg", "assets/moldova/moldova55.jpeg", "assets/moldova/moldova56.jpeg", "assets/moldova/moldova60.jpeg", "assets/moldova/moldova61.jpeg"] },   // Moldova
+      photos: ["assets/moldova/moldova59.webp", "assets/moldova/moldova55.webp", "assets/moldova/moldova56.webp", "assets/moldova/moldova60.webp", "assets/moldova/moldova61.webp"] },   // Moldova
     { id: "pt", when: "",
       note: "Madeira: Pico do Arieiro above the clouds, the Fanal laurel forest, and the north coast; and the Algarve coast at Albufeira.",
-      photos: ["assets/portugal_madeira/madeira7.jpeg", "assets/portugal_madeira/madeira6.jpeg", "assets/portugal_madeira/madeira2.jpeg", "assets/portugal_madeira/madeira1.jpeg", "assets/portugal_madeira/madeira3.jpeg", "assets/portugal_madeira/madeira4.jpeg", "assets/portugal_madeira/algarve-falesia.jpg", "assets/portugal_madeira/algarve-albufeira3.jpg"] },   // Portugal
+      photos: ["assets/portugal_madeira/madeira7.webp", "assets/portugal_madeira/madeira6.webp", "assets/portugal_madeira/madeira2.webp", "assets/portugal_madeira/madeira1.webp", "assets/portugal_madeira/madeira3.webp", "assets/portugal_madeira/madeira4.webp", "assets/portugal_madeira/algarve-falesia.webp", "assets/portugal_madeira/algarve-albufeira3.webp"] },   // Portugal
     { id: "rs", when: "visited",
       note: "Visited; no photographs made it back.",
       photos: [] },   // Serbia
     { id: "si", when: "",
       note: "Lake Bled: the island church and its Alpine backdrop.",
-      photos: ["assets/slovenia/slovenia1.jpeg"] },   // Slovenia
+      photos: ["assets/slovenia/slovenia1.webp"] },   // Slovenia
     { id: "es", when: "",
       note: "Madrid: sunset down the central streets, jamón hanging by the legful, and the Bernabéu.",
-      photos: ["assets/spain/spain1.jpeg", "assets/spain/spain2.jpeg", "assets/spain/spain3.jpeg", "assets/spain/spain4.jpeg"] },   // Spain
+      photos: ["assets/spain/spain1.webp", "assets/spain/spain2.webp", "assets/spain/spain3.webp", "assets/spain/spain4.webp"] },   // Spain
     { id: "gb", when: "",
       note: "Edinburgh's castle, Old Town, and Victoria Street, and the University of Glasgow.",
-      photos: ["assets/scotland/scotland1.jpeg", "assets/scotland/scotland3.jpeg", "assets/scotland/scotland5.jpeg", "assets/scotland/scotland4.jpeg", "assets/scotland/scotland2.jpeg", "assets/scotland/scotland6.jpeg"] },   // United Kingdom (incl. Scotland)
+      photos: ["assets/scotland/scotland1.webp", "assets/scotland/scotland3.webp", "assets/scotland/scotland5.webp", "assets/scotland/scotland4.webp", "assets/scotland/scotland2.webp", "assets/scotland/scotland6.webp"] },   // United Kingdom (incl. Scotland)
     { id: "fj", when: "",
       note: "Island-hopping across the Mamanuca and Yasawa islands.",
-      photos: ["assets/fiji/fiji6.jpeg", "assets/fiji/fiji1.jpeg", "assets/fiji/fiji2.jpeg", "assets/fiji/fiji4.jpeg", "assets/fiji/fiji7.jpeg", "assets/fiji/fiji3.jpeg", "assets/fiji/fiji5.jpeg"] },   // Fiji
+      photos: ["assets/fiji/fiji6.webp", "assets/fiji/fiji1.webp", "assets/fiji/fiji2.webp", "assets/fiji/fiji4.webp", "assets/fiji/fiji7.webp", "assets/fiji/fiji3.webp", "assets/fiji/fiji5.webp"] },   // Fiji
     { id: "pe", when: "",
       note: "A holiday across the Andes: Machu Picchu, Rainbow Mountain, the Ausangate and Salkantay treks, Cusco, and Lima.",
-      photos: ["assets/peru/peru30.jpeg", "assets/peru/peru16.jpeg", "assets/peru/peru23.jpeg", "assets/peru/peru22.jpeg", "assets/peru/peru6.jpeg", "assets/peru/peru15.jpeg", "assets/peru/peru9.jpeg", "assets/peru/peru18.jpeg", "assets/peru/peru7.jpeg", "assets/peru/peru20.jpeg", "assets/peru/peru37.jpeg", "assets/peru/peru29.jpeg", "assets/peru/peru8.jpeg", "assets/peru/peru13.jpeg", "assets/peru/peru19.jpeg", "assets/peru/peru14.jpeg", "assets/peru/peru34.jpeg", "assets/peru/peru36.jpeg"] },   // Peru
+      photos: ["assets/peru/peru30.webp", "assets/peru/peru16.webp", "assets/peru/peru23.webp", "assets/peru/peru22.webp", "assets/peru/peru6.webp", "assets/peru/peru15.webp", "assets/peru/peru9.webp", "assets/peru/peru18.webp", "assets/peru/peru7.webp", "assets/peru/peru20.webp", "assets/peru/peru37.webp", "assets/peru/peru29.webp", "assets/peru/peru8.webp", "assets/peru/peru13.webp", "assets/peru/peru19.webp", "assets/peru/peru14.webp", "assets/peru/peru34.webp", "assets/peru/peru36.webp"] },   // Peru
   ],
 
   // ----- Page 3: other hobbies -----

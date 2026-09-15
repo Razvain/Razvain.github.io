@@ -271,6 +271,11 @@
         plateEls.img.alt = `Photo ${index + 1} from ${name}`;
         plateEls.counter.textContent = `photo ${index + 1} / ${photos.length}`;
       }
+      // Preload the neighbouring photos (wrapping) so ‹ › / arrow navigation is instant.
+      [index + 1, index - 1].forEach(d => {
+        const p = photos[(d + photos.length) % photos.length];
+        if (p && !isVideo(p)) { const im = new Image(); im.src = p; }
+      });
     } else {
       plateEls.img.hidden = true;
       plateEls.video.hidden = true;
