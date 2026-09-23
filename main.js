@@ -323,7 +323,12 @@
     arcSvg.setAttribute("height", document.documentElement.scrollHeight);
     arcSvg.innerHTML = "";
 
-    const s = docRect(sourceEl);
+    // Anchor to the LAST line fragment, so a phrase that wraps across two
+    // lines starts the arc from under its final line rather than from the
+    // centre of the (tall, misleading) union bounding box.
+    const rects = sourceEl.getClientRects();
+    const lr = rects.length ? rects[rects.length - 1] : sourceEl.getBoundingClientRect();
+    const s = { cx: lr.left + lr.width / 2 + scrollX, bottom: lr.bottom + scrollY };
     const gutterX = Math.max(20, docRect(sheet).left - 46);
 
     relatedAnchors(tid).forEach((el, i) => {
