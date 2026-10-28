@@ -411,6 +411,21 @@ figcaption {
 .artifact-icon.hf { width: 17px; height: 16px; vertical-align: -3px; }
 .artifacts dt a:hover .artifact-icon { color: var(--accent); }
 .artifacts dt .tech { color: var(--faint); font-weight: 400; font-size: 11.5px; margin-left: 10px; }
+/* Milestone badge (e.g. Hugging Face downloads) — a small accent pill. */
+.artifacts dt .milestone {
+  margin-left: 8px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 11%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius: 999px;
+  padding: 1px 8px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
 .artifacts dd { margin-left: 0; font-size: 15px; color: var(--muted); text-align: justify; }
 
 /* ============ References ============ */

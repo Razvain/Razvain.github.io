@@ -326,6 +326,7 @@ const CONTENT = {
       topics: ["data", "evaluation"],
       description: "A contamination-free, multilingual copyleft code corpus, deduplicated against all publicly available training datasets, so language models can be evaluated on code they were not trained on.",
       url: "https://huggingface.co/datasets/AISE-TUDelft/the-heap", tech: "Dataset · Dedup pipeline",
+      milestone: "36k+ downloads", milestoneTitle: "36,553 all-time downloads on Hugging Face",
     },
     {
       name: "Code4Me",

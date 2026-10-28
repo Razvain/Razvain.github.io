@@ -192,7 +192,9 @@
     dt.className = "attn-item attn-anchor";
     dt.dataset.topics = topics;
     const ext = p.url && p.url.startsWith("http") ? ' target="_blank" rel="noopener"' : "";
-    dt.innerHTML = `<a href="${p.url}"${ext}>${hostIcon(p.url)}<span class="aname">${p.name}</span></a><span class="tech">${p.tech}</span>`;
+    dt.innerHTML = `<a href="${p.url}"${ext}>${hostIcon(p.url)}<span class="aname">${p.name}</span></a>` +
+      (p.milestone ? `<span class="milestone" title="${p.milestoneTitle || ""}">🔥 ${p.milestone}</span>` : "") +
+      `<span class="tech">${p.tech}</span>`;
     const dd = document.createElement("dd");
     dd.className = "attn-item";
     dd.dataset.topics = topics;
