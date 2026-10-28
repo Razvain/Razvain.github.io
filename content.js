@@ -73,6 +73,9 @@ const CONTENT = {
   // ----- News (most recent first) -----
   news: [
     { date: "Apr 2027", topics: [],
+      html: `Serving on the Program Committee of the <em>MSR ’27 Mining Challenge</em>, co-located with <em>ICSE ’27</em>, Dublin, Ireland, 26–27 April 2027.`,
+      links: ["https://2027.msrconf.org/track/msr-2027-mining-challenge"] },
+    { date: "Apr 2027", topics: [],
       html: `Co-chairing the second edition of <em>The Poisoned Chalice</em>, a Membership Inference Attack competition, co-located with <em>ICSE ’27</em>, Dublin, Ireland.`,
       links: ["https://poisoned-chalice.org/"] },
     { date: "Jul 2026", topics: ["agents", "evaluation"],
@@ -395,6 +398,8 @@ const CONTENT = {
   ],
 
   misc: [
+    { date: "2027", html: `Program Committee, <em>MSR ’27 Mining Challenge</em>, co-located with <em>ICSE ’27</em>, Dublin, Ireland, 26–27 April 2027.`,
+      links: ["https://2027.msrconf.org/track/msr-2027-mining-challenge"] },
     { date: "2026 & 2027", html: `Co-chair, <em>The Poisoned Chalice</em>, a Membership Inference Attack competition — 1st edition co-located with <em>FSE ’26</em>, Montreal, Canada, and 2nd edition with <em>ICSE ’27</em>, Dublin, Ireland.`,
       links: ["https://poisoned-chalice.org/"] },
     { date: "2025", html: `Web chair, <em>AgenticSE Workshop</em>, co-located with <em>ASE ’25</em>, Seoul, South Korea.`,
