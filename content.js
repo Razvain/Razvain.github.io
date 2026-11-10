@@ -112,6 +112,20 @@ const CONTENT = {
      TODO: add real pdf/doi/code links as they come online. */
   publications: [
     {
+      title: "SEPIA: A Dataset of Prompts from Software Engineering Research Papers",
+      authors: "Ali Al-Kaswan, Razvan Mihai Popescu, Andy Zaidman, Maliheh Izadi",
+      venue: "Under review", year: 2026, type: "journal",
+      topics: ["data"],
+      links: {},
+      tldr: "Abstract coming soon.",
+      bibtex: `@article{alkaswan2026sepia,
+  title  = {SEPIA: A Dataset of Prompts from Software Engineering Research Papers},
+  author = {Al-Kaswan, Ali and Popescu, Razvan Mihai and Zaidman, Andy and Izadi, Maliheh},
+  note   = {Under review},
+  year   = {2026}
+}`,
+    },
+    {
       title: "Characterizing Human-Agent Dynamics in Agent-authored Pull Requests",
       authors: "Ziyou Li, Razvan Mihai Popescu, Maliheh Izadi",
       venue: "Under review", year: 2026, type: "journal",
