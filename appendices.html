@@ -8,10 +8,8 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>§</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Libertinus+Serif:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Libertinus+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <script src="transitions.js"></script>
-  <script src="scroll-focus.js"></script>
   <script src="protect.js"></script>
   <script src="print-bundle.js"></script>
 </head>
@@ -19,13 +17,11 @@
 
   <div class="desk">
     <div class="paper">
-    <div class="stack" aria-hidden="true"></div>
     <article class="sheet" id="sheet">
 
       <div class="running-head">
+        <span>1:2</span>
         <span id="runningName"></span>
-        <span class="running-status">appendices</span>
-        <span>p. 2 / 3</span>
       </div>
 
       <!-- Appendix A: Education -->
@@ -63,6 +59,8 @@
         <a href="ports-of-call.html" data-nav="fwd">continued on p. 3 — fieldwork &amp; hobbies →</a>
       </nav>
 
+      <p class="page-foot even">Preprint, Vol. 1, No. 1, Article 1. Publication date: <span class="pubdate"></span>.</p>
+
       <p class="colophon" id="colophon"></p>
 
     </article>
@@ -74,6 +72,7 @@
   </div>
 
   <script src="content.js"></script>
+  <script src="refs.js"></script>
   <script src="page2.js"></script>
 
   <!-- Analytics: GoatCounter (privacy-friendly, cookieless, no consent banner needed). -->

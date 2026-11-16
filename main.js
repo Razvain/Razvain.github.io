@@ -1,7 +1,7 @@
 /* =========================================================================
    Design 3 — The Manuscript
    Renders content.js as an academic paper: numbered citations with hover
-   previews, a hand-plotted Figure 1, pencil marginalia, live references.
+   previews, a hand-plotted Figure 1, live references.
    ========================================================================= */
 
 (() => {
@@ -22,30 +22,33 @@
 
   /* ============ Citation numbering ============ */
 
-  // Reference order = publication order in content.js; cite numbers are 1-based.
+  // Reference order comes from refs.js (ACM: alphabetical by first author).
+  // A cite's visible number is 1 + its rank in that order; data-ref and the
+  // #ref-N anchors keep the content.js index, so deep links stay stable.
   const pubs = CONTENT.publications;
   const meName = CONTENT.name.trim();
+  const order = refOrder(pubs);
+  const rank = [];
+  order.forEach((i, pos) => (rank[i] = pos));
   const pubsByTopic = {};
   pubs.forEach((p, i) => p.topics.forEach(t => (pubsByTopic[t] ??= []).push(i)));
 
   const citeGroup = (topic) => {
-    const ids = pubsByTopic[topic] || [];
+    const ids = (pubsByTopic[topic] || []).slice().sort((a, b) => rank[a] - rank[b]);
     if (!ids.length) return "";
     const links = ids.map(i =>
-      `<a class="cite" href="#ref-${i}" data-ref="${i}">${i + 1}</a>`).join(", ");
+      `<a class="cite" href="#ref-${i}" data-ref="${i}">${rank[i] + 1}</a>`).join(", ");
     return `&nbsp;<sup class="cite-group">[${links}]</sup>`;
   };
 
   /* ============ Title block, abstract, keywords ============ */
 
-  const firstName = meName.split(/\s+/)[0];
-  const lastName = meName.split(/\s+/).slice(-1)[0];
-  $("#runningName").textContent = `${firstName[0]}. ${lastName} — personal pages`;
   $("#paperTitle").textContent =
     "A Longitudinal Study of a Researcher in AI for Software Engineering";
-  $("#paperAuthor").innerHTML = `${meName}`;
-  $("#paperAffil").textContent =
-    CONTENT.role + (CONTENT.affiliation ? " · " + CONTENT.affiliation : "");
+  // acmsmall: "NAME, Affiliation" on one line (the caps come from CSS).
+  const affil = (CONTENT.affiliation || "").trim().replace(/ · /g, ", ");
+  $("#paperAuthor").innerHTML =
+    `<span class="author-name">${meName}</span>` + (affil ? `, ${affil}` : "");
   CONTENT.scholarLinks.forEach(l => {
     const a = document.createElement("a");
     a.href = l.url;
@@ -63,10 +66,17 @@
 
   $("#abstractText").innerHTML = CONTENT.abstract;
 
-  $("#keywords").innerHTML = "<b>Keywords:</b> " +
+  $("#keywords").innerHTML =
+    `<span class="fm-label">Additional Key Words and Phrases:</span> ` +
     Object.values(CONTENT.topics).map(t => t.label.toLowerCase())
       .concat(CONTENT.extraKeywords || [])
-      .join(" · ");
+      .join(", ");
+
+  // Publication date in the reference format, footnote and page foot: always "now".
+  const now = new Date();
+  document.querySelectorAll(".pubdate").forEach(el =>
+    (el.textContent = now.toLocaleDateString("en-US", { month: "long", year: "numeric" })));
+  document.querySelectorAll(".pubyear").forEach(el => (el.textContent = now.getFullYear()));
 
   /* ============ 1. Introduction (bio with live citations) ============ */
 
@@ -164,15 +174,34 @@
   /* ============ 2. Notes added in proof ============ */
 
   const host = (u) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; } };
+
+  // One numbered subsection per year ("2.1 2027"), newest first; the year is
+  // the 4-digit one that ends each date, and every item keeps its full date.
+  const newsList = $("#newsList");
+  const newsSecNo = newsList.closest("section").querySelector(".sec-no")?.textContent ?? "2";
+  const newsByYear = new Map();
   CONTENT.news.forEach(n => {
-    const li = document.createElement("li");
-    li.className = "attn-item attn-anchor";
-    li.dataset.topics = (n.topics || []).join(" ");
-    const links = (n.links || [])
-      .map(u => `<a class="proof-link" href="${u}" target="_blank" rel="noopener" title="${host(u)}" aria-label="Open on ${host(u)}">↗</a>`)
-      .join("");
-    li.innerHTML = `<span class="proof-date">${n.date}</span><span>${n.html}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
-    $("#newsList").appendChild(li);
+    const year = (/(\d{4})\s*$/.exec(n.date) || [])[1] || "";
+    if (!newsByYear.has(year)) newsByYear.set(year, []);
+    newsByYear.get(year).push(n);
+  });
+  [...newsByYear.keys()].sort((a, b) => b - a).forEach((year, k) => {
+    const head = document.createElement("h3");
+    head.className = "subsec-head";
+    head.innerHTML = `<span class="sec-no">${newsSecNo}.${k + 1}</span>${year}`;
+    const ul = document.createElement("ul");
+    ul.className = "proof-notes";
+    newsByYear.get(year).forEach(n => {
+      const li = document.createElement("li");
+      li.className = "attn-item attn-anchor";
+      li.dataset.topics = (n.topics || []).join(" ");
+      const links = (n.links || [])
+        .map(u => `<a class="proof-link" href="${u}" target="_blank" rel="noopener" title="${host(u)}" aria-label="Open on ${host(u)}">↗</a>`)
+        .join("");
+      li.innerHTML = `<span class="proof-date">${n.date}</span><span>${n.html}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
+      ul.appendChild(li);
+    });
+    newsList.append(head, ul);
   });
 
   /* ============ 3. Software artifacts ============ */
@@ -180,7 +209,7 @@
   // Minimal, monochrome host marks (inherit the surrounding text colour).
   const HOST_ICON = {
     github: `<svg class="artifact-icon" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.02-1.49-2 .37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>`,
-    huggingface: `<svg class="artifact-icon hf" viewBox="0 0 32 30" aria-hidden="true"><g fill="#FFD21E" stroke="#FF9D00" stroke-width="0.6"><path d="M5.6 14.4c-1.9.1-3.1 1.6-2.8 3.4.2 1.2 1.3 1.9 2.4 1.6l3.3-.7-1.3-4.2z"/><path d="M26.4 14.4c1.9.1 3.1 1.6 2.8 3.4-.2 1.2-1.3 1.9-2.4 1.6l-3.3-.7 1.3-4.2z"/></g><path fill="#FFD21E" d="M16 5.6c5.6 0 10.2 4.4 10.2 9.9S21.6 25.4 16 25.4 5.8 21 5.8 15.5 10.4 5.6 16 5.6z"/><circle cx="10.7" cy="18" r="1.8" fill="#FF9D00" opacity="0.5"/><circle cx="21.3" cy="18" r="1.8" fill="#FF9D00" opacity="0.5"/><circle cx="12.5" cy="14.4" r="1.3" fill="#3A2E1E"/><circle cx="19.5" cy="14.4" r="1.3" fill="#3A2E1E"/><path fill="#3A2E1E" d="M12.9 18.2h6.2c0 1.8-1.4 3.2-3.1 3.2s-3.1-1.4-3.1-3.2z"/></svg>`,
+    huggingface: `<svg class="artifact-icon hf" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M1.4446 11.5059c0 1.1021.1673 2.1585.4847 3.1563-.0378-.0028-.0691-.0058-.1058-.0058-.4209 0-.8015.16-1.0704.4512-.3454.3737-.4984.8335-.4316 1.293a1.576 1.576 0 0 0 .2148.5978c-.2319.1864-.4018.4456-.4844.7578-.0646.2448-.131.7543.2149 1.2794a1.4552 1.4552 0 0 0-.0625.1055c-.208.3923-.2207.8372-.0371 1.25.2783.6258.9696 1.1175 2.3126 1.6467.8356.3292 1.5988.5411 1.6056.543 1.1046.2847 2.104.4277 2.969.4277 1.4173 0 2.4754-.3849 3.1525-1.1446 1.538.2651 2.791.1403 3.592.006.6773.7555 1.7332 1.1387 3.1467 1.1387.8649 0 1.8643-.143 2.969-.4278.0068-.0019.77-.2138 1.6056-.543 1.343-.5292 2.0343-1.0208 2.3126-1.6466.1836-.4129.171-.8577-.037-1.25a1.4685 1.4685 0 0 0-.0626-.1056c.346-.525.2795-1.0346.2149-1.2793-.0826-.3122-.2525-.5714-.4844-.7579.11-.1816.1831-.3788.2148-.5977.0669-.4595-.0862-.9193-.4316-1.293-.2688-.2913-.6495-.4513-1.0704-.4513-.0209 0-.0376.0008-.0588.0018.3162-.9966.4846-2.0518.4846-3.1523 0-5.807-4.7362-10.5144-10.5789-10.5144-5.8426 0-10.5788 4.7073-10.5788 10.5144Zm10.5788-9.4831c5.2727 0 9.5476 4.246 9.5476 9.483a9.4201 9.4201 0 0 1-.2696 2.2365c-.0039-.0047-.0079-.011-.0117-.0156-.274-.3255-.6679-.5059-1.1075-.5059-.352 0-.714.1155-1.0763.3438-.2403.1517-.5058.422-.7793.7598-.2534-.3492-.608-.5832-1.0137-.6465a1.5174 1.5174 0 0 0-.2344-.0176c-.9263 0-1.4828.7993-1.6935 1.5177-.1046.2426-.6065 1.3482-1.3614 2.0978-1.1681 1.1601-1.4458 2.3534-.8396 3.6382-.843.1029-1.5836.0927-2.365-.006.5906-1.212.3626-2.4388-.8426-3.6322-.755-.7496-1.2568-1.8552-1.3614-2.0978-.2107-.7184-.7673-1.5177-1.6935-1.5177-.078 0-.1568.0054-.2344.0176-.4057.0633-.7604.2973-1.0137.6465-.2735-.3379-.539-.6081-.7794-.7598-.3622-.2283-.7243-.3438-1.0762-.3438-.4266 0-.8094.171-1.0821.4786a9.4208 9.4208 0 0 1-.2598-2.1936c0-5.237 4.2749-9.483 9.5475-9.483zM8.6443 7.0036c-.4838.0043-.9503.2667-1.1934.7227-.3536.6633-.1006 1.4873.5645 1.84.351.1862.4883-.5261.836-.6485.3107-.1095.841.399 1.0078.086.3536-.6634.1025-1.4874-.5625-1.84a1.3659 1.3659 0 0 0-.6524-.1602Zm6.8403 0c-.2199-.002-.4426.05-.6504.1602-.665.3526-.9181 1.1766-.5645 1.84.1669.313.6971-.1955 1.0079-.086.3476.1224.4867.8347.838.6485.6649-.3527.916-1.1767.5624-1.84-.243-.456-.7096-.7184-1.1934-.7227Zm-9.7565 1.418a.8768.8768 0 0 0-.877.877c0 .4846.3925.877.877.877a.8768.8768 0 0 0 .877-.877.8768.8768 0 0 0-.877-.877zm12.6434 0c-.4845 0-.879.3925-.879.877 0 .4846.3945.877.879.877a.8768.8768 0 0 0 .877-.877.8768.8768 0 0 0-.877-.877zM8.7927 11.459c-.179-.003-.2793.1107-.2793.416 0 .8097.3874 2.125 1.4279 2.924.207-.7123 1.3453-1.2832 1.5079-1.2012.2315.1167.2191.4417.6074.7266.3884-.285.374-.6098.6056-.7266.1627-.082 1.3009.4889 1.5079 1.2012 1.0404-.799 1.4278-2.1144 1.4278-2.924 0-1.2212-1.583.6402-3.5413.6485-1.4686-.0061-2.7266-1.0558-3.2639-1.0645zM4.312 14.4768c.5792.365 1.6964 2.2751 2.1056 3.0177.1371.2488.371.3536.582.3536.4188 0 .7465-.4138.0391-.9395-1.0636-.791-.6914-2.0846-.1836-2.1642a.4302.4302 0 0 1 .0664-.004c.4616 0 .666.7892.666.7892s.5959 1.4898 1.6213 2.508c.942.9356 1.062 1.703.4961 2.6661-.0164-.004-.0159.0236-.1484.2149-.1853.2673-.4322.4688-.7188.6152-.5062.2269-1.1397.2696-1.7833.2696-1.037 0-2.1017-.1824-2.6975-.336-.0293-.0075-3.6505-.9567-3.1916-1.8224.0771-.1454.2033-.2031.3633-.2031.6463 0 1.823.9551 2.3283.9551.113 0 .196-.0865.2285-.2031.2249-.8045-3.2787-1.0522-2.9846-2.1642.0519-.1967.193-.2757.3907-.2754.854 0 2.7704 1.4923 3.172 1.4923.0307 0 .0525-.0085.0645-.0274.2012-.3227.1096-.5865-1.3087-1.4395-1.4182-.8533-2.4315-1.329-1.8653-1.9416.0651-.0707.1574-.1015.2695-.1015.8611.0002 2.8948 1.84 2.8948 1.84s.5487.5683.8809.5683c.0762 0 .1416-.0315.1855-.1054.2355-.3946-2.1858-2.2183-2.3224-2.971-.0926-.51.0641-.7676.3555-.7676-.0006.008.1701-.0285.4942.1759zm16.2257.5918c-.1366.7526-2.5579 2.5764-2.3224 2.9709.044.074.1092.1055.1855.1055.3321 0 .881-.5684.881-.5684s2.0336-1.8397 2.8947-1.84c.1121 0 .2044.0308.2695.1016.5662.6125-.447 1.0882-1.8653 1.9415-1.4183.853-1.51 1.1168-1.3087 1.4396.012.0188.0337.0273.0644.0273.4016 0 2.3181-1.4923 3.1721-1.4923.1977-.0002.3388.0787.3907.2754.294 1.112-3.2095 1.3597-2.9846 2.1642.0325.1166.1156.2032.2285.2032.5054 0 1.682-.9552 2.3283-.9552.16 0 .2862.0577.3633.2032.459.8656-3.1623 1.8149-3.1916 1.8224-.5958.1535-1.6605.336-2.6975.336-.6351 0-1.261-.0409-1.7638-.2599-.2949-.1472-.5488-.3516-.7383-.625-.0411-.0682-.1026-.1476-.1426-.205-.5726-.9679-.455-1.7371.4903-2.676 1.0254-1.0182 1.6212-2.508 1.6212-2.508s.2044-.7891.666-.7891a.4318.4318 0 0 1 .0665.0039c.5078.0796.88 1.3732-.1836 2.1642-.7074.5257-.3797.9395.039.9395.211 0 .445-.1047.5821-.3535.4092-.7426 1.5264-2.6527 2.1056-3.0178.5588-.3524.99-.1816.8497.5918z"/></svg>`,
   };
   const hostIcon = (url = "") =>
     /huggingface\.co/.test(url) ? HOST_ICON.huggingface :
@@ -213,43 +242,57 @@
 
   /* ============ References ============ */
 
-  // Label a publication-page link by its host (ACM/IEEE first, then arXiv, …).
-  const pageLabel = (url) => {
-    const u = url.toLowerCase();
-    if (u.includes("acm.org")) return "acm";
-    if (u.includes("ieee")) return "ieee";
-    if (u.includes("arxiv.org")) return "arxiv";
-    if (u.includes("openreview")) return "openreview";
-    if (u.includes("doi.org")) return "doi";
-    if (u.includes("tudelft") || u.includes("repository")) return "tu delft";
-    return "page";
+  // Venue in ACM-Reference-Format, taken from the entry's own BibTeX, e.g.
+  // "In Proceedings of the 46th IEEE/ACM International Conference on Software
+  // Engineering (ICSE ’24)."; journals are set as their name; theses as
+  // "Bachelor’s thesis. School."; unpublished work as "Under review."
+  const bibField = (pub, key) =>
+    (new RegExp(`\\b${key}\\s*=\\s*\\{([^}]*)\\}`, "i").exec(pub.bibtex || "") || [])[1] || "";
+  const bibKind = (pub) => ((/@(\w+)/.exec(pub.bibtex || "") || [])[1] || "").toLowerCase();
+  const expandVenue = (s) => s
+    .replace(/\bProc\. of\b/g, "Proceedings of")
+    .replace(/\bInt'l\b/g, "International")
+    .replace(/\bConf\./g, "Conference");
+  const venueOf = (pub) => {
+    if (pub.venue === "Under review") return "Under review.";
+    const kind = bibKind(pub);
+    if (kind.includes("thesis")) {
+      const level = /bsc|bachelor/i.test(pub.venue) ? "Bachelor’s" : /msc|master/i.test(pub.venue) ? "Master’s" : "PhD";
+      return `${level} thesis. ${bibField(pub, "school") || pub.venue}.`;
+    }
+    if (kind === "article") return `<span class="r-venue">${bibField(pub, "journal") || pub.venue}</span>.`;
+    // Conference: tag the abbreviation with the year, "(ICSE)" -> "(ICSE ’24)".
+    const name = expandVenue(bibField(pub, "booktitle") || pub.venue)
+      .replace(/\(([^()]+)\)(?![^]*\()/, `($1 ’${String(pub.year).slice(-2)})`);
+    return `In <span class="r-venue">${name}</span>.`;
   };
 
+  // Links are printed as the paper would print them: DOIs as https://doi.org/…,
+  // anything else as its URL.
+  const linkText = (url) => {
+    const doi = /(?:doi\.org\/|\/doi\/(?:abs\/|pdf\/|full\/)?)(10\.[^?#\s]+)/.exec(url);
+    return doi ? `https://doi.org/${doi[1]}` : url;
+  };
+
+  // ACM-Reference-Format, "Authors. Year. Title. Venue. URL", in refs.js order.
   const refsEl = $("#refs");
-  pubs.forEach((pub, i) => {
+  order.forEach(i => {
+    const pub = pubs[i];
     const li = document.createElement("li");
     li.id = `ref-${i}`;
     li.className = "attn-item attn-anchor";
     li.dataset.topics = pub.topics.join(" ");
-    const authors = pub.authors.split(/,\s*/)
-      .map(a => a === meName ? `<span class="me">${a}</span>` : a).join(", ");
-    const links = Object.entries(pub.links || {})
-      .map(([k, v]) => `<a class="ref-link" href="${v}">${k}</a>`).join("");
-    const pageLink = pub.page
-      ? `<a class="ref-link ref-page" href="${pub.page}" target="_blank" rel="noopener">${pageLabel(pub.page)}</a>`
-      : "";
-    const tldrBtn = pub.tldr ? `<button class="tldr-btn">abstract</button>` : "";
+    // "A and B"; "A, B, and C".
+    const names = pub.authors.split(/,\s*/)
+      .map(a => a === meName ? `<span class="me">${a}</span>` : a);
+    const authors = names.length < 3 ? names.join(" and ")
+      : names.slice(0, -1).join(", ") + ", and " + names[names.length - 1];
+    const urls = [pub.page, ...Object.values(pub.links || {})].filter(Boolean);
+    const links = urls.map(u =>
+      `<a class="ref-link" href="${u}" target="_blank" rel="noopener">${linkText(u)}</a>`).join(" ");
     li.innerHTML =
-      `${authors}. <span class="r-title">“${pub.title}.”</span> ` +
-      `<span class="r-venue">${pub.type === "journal" ? "" : "In "}${pub.venue}</span>, ` +
-      `<span class="r-year">${pub.year}</span>. ` +
-      `<span class="ref-links">${pageLink}${links}${tldrBtn}</span>` +
-      (pub.tldr ? `<div class="ref-tldr" hidden>${pub.tldr}</div>` : "");
-    li.querySelector(".tldr-btn")?.addEventListener("click", (e) => {
-      const panel = li.querySelector(".ref-tldr");
-      panel.hidden = !panel.hidden;
-      e.target.classList.toggle("open", !panel.hidden);
-    });
+      `${authors}. <span class="r-year">${pub.year}</span>. <span class="r-title">${pub.title}</span>. ` +
+      venueOf(pub) + (links ? ` <span class="ref-links">${links}</span>` : "");
     refsEl.appendChild(li);
   });
 
@@ -298,6 +341,7 @@
      to draw arcs from it to every related note, artifact, and reference,
      dimming the rest. Click again, click away, or press Esc to release. */
 
+  const sheet = $("#sheet");
   const arcSvg = document.createElementNS(SVG_NS, "svg");
   arcSvg.id = "arcs";
   arcSvg.setAttribute("aria-hidden", "true");
@@ -418,69 +462,6 @@
       if (activeTopic) drawTopicArcs(activeTopic, activeSource);
     }, 150);
   });
-
-  /* ============ Pencil marginalia ============ */
-
-  const sheet = $("#sheet");
-  const NOTES = [
-    { anchor: "#intro p:nth-child(1)", dy: 0,
-      html: `agents should <span class="tick">run</span> the tests,<br/>not just write them` },
-    { anchor: "#fig1", dy: 30,
-      html: `axes chosen after<br/>the data, obviously` },
-    { anchor: "#artifacts", dy: 8,
-      html: `code or it<br/>didn’t happen ✓` },
-    { anchor: "#referencesSec", dy: 40,
-      html: `reviewer 2 was,<br/>eventually, appeased` },
-  ];
-
-  const noteEls = [];
-  NOTES.forEach(n => {
-    const anchor = $(n.anchor);
-    if (!anchor) return;
-    const div = document.createElement("div");
-    div.className = "margin-note";
-    div.innerHTML = n.html;
-    sheet.appendChild(div);
-    noteEls.push({ div, anchor, dy: n.dy });
-  });
-
-  // Measure with layout offsets (offsetTop), not getBoundingClientRect: the
-  // sheet plays a transform-based entrance animation on every page turn, and
-  // rects read mid-animation are in transformed space. offsetTop is immune to
-  // transforms, so notes land on their sections whenever this runs.
-  function topWithinSheet(el) {
-    let y = 0;
-    for (let node = el; node && node !== sheet; node = node.offsetParent) y += node.offsetTop;
-    return y;
-  }
-  function placeNotes() {
-    for (const { div, anchor, dy } of noteEls)
-      div.style.top = (topWithinSheet(anchor) + dy) + "px";
-  }
-  placeNotes();
-  addEventListener("resize", placeNotes);
-  document.fonts?.ready.then(placeNotes);
-
-  const noteIO = new IntersectionObserver((entries) => {
-    for (const e of entries)
-      if (e.isIntersecting) { e.target.classList.add("in"); noteIO.unobserve(e.target); }
-  }, { threshold: 0.6 });
-  noteEls.forEach(({ div }) => noteIO.observe(div));
-
-  /* ============ Paper tilt: the sheet rests under your hand ============ */
-
-  if (!reducedMotion && matchMedia("(pointer: fine)").matches) {
-    let raf = null;
-    addEventListener("pointermove", (e) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        const px = e.clientX / innerWidth - 0.5;
-        const py = e.clientY / innerHeight - 0.5;
-        sheet.style.transform = `rotateY(${px * 1.6}deg) rotateX(${-py * 1.1}deg)`;
-        raf = null;
-      });
-    });
-  }
 
   /* ============ Colophon ============ */
 

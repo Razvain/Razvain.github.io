@@ -25,10 +25,6 @@
     const c = node.cloneNode(true);
     c.removeAttribute("id");
     c.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
-    c.style.transform = "";           // drop any resting paper-tilt transform
-    // Drop transient page-turn animation state (its keyframes would otherwise
-    // run on the static print clone).
-    c.classList.remove("is-entering", "is-leaving");
     return c;
   };
 

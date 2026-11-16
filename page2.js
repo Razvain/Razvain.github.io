@@ -6,7 +6,6 @@
   "use strict";
 
   const $ = (sel, root = document) => root.querySelector(sel);
-  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const host = (u) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; } };
   const arrows = (links) => (links || [])
     .map(u => `<a class="proof-link" href="${u}" target="_blank" rel="noopener" title="${host(u)}" aria-label="Open on ${host(u)}">↗</a>`)
@@ -22,11 +21,27 @@
     localStorage.setItem("theme", next);
   });
 
-  /* ============ Running head ============ */
+  /* ============ Running head, page foot ============ */
 
-  const meName = CONTENT.name.trim();
-  const parts = meName.split(/\s+/);
-  $("#runningName").textContent = `${parts[0][0]}. ${parts[parts.length - 1]} — personal pages`;
+  $("#runningName").textContent = CONTENT.name.trim();
+
+  // Publication date in the page foot: always "now".
+  const now = new Date();
+  document.querySelectorAll(".pubdate").forEach(el =>
+    (el.textContent = now.toLocaleDateString("en-US", { month: "long", year: "numeric" })));
+
+  /* ============ Citations into p. 1's references ============ */
+
+  // `[[cite:TITLE-PREFIX]]` in content.js becomes a citation to the paper whose
+  // title starts with that prefix, numbered by its place in p. 1's reference
+  // list (refs.js) and linking to its stable #ref-N anchor there.
+  const pubs = CONTENT.publications;
+  const order = refOrder(pubs);
+  const cites = (html) => html.replace(/\[\[cite:([^\]]+)\]\]/g, (m, prefix) => {
+    const i = pubs.findIndex(p => p.title.startsWith(prefix));
+    if (i < 0) return m;
+    return `<sup class="cite-group">[<a class="cite" href="index.html#ref-${i}">${order.indexOf(i) + 1}</a>]</sup>`;
+  });
 
   /* ============ Appendix A: Education ============ */
 
@@ -82,12 +97,12 @@
         supervisionList.appendChild(dt);
         const dd = document.createElement("dd");
         dd.className = "sup-dd";
-        dd.innerHTML = s.topic;
+        dd.innerHTML = cites(s.topic);
         supervisionList.appendChild(dd);
       } else {
         // No student named (e.g. the BSc cohort): description sits inline with
         // the year, no empty name row above it.
-        dt.innerHTML = `<span class="period">${s.period}</span><span class="sup-name sup-desc">${s.topic}</span>`;
+        dt.innerHTML = `<span class="period">${s.period}</span><span class="sup-name sup-desc">${cites(s.topic)}</span>`;
         supervisionList.appendChild(dt);
       }
     });
@@ -117,62 +132,6 @@
     li.innerHTML = `<span class="proof-date">${m.date}</span><span>${m.html}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
     miscList.appendChild(li);
   });
-
-  /* ============ Pencil marginalia ============ */
-
-  const sheet = $("#sheet");
-  const NOTES = [
-    { anchor: "#supervisionSec", dy: 6,
-      html: `the students did<br/>the hard parts` },
-    { anchor: "#miscSec", dy: 30,
-      html: `the quiet<br/><span class="tick">upkeep</span>` },
-  ];
-  const noteEls = [];
-  NOTES.forEach(n => {
-    const anchor = $(n.anchor);
-    if (!anchor) return;
-    const div = document.createElement("div");
-    div.className = "margin-note";
-    div.innerHTML = n.html;
-    sheet.appendChild(div);
-    noteEls.push({ div, anchor, dy: n.dy });
-  });
-  // Measure with layout offsets (offsetTop), not getBoundingClientRect: the
-  // sheet plays a transform-based entrance animation on every page turn, and
-  // rects read mid-animation are in transformed space. offsetTop is immune to
-  // transforms, so notes land on their sections whenever this runs.
-  function topWithinSheet(el) {
-    let y = 0;
-    for (let node = el; node && node !== sheet; node = node.offsetParent) y += node.offsetTop;
-    return y;
-  }
-  function placeNotes() {
-    for (const { div, anchor, dy } of noteEls)
-      div.style.top = (topWithinSheet(anchor) + dy) + "px";
-  }
-  placeNotes();
-  addEventListener("resize", placeNotes);
-  document.fonts?.ready.then(placeNotes);
-  const noteIO = new IntersectionObserver((entries) => {
-    for (const e of entries)
-      if (e.isIntersecting) { e.target.classList.add("in"); noteIO.unobserve(e.target); }
-  }, { threshold: 0.6 });
-  noteEls.forEach(({ div }) => noteIO.observe(div));
-
-  /* ============ Paper tilt ============ */
-
-  if (!reducedMotion && matchMedia("(pointer: fine)").matches) {
-    let raf = null;
-    addEventListener("pointermove", (e) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        const px = e.clientX / innerWidth - 0.5;
-        const py = e.clientY / innerHeight - 0.5;
-        sheet.style.transform = `rotateY(${px * 1.6}deg) rotateX(${-py * 1.1}deg)`;
-        raf = null;
-      });
-    });
-  }
 
   /* ============ Colophon ============ */
 

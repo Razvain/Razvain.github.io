@@ -397,7 +397,7 @@ const CONTENT = {
       { period: "2025–", who: "Nawmi Nujhat",
         topic: "Agentic issue resolution within dynamic software environments." },
       { period: "2025–2026", who: "Inaesh Joshi",
-        topic: `Refactoring and maintainability impact of coding agents on open-source repositories, with Meta. This work culminated in a paper&nbsp;<sup class="cite-group">[<a class="cite" href="index.html#ref-1">2</a>]</sup>.` },
+        topic: `Refactoring and maintainability impact of coding agents on open-source repositories, with Meta. This work culminated in a paper&nbsp;[[cite:Beyond Merging]].` },
     ] },
     { label: "4 × BSc Thesis", items: [
       { period: "2025", who: "",

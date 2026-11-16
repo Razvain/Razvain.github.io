@@ -11,3 +11,6 @@ _archive/
 # Camera originals — the site serves the .jpeg/.png conversions, not these
 *.heic
 *.HEIC
+
+# Working notes for /work tasks — never published
+tasks/

@@ -10,7 +10,7 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ============ Theme / running head ============ */
+  /* ============ Theme / page foot ============ */
 
   const stored = localStorage.getItem("theme");
   if (stored) document.documentElement.dataset.theme = stored;
@@ -20,8 +20,10 @@
     localStorage.setItem("theme", next);
   });
 
-  const parts = CONTENT.name.trim().split(/\s+/);
-  $("#runningName").textContent = `${parts[0][0]}. ${parts[parts.length - 1]} — personal pages`;
+  // Publication date in the page foot and the received line: always "now".
+  const now = new Date();
+  document.querySelectorAll(".pubdate").forEach(el =>
+    (el.textContent = now.toLocaleDateString("en-US", { month: "long", year: "numeric" })));
 
   /* ============ Hobbies ============ */
 
@@ -355,24 +357,6 @@
         }
       });
 
-      // Light them up one-by-one in a quick west-to-east sweep. Each visited
-      // country's fade is nudged by a small per-country delay; capped so the
-      // whole sequence stays snappy however many countries there are.
-      if (!reducedMotion) {
-        const visited = [...svg.querySelectorAll("path.visited")].map(p => {
-          let x = 0; try { const b = p.getBBox(); x = b.x + b.width / 2; } catch {}
-          return { p, x };
-        }).sort((a, b) => a.x - b.x);
-        const step = Math.min(55, 1000 / Math.max(1, visited.length - 1)); // total spread ≤ ~1s
-        visited.forEach(({ p }, i) => {
-          p.style.animationDelay = (0.1 + i * step / 1000) + "s";
-          // Re-append in west-to-east order so visited pieces paint on top of
-          // their neighbours — a country scaling up then isn't clipped by a
-          // neighbour that happened to be drawn later in the source SVG.
-          svg.appendChild(p);
-        });
-      }
-
       // Event delegation: hover moves the card, click pins it (works on touch)
       svg.addEventListener("pointermove", (e) => {
         if (pinned) return;
@@ -407,78 +391,12 @@
           svg.querySelectorAll(".pinned").forEach(el => el.classList.remove("pinned"));
         }
       });
-
-      // The map only now has its height, so the hobbies section (and the pencil
-      // note anchored to it) has shifted down. Re-place the notes so they don't
-      // land in a different spot depending on when the SVG finished loading.
-      placeNotes();
     })
     .catch(() => {
       $("#mapMount").innerHTML =
         `<p style="text-align:center;color:var(--faint);font-style:italic">
            (map failed to load; world-map.svg missing)</p>`;
     });
-
-  /* ============ Pencil marginalia ============ */
-
-  const sheet = $("#sheet");
-  const NOTES = [
-    { anchor: "#fieldworkSec", dy: 60,
-      html: `n = ${(CONTENT.travels || []).length} countries;<br/>results <span class="tick">generalize</span>` },
-    { anchor: "#mapMount", mid: true,
-      html: `the map is not the territory,<br/>but it’s close` },
-  ];
-  const noteEls = [];
-  NOTES.forEach(n => {
-    const anchor = $(n.anchor);
-    if (!anchor) return;
-    const div = document.createElement("div");
-    div.className = "margin-note";
-    div.innerHTML = n.html;
-    sheet.appendChild(div);
-    noteEls.push({ div, anchor, dy: n.dy || 0, mid: !!n.mid });
-  });
-  // Measure with layout offsets (offsetTop), not getBoundingClientRect: the
-  // sheet plays a transform-based entrance animation on every page turn, and
-  // rects read mid-animation are in transformed space. offsetTop is immune to
-  // transforms, so notes land on their sections whenever this runs.
-  function topWithinSheet(el) {
-    let y = 0;
-    for (let node = el; node && node !== sheet; node = node.offsetParent) y += node.offsetTop;
-    return y;
-  }
-  function placeNotes() {
-    for (const { div, anchor, dy, mid } of noteEls) {
-      const base = topWithinSheet(anchor);
-      // `mid` notes sit level with the vertical centre of their anchor (the
-      // map); the rest sit `dy` px below the anchor's top.
-      div.style.top = (mid ? base + anchor.offsetHeight / 2 - div.offsetHeight / 2
-                           : base + dy) + "px";
-    }
-  }
-  placeNotes();
-  addEventListener("resize", placeNotes);
-  document.fonts?.ready.then(placeNotes);
-  const noteIO = new IntersectionObserver((entries) => {
-    for (const e of entries)
-      if (e.isIntersecting) { e.target.classList.add("in"); noteIO.unobserve(e.target); }
-  }, { threshold: 0.6 });
-  noteEls.forEach(({ div }) => noteIO.observe(div));
-
-  /* ============ Paper tilt ============ */
-
-  if (!reducedMotion && matchMedia("(pointer: fine)").matches) {
-    let raf = null;
-    addEventListener("pointermove", (e) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        const px = e.clientX / innerWidth - 0.5;
-        const py = e.clientY / innerHeight - 0.5;
-        sheet.style.transform = `rotateY(${px * 1.6}deg) rotateX(${-py * 1.1}deg)`;
-        raf = null;
-      });
-    });
-  }
 
   const signoffEl = $("#signoff");
   if (signoffEl && CONTENT.signoff) signoffEl.textContent = CONTENT.signoff;
