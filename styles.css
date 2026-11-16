@@ -336,13 +336,22 @@ figcaption strong { font-weight: 400; }
 
 /* ============ Software artifacts ============ */
 
-/* Data Availability is Table 1: artifact (with host mark), type, description. */
-.artifacts-table td:first-child { white-space: nowrap; font-variant-numeric: normal; }
-.artifacts-table td:nth-child(2) { width: 9.5em; }
-.artifacts-table a { color: var(--ink); text-decoration: none; }
-.artifacts-table a:hover { color: var(--accent); }
-.artifacts-table a:hover .aname { text-decoration: underline; text-underline-offset: 3px; }
-.artifacts-table .aname { font-weight: 700; }
+/* Data Availability: Fig. 2 (artifacts linked to the topics of Fig. 1), then
+   a short list of descriptions, "Name (type). Description." */
+.artfig { margin: 18px 0 10px; }
+.artfig .a-name { font-family: var(--sans); font-weight: 700; font-size: var(--fs-small); fill: var(--ink); }
+.artfig .a-type { font-family: var(--sans); font-style: italic; font-size: var(--fs-foot); fill: var(--muted); }
+.artfig .t-name { font-family: var(--sans); font-size: var(--fs-small); fill: var(--ink); }
+.artfig .link { fill: none; stroke: color-mix(in srgb, var(--accent) 55%, var(--paper)); stroke-width: 1.2; transition: opacity 0.15s ease, stroke 0.15s ease; }
+.artfig g.art.lit .link { stroke: var(--accent); stroke-width: 1.6; }
+.artfig g.art.dim { opacity: 0.3; }
+
+.artifact-list { list-style: none; margin: 0 0 0.6em; padding: 0; }
+.artifact-list li { margin: 0 0 0.4em; text-align: left; }
+.artifact-list a { color: var(--ink); text-decoration: none; }
+.artifact-list a:hover { color: var(--accent); }
+.artifact-list a:hover .aname { text-decoration: underline; text-underline-offset: 3px; }
+.artifact-list .aname { font-weight: 700; }
 .artifact-icon {
   width: 13px;
   height: 13px;
@@ -351,7 +360,7 @@ figcaption strong { font-weight: 400; }
   color: var(--faint);
 }
 .artifact-icon.hf { width: 17px; height: 16px; vertical-align: -3px; }
-.artifacts-table a:hover .artifact-icon { color: var(--accent); }
+.artifact-list a:hover .artifact-icon { color: var(--accent); }
 
 /* ============ References ============ */
 

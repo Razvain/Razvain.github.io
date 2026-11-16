@@ -194,19 +194,55 @@
     /huggingface\.co/.test(url) ? HOST_ICON.huggingface :
     /github\.com/.test(url) ? HOST_ICON.github : "";
 
-  // One table row per artifact: name (with its host mark), type, description.
+  // Descriptions as a short list under Fig. 2: "Name (type). Description."
   CONTENT.projects.forEach(p => {
-    const tr = document.createElement("tr");
-    tr.className = "attn-item attn-anchor";
-    tr.dataset.topics = (p.topics || []).join(" ");
+    const li = document.createElement("li");
+    li.className = "attn-item attn-anchor";
+    li.dataset.topics = (p.topics || []).join(" ");
     const ext = p.url && p.url.startsWith("http") ? ' target="_blank" rel="noopener"' : "";
     const milestone = p.milestone
       ? `; <span class="milestone" title="${p.milestoneTitle || ""}">${p.milestone}</span>` : "";
-    tr.innerHTML =
-      `<td><a href="${p.url}"${ext}>${hostIcon(p.url)}<span class="aname">${p.name}</span></a></td>` +
-      `<td>${p.tech.replace(/ · /g, "&nbsp;·&nbsp;")}${milestone}</td><td>${p.description}</td>`;   // keep "a · b" together
-    $("#artifacts").appendChild(tr);
+    li.innerHTML = `<a href="${p.url}"${ext}>${hostIcon(p.url)}<span class="aname">${p.name}</span></a> ` +
+      `(${p.tech}${milestone}). ${p.description}`;
+    $("#artifacts").appendChild(li);
   });
+
+  // Fig. 2: artifacts on the left, linked by curves to the research topics of
+  // Fig. 1 on the right. Hovering an artifact highlights its links.
+  (() => {
+    const arts = CONTENT.projects;
+    const topicIds = Object.keys(CONTENT.topics);
+    const AX = 190, TX = 400, ay = (i) => 30 + i * 56, ty = (j) => 22 + j * 48;
+    const H = Math.max(ay(arts.length - 1), ty(topicIds.length - 1)) + 36;
+    const svg = el("svg", { viewBox: `0 0 600 ${H}`, width: 600 });
+    const groups = arts.map((p, i) => {
+      const g = el("g", { class: "art" });
+      (p.topics || []).forEach(tid => {
+        const j = topicIds.indexOf(tid);
+        if (j < 0) return;
+        const mx = (AX + TX) / 2;
+        g.appendChild(el("path", { class: "link", d: `M ${AX} ${ay(i)} C ${mx} ${ay(i)}, ${mx} ${ty(j)}, ${TX} ${ty(j)}` }));
+      });
+      g.appendChild(el("text", { class: "a-name", x: AX - 12, y: ay(i) - 2, "text-anchor": "end" }, p.name));
+      g.appendChild(el("text", { class: "a-type", x: AX - 12, y: ay(i) + 13, "text-anchor": "end" }, p.tech));
+      g.appendChild(el("circle", { class: "mark", cx: AX, cy: ay(i), r: 4 }));
+      g.appendChild(el("rect", { class: "mark-hit", x: 0, y: ay(i) - 18, width: AX + 10, height: 38 }));
+      g.dataset.topics = (p.topics || []).join(" ");
+      svg.appendChild(g);
+      return g;
+    });
+    topicIds.forEach((tid, j) => {
+      svg.appendChild(el("circle", { class: "mark", cx: TX, cy: ty(j), r: 4 }));
+      svg.appendChild(el("text", { class: "t-name", x: TX + 12, y: ty(j) + 4 }, CONTENT.topics[tid].label));
+    });
+    svg.appendChild(el("text", { class: "a-type", x: AX - 12, y: H - 4, "text-anchor": "end" }, "artifacts"));
+    svg.appendChild(el("text", { class: "a-type", x: TX + 12, y: H - 4 }, "topics (Fig. 1)"));
+    groups.forEach(g => {
+      g.addEventListener("mouseenter", () => groups.forEach(o => o.classList.toggle(o === g ? "lit" : "dim", true)));
+      g.addEventListener("mouseleave", () => groups.forEach(o => o.classList.remove("lit", "dim")));
+    });
+    $("#artFigMount").appendChild(svg);
+  })();
 
   /* ============ 4. Acknowledgments ============ */
 
