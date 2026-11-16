@@ -81,10 +81,8 @@
 
     mount.innerHTML =
       `<div class="fw-headline">` +
-        `<span class="fw-stat"><b data-to="${countries}">0</b> countries</span>` +
-        `<span class="fw-sep">·</span>` +
-        `<span class="fw-stat"><b data-to="${continents}">0</b> continents</span>` +
-        `<span class="fw-sep">·</span>` +
+        `<span class="fw-stat"><b data-to="${countries}">0</b> countries,</span>` +
+        `<span class="fw-stat"><b data-to="${continents}">0</b> continents,</span>` +
         `<span class="fw-stat"><b data-to="${pct}">0</b>% of the world</span>` +
       `</div>` +
       `<div class="fw-dist" role="img" aria-label="Countries visited by continent: ` +

@@ -48,7 +48,7 @@ html { scroll-behavior: smooth; }
 /* No words broken across lines, and no paragraph ending on a lone short word:
    "pretty" balances the last lines of every text block. */
 p, li, dd, td, th, figcaption { text-wrap: pretty; }
-h1, h2, h3 { text-wrap: balance; }
+h2, h3 { text-wrap: balance; }   /* the paper title keeps its natural breaks */
 
 body {
   background: var(--desk);
@@ -382,6 +382,7 @@ figcaption strong { font-weight: 400; }
 .refs li.flash::before { color: var(--accent); }
 
 .refs .r-venue { font-style: italic; }
+.refs .me { font-weight: 700; }   /* the author's own name, highlighted */
 
 /* Links print as the paper would print them (DOI or URL); long ones may break anywhere. */
 .ref-link {
@@ -449,7 +450,7 @@ figcaption strong { font-weight: 400; }
   justify-content: center;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 0.3em;   /* a word space: the commas separate the stats */
   font-size: var(--fs-small);
   color: var(--faint);
 }
@@ -458,7 +459,6 @@ figcaption strong { font-weight: 400; }
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
-.fieldwork-stats .fw-sep { opacity: 0.45; }
 
 /* Distribution bar — the breakdown by continent, as a real figure */
 .fieldwork-stats .fw-dist {

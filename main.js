@@ -46,7 +46,7 @@
   $("#paperTitle").textContent =
     "A Longitudinal Study of a Researcher in AI for Software Engineering";
   // acmsmall: "NAME, Affiliation" on one line (the caps come from CSS).
-  const affil = (CONTENT.affiliation || "").trim().replace(/ · /g, ", ");
+  const affil = (CONTENT.affiliation || "").trim();
   $("#paperAuthor").innerHTML =
     `<span class="author-name">${meName}</span>` + (affil ? `, ${affil}` : "");
   CONTENT.scholarLinks.forEach(l => {
@@ -204,7 +204,7 @@
       ? `; <span class="milestone" title="${p.milestoneTitle || ""}">${p.milestone}</span>` : "";
     tr.innerHTML =
       `<td><a href="${p.url}"${ext}>${hostIcon(p.url)}<span class="aname">${p.name}</span></a></td>` +
-      `<td>${p.tech.replace(/ · /g, "&nbsp;·&nbsp;")}${milestone}</td><td>${p.description}</td>`;   // keep "a · b" together
+      `<td>${p.tech}${milestone}</td><td>${p.description}</td>`;
     $("#artifacts").appendChild(tr);
   });
 
@@ -281,7 +281,7 @@
     const pub = pubs[+cite.dataset.ref];
     card.innerHTML =
       `<div class="cc-title">${pub.title}</div>` +
-      `<div class="cc-meta">${pub.venue} ${pub.year} · ${pub.authors}</div>`;
+      `<div class="cc-meta">${pub.venue}, ${pub.year}. ${pub.authors}</div>`;
     card.hidden = false;
     const r = cite.getBoundingClientRect();
     card.style.left = Math.min(r.left, innerWidth - 360) + "px";
