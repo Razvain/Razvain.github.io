@@ -129,9 +129,5 @@
     miscList.appendChild(li);
   });
 
-  /* ============ Colophon ============ */
-
-  $("#colophon").textContent =
-    "typeset in the browser · no frameworks · prints like a paper (try ⌘P)";
 
 })();

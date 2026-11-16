@@ -17,6 +17,14 @@
   --pencil:  #5E5E5E;
   --shadow:  0 1px 3px rgba(0, 0, 0, 0.10), 0 8px 24px -12px rgba(0, 0, 0, 0.25);
   --serif: "Libertinus Serif", Georgia, serif;
+  /* Type scale measured from a compiled acmart acmsmall page: body 10pt; title
+     \LARGE (x1.47); author x1.07; abstract, CCS, captions \small (x0.87);
+     references, running heads, footnotes \footnotesize (x0.8). */
+  --fs:       17px;
+  --fs-title: calc(var(--fs) * 1.47);
+  --fs-large: calc(var(--fs) * 1.07);
+  --fs-small: calc(var(--fs) * 0.87);
+  --fs-foot:  calc(var(--fs) * 0.8);
   --sans:  "Libertinus Sans", "Libertinus Serif", sans-serif;
 }
 
@@ -41,7 +49,7 @@ body {
   background: var(--desk);
   color: var(--ink);
   font-family: var(--serif);
-  font-size: 17.5px;
+  font-size: var(--fs);
   line-height: 1.55;
   -webkit-font-smoothing: auto;
 }
@@ -78,7 +86,7 @@ a { color: inherit; }
   justify-content: space-between;
   gap: 16px;
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: var(--fs-foot);
   color: var(--ink);
   margin-bottom: 44px;
 }
@@ -90,18 +98,18 @@ a { color: inherit; }
 
 .paper-title {
   font-family: var(--sans);
-  font-size: 27px;
+  font-size: var(--fs-title);
   font-weight: 700;
   line-height: 1.22;
   margin-bottom: 16px;
 }
 
 /* One line, "NAME, Affiliation": the name in sans caps, the rest in roman. */
-.paper-author { font-size: 15px; margin-bottom: 10px; }
+.paper-author { font-size: var(--fs-small); margin-bottom: 10px; }
 .paper-author em { font-style: italic; }
 .author-name {
   font-family: var(--sans);
-  font-size: 15.5px;
+  font-size: var(--fs-large);
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
@@ -112,7 +120,7 @@ a { color: inherit; }
   flex-wrap: wrap;
   gap: 4px 16px;
   font-family: var(--serif);
-  font-size: 15px;
+  font-size: var(--fs-small);
 }
 .paper-links a { color: var(--accent); text-decoration: none; }
 .paper-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -122,7 +130,7 @@ a { color: inherit; }
 /* acmsmall sets the abstract without an "Abstract" heading. */
 .abstract { margin: 0 0 30px; }
 
-.abstract p { font-size: 16px; line-height: 1.6; text-align: justify; hyphens: auto; }
+.abstract p { font-size: var(--fs-small); line-height: 1.6; text-align: justify; hyphens: auto; }
 
 .abstract-body { display: flow-root; } /* contains the float without clipping */
 
@@ -140,11 +148,11 @@ a { color: inherit; }
 }
 
 /* Front matter under the abstract: CCS concepts and key words, 15px serif. */
-.abstract .ccs { margin-top: 12px; font-size: 15px; text-align: left; }
+.abstract .ccs { margin-top: 12px; font-size: var(--fs-small); text-align: left; }
 .keywords {
   margin-top: 4px;
   font-family: var(--serif);
-  font-size: 15px !important;
+  font-size: var(--fs-small) !important;
   color: var(--ink);
   text-align: left !important;
 }
@@ -156,14 +164,14 @@ a { color: inherit; }
 /* acmart: \sffamily\bfseries, sentence case, "1 Introduction". */
 .sec-head {
   font-family: var(--sans);
-  font-size: 18.5px;
+  font-size: var(--fs);
   font-weight: 700;
   margin-bottom: 10px;
 }
 .sec-no { display: inline-block; min-width: 30px; }
 .subsec-head {
   font-family: var(--sans);
-  font-size: 16px;
+  font-size: var(--fs);
   font-weight: 700;
   margin: 14px 0 6px;
 }
@@ -217,12 +225,12 @@ a.cite:hover, a.cite.lit { background: var(--accent-soft); }
 
 .fig .axis { stroke: var(--ink); stroke-width: 0.8; fill: none; }
 .fig .grid { stroke: var(--rule); stroke-width: 0.6; stroke-dasharray: 2 3; fill: none; }
-.fig .tick-label { font-family: var(--sans); font-size: 12px; fill: var(--ink); }
-.fig .axis-label { font-family: var(--sans); font-size: 13px; fill: var(--ink); }
+.fig .tick-label { font-family: var(--sans); font-size: var(--fs-foot); fill: var(--ink); }
+.fig .axis-label { font-family: var(--sans); font-size: var(--fs-small); fill: var(--ink); }
 .fig .mark { fill: var(--accent); stroke: var(--paper); stroke-width: 1; cursor: pointer; }
 .fig .mark-label {
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: var(--fs-foot);
   fill: var(--ink);
   cursor: pointer;
 }
@@ -270,7 +278,7 @@ body.attention-active .attn-item:not(.related) { opacity: 0.28; }
 figcaption {
   margin-top: 14px;
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: var(--fs-small);
   color: var(--ink);
   text-align: center;
 }
@@ -291,7 +299,7 @@ figcaption strong { font-weight: 400; }
 }
 .proof-date {
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: var(--fs-small);
   color: var(--muted);
   font-variant-numeric: tabular-nums;
   padding-top: 1px;
@@ -311,7 +319,7 @@ figcaption strong { font-weight: 400; }
 .proof-link::after {
   content: "\2020";           /* † */
   font-family: var(--serif);
-  font-size: 12.5px;
+  font-size: var(--fs-foot);
   line-height: 0;
   vertical-align: 0.6em;      /* explicit raise: "super" has no metrics to use in a 0-size parent */
   color: var(--accent);
@@ -326,7 +334,7 @@ figcaption strong { font-weight: 400; }
 /* Paragraph-style run-in heads. */
 .artifacts dt {
   font-family: var(--sans);
-  font-size: 15.5px;
+  font-size: var(--fs);
   font-weight: 700;
   margin-top: 14px;
 }
@@ -342,12 +350,12 @@ figcaption strong { font-weight: 400; }
 }
 .artifact-icon.hf { width: 17px; height: 16px; vertical-align: -3px; }
 .artifacts dt a:hover .artifact-icon { color: var(--accent); }
-.artifacts dt .tech { color: var(--faint); font-weight: 400; font-style: italic; font-size: 14.5px; margin-left: 10px; }
+.artifacts dt .tech { color: var(--faint); font-weight: 400; font-style: italic; font-size: var(--fs-small); margin-left: 10px; }
 /* Milestone (e.g. Hugging Face downloads): a quiet italic aside. */
 .artifacts dt .milestone {
   margin-left: 8px;
   font-family: var(--serif);
-  font-size: 14.5px;
+  font-size: var(--fs-small);
   font-weight: 400;
   font-style: italic;
   color: var(--muted);
@@ -365,7 +373,7 @@ figcaption strong { font-weight: 400; }
   counter-increment: ref;
   position: relative;
   padding: 4px 0 4px 44px;
-  font-size: 14.5px;
+  font-size: var(--fs-foot);
   line-height: 1.45;
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
@@ -374,7 +382,7 @@ figcaption strong { font-weight: 400; }
   position: absolute;
   left: 6px;
   font-family: var(--serif);
-  font-size: 15px;
+  font-size: 1em;
   color: var(--faint);
 }
 .refs li.lit { background: var(--accent-soft); }
@@ -404,7 +412,7 @@ figcaption strong { font-weight: 400; }
   gap: 16px;
   margin-top: 44px;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: var(--fs-foot);
 }
 .page-nav a { color: var(--accent); text-decoration: none; }
 .page-nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -414,13 +422,13 @@ figcaption strong { font-weight: 400; }
   grid-template-columns: 96px 1fr;
   gap: 14px;
   font-weight: 600;
-  font-size: 15.5px;
+  font-size: var(--fs);
   margin-top: 12px;
 }
 .appendix-list dt .period {
   font-family: var(--sans);
   font-weight: 400;
-  font-size: 13.5px;
+  font-size: var(--fs-small);
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
@@ -454,7 +462,7 @@ figcaption strong { font-weight: 400; }
   flex: none;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: 11.5px;
+  font-size: var(--fs-foot);
   color: var(--faint);
 }
 /* Stacked entry title: headline on top, a small grey sub-line beneath it
@@ -463,7 +471,7 @@ figcaption strong { font-weight: 400; }
 .appendix-list dt .subline {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: 11px;
+  font-size: var(--fs-foot);
   color: color-mix(in srgb, var(--muted) 65%, var(--ink));
   margin-top: 0;
   line-height: 1.3;
@@ -498,7 +506,7 @@ figcaption strong { font-weight: 400; }
 .interests-grid .interest-idx {
   display: block;
   font-family: var(--serif);
-  font-size: 14px;
+  font-size: var(--fs-foot);
   font-style: italic;
   color: var(--faint);
   margin-bottom: 5px;
@@ -507,12 +515,12 @@ figcaption strong { font-weight: 400; }
   margin: 0 0 3px;
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 15.5px;
+  font-size: var(--fs);
   letter-spacing: 0.01em;
 }
 .interests-grid .interest-note {
   margin: 0;
-  font-size: 14.5px;
+  font-size: var(--fs);
   font-style: italic;
   line-height: 1.45;
   color: var(--muted);
@@ -546,7 +554,7 @@ figcaption strong { font-weight: 400; }
   align-items: baseline;
   flex-wrap: wrap;
   gap: 12px;
-  font-size: 15px;
+  font-size: var(--fs-small);
   color: var(--faint);
 }
 .fieldwork-stats .fw-stat b {
@@ -582,7 +590,7 @@ figcaption strong { font-weight: 400; }
   flex-wrap: wrap;
   gap: 6px 16px;
   margin-top: 10px;
-  font-size: 11px;
+  font-size: var(--fs-foot);
   color: var(--faint);
 }
 .fieldwork-stats .fw-kv {
@@ -634,7 +642,7 @@ figcaption strong { font-weight: 400; }
   columns: 2;
   column-gap: 16px;
   font-family: var(--serif);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.02em;
   color: var(--muted);
 }
@@ -697,7 +705,7 @@ figcaption strong { font-weight: 400; }
   gap: 22px;
   margin-top: 10px;
   font-family: var(--serif);
-  font-size: 11px;
+  font-size: var(--fs-foot);
   color: var(--faint);
 }
 .map-legend .swatch {
@@ -714,7 +722,7 @@ figcaption strong { font-weight: 400; }
 /* Travel hover card (extends .cite-card look) */
 .travel-card .tc-when {
   font-family: var(--serif);
-  font-size: 10.5px;
+  font-size: 12px;
   font-style: italic;
   color: var(--muted);
 }
@@ -797,7 +805,7 @@ figcaption strong { font-weight: 400; }
 .plate-title .plate-no { color: var(--muted); font-weight: 600; margin-right: 10px; }
 .plate-when {
   font-family: var(--serif);
-  font-size: 11px;
+  font-size: 12px;
   font-style: italic;
   color: var(--muted);
   white-space: nowrap;
@@ -880,7 +888,7 @@ figcaption strong { font-weight: 400; }
 .plate-counter {
   font-family: var(--serif);
   font-style: normal;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--faint);
   white-space: nowrap;
 }
@@ -911,7 +919,7 @@ figcaption strong { font-weight: 400; }
 }
 .closing-mark {
   font-family: var(--serif);
-  font-size: 17px;
+  font-size: var(--fs);
   letter-spacing: 0.5em;
   text-indent: 0.5em; /* re-center despite trailing letter-spacing */
   color: var(--faint);
@@ -922,20 +930,20 @@ figcaption strong { font-weight: 400; }
   margin: 0 auto;
   font-family: var(--serif);
   font-style: italic;
-  font-size: 16px;
+  font-size: var(--fs);
   line-height: 1.55;
   color: var(--muted);
 }
 
 /* "Received …; revised …", the last line of an ACM paper (p. 3). */
-.received { margin-top: 36px; font-size: 14.5px; }
+.received { margin-top: 36px; font-size: var(--fs-small); }
 
 /* First-page footnote (p. 1): author's contact and copyright under a rule. */
 .contact-foot {
   margin-top: 36px;
   padding-top: 6px;
   border-top: 1px solid var(--ink);
-  font-size: 13px;
+  font-size: var(--fs-foot);
   line-height: 1.45;
   color: var(--ink);
 }
@@ -945,21 +953,12 @@ figcaption strong { font-weight: 400; }
 .page-foot {
   margin-top: 28px;
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: var(--fs-foot);
   color: var(--ink);
   text-align: right;
 }
 .page-foot.even { text-align: left; }
 
-.colophon {
-  margin-top: 40px;
-  padding-top: 14px;
-  border-top: 1px solid var(--rule);
-  font-family: var(--sans);
-  font-size: 13px;
-  color: var(--faint);
-  text-align: center !important;
-}
 
 .fixed-ui {
   position: fixed;
@@ -988,7 +987,7 @@ figcaption strong { font-weight: 400; }
 @media (max-width: 700px) {
   .desk { padding: 12px 8px 40px; }
   .sheet { padding: 32px 22px 36px; }
-  body { font-size: 17px; }
+  :root { --fs: 16px; }
 }
 
 /* Narrow screens: justified text opens rivers in a ~340px measure, and the

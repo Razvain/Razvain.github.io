@@ -401,7 +401,4 @@
   const signoffEl = $("#signoff");
   if (signoffEl && CONTENT.signoff) signoffEl.textContent = CONTENT.signoff;
 
-  $("#colophon").textContent =
-    "typeset in the browser · no frameworks · prints like a paper (try ⌘P)";
-
 })();
