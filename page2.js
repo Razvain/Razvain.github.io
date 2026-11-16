@@ -53,7 +53,7 @@
       `<tr><td>${e.period}</td><td>${e.degree}${footmarks(e.links)}</td>` +
       `<td>${[e.institution, e.location].filter(Boolean).join(", ")}</td></tr>`).join("");
     educationList.insertAdjacentHTML("beforeend",
-      `<figure class="paper-table"><figcaption><strong>Table ${k + 1}.</strong> ${group.label}.</figcaption>` +
+      `<figure class="paper-table"><figcaption><strong>Table ${k + 2}.</strong> ${group.label}.</figcaption>` +
       `<table><thead><tr><th>Period</th><th>${what}</th><th>Institution</th></tr></thead>` +
       `<tbody>${rows}</tbody></table></figure>`);
   });
