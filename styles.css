@@ -289,21 +289,16 @@ figcaption strong { font-weight: 400; }
 
 .proof-notes { list-style: none; }
 
+/* Each note is a run-in paragraph, "Apr 2027. Serving on …", as LaTeX sets
+   \paragraph heads. */
 .proof-notes li {
-  display: grid;
-  grid-template-columns: 104px 1fr;
-  gap: 14px;
-  padding: 5px 0;
-  font-size: 1em;
+  margin: 0 0 0.4em;
   color: var(--ink);
+  text-align: justify;
+  hyphens: auto;
 }
-.proof-date {
-  font-family: var(--sans);
-  font-size: var(--fs-small);
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
-  padding-top: 1px;
-}
+.proof-date { font-weight: 700; margin-right: 0.35em; }
+.proof-date::after { content: "."; }
 
 /* External links on each note, set as footnote-style marks (as acmart sets
    URLs). The ↗ stays in the DOM (screen readers) but takes no space; a
@@ -331,13 +326,10 @@ figcaption strong { font-weight: 400; }
 
 /* ============ Software artifacts ============ */
 
-/* Paragraph-style run-in heads. */
-.artifacts dt {
-  font-family: var(--sans);
-  font-size: var(--fs);
-  font-weight: 700;
-  margin-top: 14px;
-}
+/* Run-in paragraphs: "MOSAIC-3M (Dataset · GitHub mining). Description." */
+.artifacts { text-align: justify; hyphens: auto; }
+.artifacts dt { display: inline; font-weight: 400; margin-right: 0.3em; }
+.artifacts dt .aname { font-weight: 700; }
 .artifacts dt a { color: var(--ink); text-decoration: none; }
 .artifacts dt a:hover { color: var(--accent); }
 .artifacts dt a:hover .aname { text-decoration: underline; text-underline-offset: 3px; }
@@ -350,19 +342,9 @@ figcaption strong { font-weight: 400; }
 }
 .artifact-icon.hf { width: 17px; height: 16px; vertical-align: -3px; }
 .artifacts dt a:hover .artifact-icon { color: var(--accent); }
-.artifacts dt .tech { color: var(--faint); font-weight: 400; font-style: italic; font-size: var(--fs-small); margin-left: 10px; }
-/* Milestone (e.g. Hugging Face downloads): a quiet italic aside. */
-.artifacts dt .milestone {
-  margin-left: 8px;
-  font-family: var(--serif);
-  font-size: var(--fs-small);
-  font-weight: 400;
-  font-style: italic;
-  color: var(--muted);
-  white-space: nowrap;
-  vertical-align: 1px;
-}
-.artifacts dd { margin-left: 0; font-size: 1em; color: var(--ink); text-align: justify; hyphens: auto; }
+.artifacts dt .tech { font-style: italic; }
+.artifacts dd { display: inline; margin: 0; color: var(--ink); }
+.artifacts dd::after { content: ""; display: block; margin-bottom: 0.4em; }   /* end of paragraph */
 
 /* ============ References ============ */
 
@@ -417,131 +399,36 @@ figcaption strong { font-weight: 400; }
 .page-nav a { color: var(--accent); text-decoration: none; }
 .page-nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-.appendix-list dt {
-  display: grid;
-  grid-template-columns: 96px 1fr;
-  gap: 14px;
-  font-weight: 600;
-  font-size: var(--fs);
-  margin-top: 12px;
-}
-.appendix-list dt .period {
-  font-family: var(--sans);
-  font-weight: 400;
+/* Appendices B–D: run-in paragraphs, "Head (period). Text." */
+.runin { margin: 0 0 0.4em; text-align: justify; hyphens: auto; }
+.paper-section p.runin + p.runin { text-indent: 0; }   /* run-in heads already mark each paragraph */
+.runin-head { font-weight: 700; }
+
+/* Tables in the booktabs style acmart uses: caption above, three rules,
+   no vertical lines. */
+.paper-table { margin: 18px 0 22px; }
+.paper-table figcaption { margin: 0 0 8px; text-align: center; }
+.paper-table table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: var(--fs-small);
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+  border-top: 1.2px solid var(--ink);
+  border-bottom: 1.2px solid var(--ink);
 }
-/* Grouping header, e.g. “2 × MSc Thesis”: its label sits in the title column
-   (inline with the other entry titles), and its entries nest one step in. */
-.appendix-list dt.sup-group { margin-top: 18px; }
-.appendix-list dt.sup-item { margin-top: 8px; }
-.appendix-list dt.sup-item .sup-name { padding-left: 22px; }
-.appendix-list dt.sup-item .sup-name.sup-desc {
-  font-weight: 400;
-  color: var(--muted);
-  text-align: justify;
-  hyphens: auto;
+.paper-table thead th {
+  font-weight: 700;
+  text-align: left;
+  border-bottom: 0.6px solid var(--ink);
 }
-.appendix-list dd {
-  margin: 0 0 2px 110px;
-  font-size: 1em;
-  color: var(--ink);
-  text-align: justify;
-  hyphens: auto;
-}
-.appendix-list dd.sup-dd { margin-left: 132px; }
-/* Experience: role on the left, location pinned right in the date's style. */
-.appendix-list dt .exp-role {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 14px;
-}
-.appendix-list dt .exp-role .exp-loc {
-  flex: none;
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: var(--fs-foot);
-  color: var(--faint);
-}
-/* Stacked entry title: headline on top, a small grey sub-line beneath it
-   (used for the institution under a degree, and the course under a position). */
-.appendix-list dt .stack-body { display: flex; flex-direction: column; }
-.appendix-list dt .subline {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: var(--fs-foot);
-  color: color-mix(in srgb, var(--muted) 65%, var(--ink));
-  margin-top: 0;
-  line-height: 1.3;
-}
-/* Teaching: course shown inline after the position, dot-separated, secondary. */
-.appendix-list dt .t-course { font-weight: 400; color: color-mix(in srgb, var(--muted) 65%, var(--ink)); }
-@media (max-width: 700px) {
-  .appendix-list dt { grid-template-columns: 1fr; gap: 0; }
-  .appendix-list dd, .appendix-list dd.sup-dd { margin-left: 0; }
-  .appendix-list dt.sup-item .sup-name { padding-left: 12px; }
-}
+.paper-table th, .paper-table td { padding: 4px 14px 4px 0; vertical-align: top; text-align: left; }
+.paper-table th:last-child, .paper-table td:last-child { padding-right: 0; }
+.paper-table td:first-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
 
 /* ============ Page 3: world map & hobbies ============ */
 
-/* Section G rendered as a figure: a catalogue grid of interests */
-.interests-fig { margin: 26px 0 34px; text-align: left; }
-
-.interests-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 34px;
-  row-gap: 0;
-}
-.interests-grid .interest {
-  margin: 0;
-  padding: 14px 0 15px;
-  border-top: 1px solid var(--rule);
-}
-/* Let the two columns share their top edge without a double rule stack:
-   the first row's cells keep the rule; nothing else special needed since
-   every cell carries its own top border, forming a clean ledger. */
-.interests-grid .interest-idx {
-  display: block;
-  font-family: var(--serif);
-  font-size: var(--fs-foot);
-  font-style: italic;
-  color: var(--faint);
-  margin-bottom: 5px;
-}
-.interests-grid .interest-name {
-  margin: 0 0 3px;
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: var(--fs);
-  letter-spacing: 0.01em;
-}
-.interests-grid .interest-note {
-  margin: 0;
-  font-size: var(--fs);
-  font-style: italic;
-  line-height: 1.45;
-  color: var(--muted);
-}
-
-/* An odd last entry spans the full width and centers, so it never sits
-   alone in a half-empty row. */
-.interests-grid .interest.interest-centered {
-  grid-column: 1 / -1;
-  text-align: center;
-}
-.interests-grid .interest.interest-centered .interest-note {
-  max-width: 34em;
-  margin: 0 auto;
-}
-
-@media (max-width: 560px) {
-  .interests-grid { grid-template-columns: 1fr; column-gap: 0; }
-  .interests-grid .interest.interest-centered { text-align: left; }
-  .interests-grid .interest.interest-centered .interest-note { margin: 0; }
-}
+/* Section G is a table (Table 3). */
+.interests-fig td:first-child { font-weight: 700; }
 
 /* Subtle "sample size" readout above the map */
 .fieldwork-stats {
@@ -990,13 +877,14 @@ figcaption strong { font-weight: 400; }
   :root { --fs: 16px; }
 }
 
-/* Narrow screens: justified text opens rivers in a ~340px measure, and the
-   news dates read better above their entries than in a cramped column. */
+/* Narrow screens: justified text opens rivers in a ~340px measure, so text is
+   set ragged-right there. */
 @media (max-width: 560px) {
   .abstract p,
   .paper-section p,
-  .artifacts dd { text-align: left !important; }
-  .proof-notes li { grid-template-columns: 1fr; gap: 0; }
+  .artifacts,
+  .proof-notes li,
+  .runin { text-align: left !important; }
 }
 
 @media print {

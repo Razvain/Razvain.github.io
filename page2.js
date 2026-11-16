@@ -39,68 +39,47 @@
     return `<sup class="cite-group">[<a class="cite" href="index.html#ref-${i}">${order.indexOf(i) + 1}</a>]</sup>`;
   });
 
-  /* ============ Appendix A: Education ============ */
+  /* ============ Appendix A: Education (tables) ============ */
 
+  // Each group is a booktabs-style table with its caption above, as in acmart.
+  const footmarks = (links) => {
+    const l = arrows(links);
+    return l ? `&nbsp;<span class="proof-links">${l}</span>` : "";
+  };
   const educationList = $("#educationList");
-  if (educationList) (CONTENT.education || []).forEach(group => {
-    const head = document.createElement("dt");
-    head.className = "sup-group";
-    head.innerHTML = `<span class="period"></span><span>${group.label}</span>`;
-    educationList.appendChild(head);
-    (group.items || []).forEach(e => {
-      const dt = document.createElement("dt");
-      dt.className = "sup-item";
-      const links = arrows(e.links);
-      const linkWrap = links ? `&nbsp;<span class="proof-links">${links}</span>` : "";
-      const loc = e.location ? `<span class="exp-loc">${e.location}</span>` : "";
-      const inst = e.institution ? `<span class="subline">${e.institution}</span>` : "";
-      dt.innerHTML = `<span class="period">${e.period}</span>` +
-        `<span class="sup-name stack-body">` +
-          `<span class="exp-role"><span>${e.degree}${linkWrap}</span>${loc}</span>` +
-          inst +
-        `</span>`;
-      educationList.appendChild(dt);
-    });
+  if (educationList) (CONTENT.education || []).forEach((group, k) => {
+    const what = group.label.replace(/^Selected\s+/i, "").replace(/s$/, "");   // "Degrees" -> "Degree"
+    const rows = (group.items || []).map(e =>
+      `<tr><td>${e.period}</td><td>${e.degree}${footmarks(e.links)}</td>` +
+      `<td>${[e.institution, e.location].filter(Boolean).join(", ")}</td></tr>`).join("");
+    educationList.insertAdjacentHTML("beforeend",
+      `<figure class="paper-table"><figcaption><strong>Table ${k + 1}.</strong> ${group.label}.</figcaption>` +
+      `<table><thead><tr><th>Period</th><th>${what}</th><th>Institution</th></tr></thead>` +
+      `<tbody>${rows}</tbody></table></figure>`);
   });
+
+  // Appendices B–D are run-in paragraphs: "Head (period). Text."
+  const runin = (head, meta, body) =>
+    `<p class="runin"><span class="runin-head">${head}</span>${meta ? ` (${meta})` : ""}. ${body}</p>`;
 
   /* ============ Appendix B: Teaching ============ */
 
   const teachingList = $("#teachingList");
   if (teachingList) (CONTENT.teaching || []).forEach(t => {
-    const dt = document.createElement("dt");
-    const course = t.course ? `<span class="t-course"> · ${t.course}</span>` : "";
-    dt.innerHTML = `<span class="period">${t.period}</span><span>${t.position || t.role}${course}</span>`;
-    const dd = document.createElement("dd");
-    dd.textContent = t.what;
-    teachingList.appendChild(dt);
-    teachingList.appendChild(dd);
+    const head = [t.position || t.role, t.course].filter(Boolean).join(", ");
+    teachingList.insertAdjacentHTML("beforeend", runin(head, t.period, t.what));
   });
 
   /* ============ Appendix C: Supervision ============ */
 
   const supervisionList = $("#supervisionList");
   if (supervisionList) (CONTENT.supervision || []).forEach(group => {
-    const head = document.createElement("dt");
-    head.className = "sup-group";
-    head.innerHTML = `<span class="period"></span><span>${group.label}</span>`;
-    supervisionList.appendChild(head);
+    supervisionList.insertAdjacentHTML("beforeend", `<h3 class="subsec-head">${group.label}</h3>`);
     (group.items || []).forEach(s => {
-      const dt = document.createElement("dt");
-      dt.className = "sup-item";
-      if (s.who) {
-        // Named student: name on its own row, description beneath it.
-        dt.innerHTML = `<span class="period">${s.period}</span><span class="sup-name">${s.who}</span>`;
-        supervisionList.appendChild(dt);
-        const dd = document.createElement("dd");
-        dd.className = "sup-dd";
-        dd.innerHTML = cites(s.topic);
-        supervisionList.appendChild(dd);
-      } else {
-        // No student named (e.g. the BSc cohort): description sits inline with
-        // the year, no empty name row above it.
-        dt.innerHTML = `<span class="period">${s.period}</span><span class="sup-name sup-desc">${cites(s.topic)}</span>`;
-        supervisionList.appendChild(dt);
-      }
+      // A named student leads the paragraph; an unnamed cohort is led by its year.
+      supervisionList.insertAdjacentHTML("beforeend", s.who
+        ? runin(s.who, s.period, cites(s.topic))
+        : `<p class="runin"><span class="runin-head">${s.period}.</span> ${cites(s.topic)}</p>`);
     });
   });
 
@@ -108,15 +87,9 @@
 
   const experienceList = $("#experienceList");
   if (experienceList) (CONTENT.experience || []).forEach(x => {
-    const dt = document.createElement("dt");
-    const loc = x.location ? `<span class="exp-loc">${x.location}</span>` : "";
-    const place = x.place ? `<span class="t-course"> · ${x.place}</span>` : "";
-    const title = x.position ? `${x.position}${place}` : x.role;
-    dt.innerHTML = `<span class="period">${x.period}</span><span class="exp-role"><span>${title}</span>${loc}</span>`;
-    const dd = document.createElement("dd");
-    dd.textContent = x.what;
-    experienceList.appendChild(dt);
-    experienceList.appendChild(dd);
+    const head = x.position ? [x.position, x.place].filter(Boolean).join(", ") : x.role;
+    experienceList.insertAdjacentHTML("beforeend",
+      runin(head, [x.period, x.location].filter(Boolean).join("; "), x.what));
   });
 
   /* ============ Appendix E: Miscellany ============ */

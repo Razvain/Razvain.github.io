@@ -28,21 +28,8 @@
   /* ============ Hobbies ============ */
 
   const hobbyList = $("#hobbyList");
-  const hobbies = CONTENT.hobbies || [];
-  hobbies.forEach((h, i) => {
-    const cell = document.createElement("figure");
-    cell.className = "interest";
-    // An odd final entry would sit alone in a 2-col grid; span + center it
-    // so it reads as a deliberate closing line rather than a stray cell.
-    if (i === hobbies.length - 1 && hobbies.length % 2 === 1)
-      cell.classList.add("interest-centered");
-    const idx = `G.${i + 1}`;
-    cell.innerHTML =
-      `<span class="interest-idx">${idx}</span>` +
-      `<h3 class="interest-name">${h.name}</h3>` +
-      `<p class="interest-note">${h.note}</p>`;
-    hobbyList.appendChild(cell);
-  });
+  (CONTENT.hobbies || []).forEach(h =>
+    hobbyList.insertAdjacentHTML("beforeend", `<tr><td>${h.name}</td><td>${h.note}</td></tr>`));
 
   /* ============ Fieldwork "sample size" counter ============ */
 

@@ -170,33 +170,17 @@
 
   const host = (u) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; } };
 
-  // One numbered subsection per year ("2.1 2027"), newest first; the year is
-  // the 4-digit one that ends each date, and every item keeps its full date.
+  // Each note is a run-in paragraph, "Apr 2027. Serving on …", newest first.
   const newsList = $("#newsList");
-  const newsSecNo = newsList.closest("section").querySelector(".sec-no")?.textContent ?? "2";
-  const newsByYear = new Map();
   CONTENT.news.forEach(n => {
-    const year = (/(\d{4})\s*$/.exec(n.date) || [])[1] || "";
-    if (!newsByYear.has(year)) newsByYear.set(year, []);
-    newsByYear.get(year).push(n);
-  });
-  [...newsByYear.keys()].sort((a, b) => b - a).forEach((year, k) => {
-    const head = document.createElement("h3");
-    head.className = "subsec-head";
-    head.innerHTML = `<span class="sec-no">${newsSecNo}.${k + 1}</span>${year}`;
-    const ul = document.createElement("ul");
-    ul.className = "proof-notes";
-    newsByYear.get(year).forEach(n => {
-      const li = document.createElement("li");
-      li.className = "attn-item attn-anchor";
-      li.dataset.topics = (n.topics || []).join(" ");
-      const links = (n.links || [])
-        .map(u => `<a class="proof-link" href="${u}" target="_blank" rel="noopener" title="${host(u)}" aria-label="Open on ${host(u)}">↗</a>`)
-        .join("");
-      li.innerHTML = `<span class="proof-date">${n.date}</span><span>${n.html}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
-      ul.appendChild(li);
-    });
-    newsList.append(head, ul);
+    const li = document.createElement("li");
+    li.className = "attn-item attn-anchor";
+    li.dataset.topics = (n.topics || []).join(" ");
+    const links = (n.links || [])
+      .map(u => `<a class="proof-link" href="${u}" target="_blank" rel="noopener" title="${host(u)}" aria-label="Open on ${host(u)}">↗</a>`)
+      .join("");
+    li.innerHTML = `<span class="proof-date">${n.date}</span><span>${n.html}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
+    newsList.appendChild(li);
   });
 
   /* ============ 3. Software artifacts ============ */
@@ -216,9 +200,11 @@
     dt.className = "attn-item attn-anchor";
     dt.dataset.topics = topics;
     const ext = p.url && p.url.startsWith("http") ? ' target="_blank" rel="noopener"' : "";
-    dt.innerHTML = `<a href="${p.url}"${ext}>${hostIcon(p.url)}<span class="aname">${p.name}</span></a>` +
-      (p.milestone ? `<span class="milestone" title="${p.milestoneTitle || ""}">🔥 ${p.milestone}</span>` : "") +
-      `<span class="tech">${p.tech}</span>`;
+    // Run-in head: "MOSAIC-3M (Dataset · GitHub mining)." then the description.
+    const milestone = p.milestone
+      ? `; <span class="milestone" title="${p.milestoneTitle || ""}">${p.milestone}</span>` : "";
+    dt.innerHTML = `<a href="${p.url}"${ext}>${hostIcon(p.url)}<span class="aname">${p.name}</span></a> ` +
+      `<span class="tech">(${p.tech}${milestone})</span>.`;
     const dd = document.createElement("dd");
     dd.className = "attn-item";
     dd.dataset.topics = topics;
@@ -364,17 +350,24 @@
     arcSvg.setAttribute("height", document.documentElement.scrollHeight);
     arcSvg.innerHTML = "";
 
-    // Anchor to the LAST line fragment, so a phrase that wraps across two
-    // lines starts the arc from under its final line rather than from the
-    // centre of the (tall, misleading) union bounding box.
-    const rects = sourceEl.getClientRects();
-    const lr = rects.length ? rects[rects.length - 1] : sourceEl.getBoundingClientRect();
-    const s = { cx: lr.left + lr.width / 2 + scrollX, bottom: lr.bottom + scrollY };
+    // A figure point starts its arcs at the marker itself. A phrase in the text
+    // starts under its LAST line fragment, so one that wraps across two lines
+    // doesn't start from the centre of its tall, misleading union box.
+    const marker = sourceEl.querySelector?.(".mark");
+    let s;
+    if (marker) {
+      const r = marker.getBoundingClientRect();
+      s = { cx: r.left + r.width / 2 + scrollX, y: r.top + r.height / 2 + scrollY };
+    } else {
+      const rects = sourceEl.getClientRects();
+      const lr = rects.length ? rects[rects.length - 1] : sourceEl.getBoundingClientRect();
+      s = { cx: lr.left + lr.width / 2 + scrollX, y: lr.bottom + scrollY + 2 };
+    }
     const gutterX = Math.max(20, docRect(sheet).left - 46);
 
     relatedAnchors(tid).forEach((el, i) => {
       const t = docRect(el);
-      const sx = s.cx, sy = s.bottom + 2;
+      const sx = s.cx, sy = s.y;
       const ex = t.left - 6, ey = t.cy;
       const m1 = sy + (ey - sy) * 0.28, m2 = sy + (ey - sy) * 0.72;
 
