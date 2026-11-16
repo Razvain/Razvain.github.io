@@ -45,6 +45,11 @@
 
 html { scroll-behavior: smooth; }
 
+/* No words broken across lines, and no paragraph ending on a lone short word:
+   "pretty" balances the last lines of every text block. */
+p, li, dd, td, th, figcaption { text-wrap: pretty; }
+h1, h2, h3 { text-wrap: balance; }
+
 body {
   background: var(--desk);
   color: var(--ink);
@@ -130,7 +135,7 @@ a { color: inherit; }
 /* acmsmall sets the abstract without an "Abstract" heading. */
 .abstract { margin: 0 0 30px; }
 
-.abstract p { font-size: var(--fs-small); line-height: 1.6; text-align: justify; hyphens: auto; }
+.abstract p { font-size: var(--fs-small); line-height: 1.6; text-align: justify; hyphens: manual; }
 
 .abstract-body { display: flow-root; } /* contains the float without clipping */
 
@@ -179,7 +184,7 @@ a { color: inherit; }
 /* Body: justified with hyphenation, as acmart sets it. */
 .paper-section p, #intro p {
   text-align: justify;
-  hyphens: auto;
+  hyphens: manual;
 }
 /* acmart indents every paragraph after the first (class-based so print clones keep it). */
 .paper-section p + p { text-indent: 1.5em; }
@@ -289,16 +294,21 @@ figcaption strong { font-weight: 400; }
 
 .proof-notes { list-style: none; }
 
-/* Each note is a run-in paragraph, "Apr 2027. Serving on …", as LaTeX sets
-   \paragraph heads. */
+/* Each note: the date in a narrow hanging column, the text beside it. */
 .proof-notes li {
-  margin: 0 0 0.4em;
+  display: grid;
+  grid-template-columns: 6.2em 1fr;
+  column-gap: 1em;
+  margin: 0 0 0.45em;
   color: var(--ink);
-  text-align: justify;
-  hyphens: auto;
+  text-align: left;   /* without hyphenation, justified short lines open wide gaps */
 }
-.proof-date { font-weight: 700; margin-right: 0.35em; }
-.proof-date::after { content: "."; }
+.proof-date {
+  font-size: var(--fs-small);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.12em;
+}
 
 /* External links on each note, set as footnote-style marks (as acmart sets
    URLs). The ↗ stays in the DOM (screen readers) but takes no space; a
@@ -326,13 +336,13 @@ figcaption strong { font-weight: 400; }
 
 /* ============ Software artifacts ============ */
 
-/* Run-in paragraphs: "MOSAIC-3M (Dataset · GitHub mining). Description." */
-.artifacts { text-align: justify; hyphens: auto; }
-.artifacts dt { display: inline; font-weight: 400; margin-right: 0.3em; }
-.artifacts dt .aname { font-weight: 700; }
-.artifacts dt a { color: var(--ink); text-decoration: none; }
-.artifacts dt a:hover { color: var(--accent); }
-.artifacts dt a:hover .aname { text-decoration: underline; text-underline-offset: 3px; }
+/* Data Availability is Table 1: artifact (with host mark), type, description. */
+.artifacts-table td:first-child { white-space: nowrap; font-variant-numeric: normal; }
+.artifacts-table td:nth-child(2) { width: 9.5em; }
+.artifacts-table a { color: var(--ink); text-decoration: none; }
+.artifacts-table a:hover { color: var(--accent); }
+.artifacts-table a:hover .aname { text-decoration: underline; text-underline-offset: 3px; }
+.artifacts-table .aname { font-weight: 700; }
 .artifact-icon {
   width: 13px;
   height: 13px;
@@ -341,10 +351,7 @@ figcaption strong { font-weight: 400; }
   color: var(--faint);
 }
 .artifact-icon.hf { width: 17px; height: 16px; vertical-align: -3px; }
-.artifacts dt a:hover .artifact-icon { color: var(--accent); }
-.artifacts dt .tech { font-style: italic; }
-.artifacts dd { display: inline; margin: 0; color: var(--ink); }
-.artifacts dd::after { content: ""; display: block; margin-bottom: 0.4em; }   /* end of paragraph */
+.artifacts-table a:hover .artifact-icon { color: var(--accent); }
 
 /* ============ References ============ */
 
@@ -399,10 +406,12 @@ figcaption strong { font-weight: 400; }
 .page-nav a { color: var(--accent); text-decoration: none; }
 .page-nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-/* Appendices B–D: run-in paragraphs, "Head (period). Text." */
-.runin { margin: 0 0 0.4em; text-align: justify; hyphens: auto; }
-.paper-section p.runin + p.runin { text-indent: 0; }   /* run-in heads already mark each paragraph */
+/* Appendices B–E: bulleted lists (LaTeX itemize), "• Head (period). Text." */
+.paper-list { margin: 0 0 0.6em; padding-left: 1.3em; list-style: disc; }
+.paper-list li { margin: 0 0 0.35em; padding-left: 0.2em; text-align: left; }
+.paper-list li::marker { color: var(--ink); }
 .runin-head { font-weight: 700; }
+.nowrap { white-space: nowrap; }
 
 /* Tables in the booktabs style acmart uses: caption above, three rules,
    no vertical lines. */
@@ -882,9 +891,9 @@ figcaption strong { font-weight: 400; }
 @media (max-width: 560px) {
   .abstract p,
   .paper-section p,
-  .artifacts,
   .proof-notes li,
-  .runin { text-align: left !important; }
+  .paper-list li { text-align: left !important; }
+  .proof-notes li { grid-template-columns: 1fr; }   /* date above its note */
 }
 
 @media print {

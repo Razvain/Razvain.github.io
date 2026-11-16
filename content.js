@@ -13,7 +13,7 @@ const CONTENT = {
   name: "Razvan Mihai Popescu",
   kicker: "AI × Software Engineering",
   role: "PhD Researcher in AI for Software Engineering",
-  affiliation: " AISE Lab · Delft University of Technology, The Netherlands",
+  affiliation: "Delft University of Technology, The Netherlands",
   photo: "assets/photo.jpg",   // TODO: save your portrait as assets/photo.jpg
 
   /* Bio: plain text with [[topic-id|display text]] markers.

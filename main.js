@@ -194,23 +194,18 @@
     /huggingface\.co/.test(url) ? HOST_ICON.huggingface :
     /github\.com/.test(url) ? HOST_ICON.github : "";
 
+  // One table row per artifact: name (with its host mark), type, description.
   CONTENT.projects.forEach(p => {
-    const topics = (p.topics || []).join(" ");
-    const dt = document.createElement("dt");
-    dt.className = "attn-item attn-anchor";
-    dt.dataset.topics = topics;
+    const tr = document.createElement("tr");
+    tr.className = "attn-item attn-anchor";
+    tr.dataset.topics = (p.topics || []).join(" ");
     const ext = p.url && p.url.startsWith("http") ? ' target="_blank" rel="noopener"' : "";
-    // Run-in head: "MOSAIC-3M (Dataset · GitHub mining)." then the description.
     const milestone = p.milestone
       ? `; <span class="milestone" title="${p.milestoneTitle || ""}">${p.milestone}</span>` : "";
-    dt.innerHTML = `<a href="${p.url}"${ext}>${hostIcon(p.url)}<span class="aname">${p.name}</span></a> ` +
-      `<span class="tech">(${p.tech}${milestone})</span>.`;
-    const dd = document.createElement("dd");
-    dd.className = "attn-item";
-    dd.dataset.topics = topics;
-    dd.textContent = p.description;
-    $("#artifacts").appendChild(dt);
-    $("#artifacts").appendChild(dd);
+    tr.innerHTML =
+      `<td><a href="${p.url}"${ext}>${hostIcon(p.url)}<span class="aname">${p.name}</span></a></td>` +
+      `<td>${p.tech.replace(/ · /g, "&nbsp;·&nbsp;")}${milestone}</td><td>${p.description}</td>`;   // keep "a · b" together
+    $("#artifacts").appendChild(tr);
   });
 
   /* ============ 4. Acknowledgments ============ */
