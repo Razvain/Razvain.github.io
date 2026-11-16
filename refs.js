@@ -7,7 +7,7 @@
 
 // "alpha": ACM-Reference-Format order (first author's surname, then the full
 // author list, then year ascending, then title). "chrono": content.js order.
-const REF_ORDER = "alpha";
+const REF_ORDER = "chrono";
 
 window.refOrder = (pubs) => {
   const ids = pubs.map((_, i) => i);

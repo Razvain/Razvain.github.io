@@ -1,7 +1,7 @@
 /* =========================================================================
    Design 3 — The Manuscript
    Renders content.js as an academic paper: numbered citations with hover
-   previews, a hand-plotted Figure 1, live references.
+   previews, a plotted Figure 1, live references.
    ========================================================================= */
 
 (() => {
@@ -72,11 +72,8 @@
       .concat(CONTENT.extraKeywords || [])
       .join(", ");
 
-  // Publication date in the reference format, footnote and page foot: always "now".
-  const now = new Date();
-  document.querySelectorAll(".pubdate").forEach(el =>
-    (el.textContent = now.toLocaleDateString("en-US", { month: "long", year: "numeric" })));
-  document.querySelectorAll(".pubyear").forEach(el => (el.textContent = now.getFullYear()));
+  // Copyright year in the contact footnote: always "now".
+  document.querySelectorAll(".pubyear").forEach(el => (el.textContent = new Date().getFullYear()));
 
   /* ============ 1. Introduction (bio with live citations) ============ */
 
@@ -92,70 +89,68 @@
   /* ============ Figure 1: interests plotted on axes ============ */
 
   const SVG_NS = "http://www.w3.org/2000/svg";
-  // Hand-placed positions per topic id, in a 520x300 plot (x: theory→practice, y: models→code)
+  // Topic positions in data coordinates: x from theory (0) to practice (1),
+  // y from code (0) to models (1).
   const FIG_POS = {
-    agents:           { x: 400, y: 110 },
-    evaluation:       { x: 288, y: 178 },
-    interpretability: { x: 138, y: 96 },
-    data:             { x: 196, y: 238 },
-    completion:       { x: 408, y: 224 },
+    agents:           { x: 0.72, y: 0.66 },
+    evaluation:       { x: 0.48, y: 0.39 },
+    interpretability: { x: 0.17, y: 0.71 },
+    data:             { x: 0.29, y: 0.15 },
+    completion:       { x: 0.74, y: 0.21 },
   };
+
+  // A plain scatter plot in the style of a paper figure: framed axes, inward
+  // ticks, a faint grid, filled markers with annotations, axis titles.
+  const W = 560, H = 330;
+  const P = { left: 74, right: 540, top: 16, bottom: 262 };   // plot area
+  const px = (x) => P.left + x * (P.right - P.left);
+  const py = (y) => P.bottom - y * (P.bottom - P.top);
 
   const fig = document.createElementNS(SVG_NS, "svg");
-  fig.setAttribute("viewBox", "0 0 560 320");
-  fig.setAttribute("width", "560");
+  fig.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  fig.setAttribute("width", W);
 
-  // slightly wobbly hand-drawn axes
-  const axes = document.createElementNS(SVG_NS, "path");
-  axes.setAttribute("class", "axis");
-  axes.setAttribute("d",
-    "M 60 24 C 58 110, 61 200, 59 276 L 530 274 M 59 276 L 530 274" +
-    " M 60 24 l -4 9 M 60 24 l 5 9 M 530 274 l -9 -4 M 530 274 l -9 5");
-  fig.appendChild(axes);
+  const el = (tag, attrs, text) => {
+    const n = document.createElementNS(SVG_NS, tag);
+    for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+    if (text != null) n.textContent = text;
+    return n;
+  };
 
-  const label = (x, y, text, anchor = "middle", rotate = null) => {
-    const t = document.createElementNS(SVG_NS, "text");
-    t.setAttribute("class", "axis-label");
-    t.setAttribute("x", x); t.setAttribute("y", y);
-    t.setAttribute("text-anchor", anchor);
+  const TICKS = [0, 0.25, 0.5, 0.75, 1];
+  const grid = TICKS.slice(1, -1).map(t =>
+    `M ${px(t)} ${P.top} V ${P.bottom} M ${P.left} ${py(t)} H ${P.right}`).join(" ");
+  fig.appendChild(el("path", { class: "grid", d: grid }));
+  const ticks = TICKS.map(t =>
+    `M ${px(t)} ${P.bottom} v -5 M ${px(t)} ${P.top} v 5 M ${P.left} ${py(t)} h 5 M ${P.right} ${py(t)} h -5`).join(" ");
+  fig.appendChild(el("path", { class: "axis", d: ticks }));
+  fig.appendChild(el("rect", { class: "axis", x: P.left, y: P.top,
+    width: P.right - P.left, height: P.bottom - P.top }));
+
+  // Tick labels only at the ends of each (qualitative) scale, aligned to the
+  // frame so the two scales don't collide at the origin; then axis titles.
+  const label = (x, y, text, cls, anchor = "middle", rotate = null) => {
+    const t = el("text", { class: cls, x, y, "text-anchor": anchor }, text);
     if (rotate) t.setAttribute("transform", `rotate(${rotate} ${x} ${y})`);
-    t.textContent = text;
     fig.appendChild(t);
   };
-  label(48, 20, "models", "end");
-  label(46, 262, "code", "end", -90);
-  label(530, 292, "practice", "end");
-  label(84, 292, "theory", "start");
+  label(px(0), P.bottom + 18, "theory", "tick-label", "start");
+  label(px(1), P.bottom + 18, "practice", "tick-label", "end");
+  label(P.left - 8, py(0), "code", "tick-label", "start", -90);
+  label(P.left - 8, py(1), "models", "tick-label", "end", -90);
+  label((P.left + P.right) / 2, P.bottom + 44, "Research orientation", "axis-label");
+  label(P.left - 30, (P.top + P.bottom) / 2, "Object of study", "axis-label", "middle", -90);
 
   const topicGroups = {};
   for (const [tid, t] of Object.entries(CONTENT.topics)) {
-    const pos = FIG_POS[tid] || { x: 100 + Math.random() * 380, y: 60 + Math.random() * 200 };
-    const g = document.createElementNS(SVG_NS, "g");
-    g.setAttribute("class", "topic");
+    const at = FIG_POS[tid] || { x: 0.5, y: 0.5 };
+    const x = px(at.x), y = py(at.y);
+    const g = el("g", { class: "topic" });
     g.dataset.topic = tid;
-
-    const s = 5;
-    const mark = document.createElementNS(SVG_NS, "path");
-    mark.setAttribute("class", "mark");
-    mark.setAttribute("d",
-      `M ${pos.x - s} ${pos.y - s} L ${pos.x + s} ${pos.y + s} M ${pos.x - s} ${pos.y + s} L ${pos.x + s} ${pos.y - s}`);
-    g.appendChild(mark);
-
-    const txt = document.createElementNS(SVG_NS, "text");
-    txt.setAttribute("class", "mark-label");
-    txt.setAttribute("x", pos.x + 11);
-    txt.setAttribute("y", pos.y + 4);
-    txt.textContent = t.label;
-    g.appendChild(txt);
-
-    const hit = document.createElementNS(SVG_NS, "rect");
-    hit.setAttribute("class", "mark-hit");
-    hit.setAttribute("x", pos.x - 12);
-    hit.setAttribute("y", pos.y - 16);
-    hit.setAttribute("width", 24 + t.label.length * 7.5);
-    hit.setAttribute("height", 32);
-    g.appendChild(hit);
-
+    g.appendChild(el("circle", { class: "mark", cx: x, cy: y, r: 4.5 }));
+    g.appendChild(el("text", { class: "mark-label", x: x + 9, y: y - 7 }, t.label));
+    g.appendChild(el("rect", { class: "mark-hit", x: x - 12, y: y - 22,
+      width: 24 + t.label.length * 7, height: 34 }));
     fig.appendChild(g);
     topicGroups[tid] = g;
   }
@@ -463,10 +458,5 @@
     }, 150);
   });
 
-  /* ============ Colophon ============ */
-
-  $("#colophon").textContent =
-    "typeset in the browser · no frameworks · prints like a paper (try ⌘P) · " +
-    CONTENT.colophon.toLowerCase().replace(/^hand-built.*?js\. /, "");
 
 })();

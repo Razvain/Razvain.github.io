@@ -25,10 +25,6 @@
 
   $("#runningName").textContent = CONTENT.name.trim();
 
-  // Publication date in the page foot: always "now".
-  const now = new Date();
-  document.querySelectorAll(".pubdate").forEach(el =>
-    (el.textContent = now.toLocaleDateString("en-US", { month: "long", year: "numeric" })));
 
   /* ============ Citations into p. 1's references ============ */
 

@@ -20,7 +20,7 @@
     localStorage.setItem("theme", next);
   });
 
-  // Publication date in the page foot and the received line: always "now".
+  // Revision date in the received line: always "now".
   const now = new Date();
   document.querySelectorAll(".pubdate").forEach(el =>
     (el.textContent = now.toLocaleDateString("en-US", { month: "long", year: "numeric" })));
