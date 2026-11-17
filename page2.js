@@ -47,16 +47,18 @@
     return l ? `&nbsp;<span class="proof-links">${l}</span>` : "";
   };
   const educationList = $("#educationList");
-  if (educationList) (CONTENT.education || []).forEach((group, k) => {
-    const what = group.label.replace(/^Selected\s+/i, "").replace(/s$/, "");   // "Degrees" -> "Degree"
-    const rows = (group.items || []).map(e =>
-      `<tr><td>${e.period}</td><td>${e.degree}${footmarks(e.links)}</td>` +
-      `<td>${[e.institution, e.location].filter(Boolean).join(", ")}</td></tr>`).join("");
-    educationList.insertAdjacentHTML("beforeend",
-      `<figure class="paper-table"><figcaption><strong>Table ${k + 2}.</strong> ${group.label}.</figcaption>` +
-      `<table><thead><tr><th>Period</th><th>${what}</th><th>Institution</th></tr></thead>` +
-      `<tbody>${rows}</tbody></table></figure>`);
-  });
+  if (educationList) {
+    // One table, a labelled group of rows per education group (degrees, programs).
+    const rows = (CONTENT.education || []).map(group =>
+      `<tr class="group-row"><th colspan="3">${group.label}</th></tr>` +
+      (group.items || []).map(e =>
+        `<tr><td>${e.period}</td><td>${e.degree}${footmarks(e.links)}</td>` +
+        `<td>${[e.institution, e.location].filter(Boolean).join(", ")}</td></tr>`).join("")).join("");
+    educationList.innerHTML =
+      `<figure class="paper-table"><figcaption><strong>Table 2.</strong> Degrees and selected programs.</figcaption>` +
+      `<table><thead><tr><th>Period</th><th>Degree or program</th><th>Institution</th></tr></thead>` +
+      `<tbody>${rows}</tbody></table></figure>`;
+  }
 
   // Appendices B–E are bulleted lists: "• Head (period). Text."
   const item = (head, meta, body) =>

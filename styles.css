@@ -335,21 +335,12 @@ figcaption strong { font-weight: 400; }
 /* ============ Software artifacts ============ */
 
 /* Data Availability is Table 1: artifact (with host mark), type, description. */
-.artifacts-table td:first-child { white-space: nowrap; font-variant-numeric: normal; }
-.artifacts-table td:nth-child(2) { width: 9.5em; }
 .artifacts-table a { color: var(--ink); text-decoration: none; }
 .artifacts-table a:hover { color: var(--accent); }
 .artifacts-table a:hover .aname { text-decoration: underline; text-underline-offset: 3px; }
 .artifacts-table .aname { font-weight: 700; }
-.artifact-icon {
-  width: 13px;
-  height: 13px;
-  vertical-align: -1px;
-  margin-right: 6px;
-  color: var(--faint);
-}
-.artifact-icon.hf { width: 17px; height: 16px; vertical-align: -3px; }
-.artifacts-table a:hover .artifact-icon { color: var(--accent); }
+.artifacts-table td:first-child { width: 11em; white-space: normal; font-variant-numeric: normal; }
+.artifacts-table .atype { display: block; font-style: italic; font-size: var(--fs-foot); color: var(--muted); }
 
 /* ============ References ============ */
 
@@ -432,6 +423,14 @@ figcaption strong { font-weight: 400; }
 .paper-table th, .paper-table td { padding: 4px 14px 4px 0; vertical-align: top; text-align: left; }
 .paper-table th:last-child, .paper-table td:last-child { padding-right: 0; }
 .paper-table td:first-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
+/* Group label inside a table, set like a booktabs \midrule + italic label. */
+.paper-table tr.group-row th {
+  padding-top: 8px;
+  font-weight: 400;
+  font-style: italic;
+  border-bottom: 0.6px solid var(--rule);
+}
+.paper-table tbody tr.group-row:first-child th { padding-top: 4px; }
 
 /* ============ Page 3: world map & hobbies ============ */
 

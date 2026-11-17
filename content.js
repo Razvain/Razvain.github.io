@@ -102,7 +102,7 @@ const CONTENT = {
     { date: "Sep 2025", topics: ["interpretability"],
       html: `<em>Automated Attention Pattern Discovery at Scale</em> accepted at <em>NeurIPS ’25</em>.`,
       links: ["https://openreview.net/forum?id=foz36TBALK"] },
-    { date: "Apr–May 2025", topics: ["data", "evaluation"],
+    { date: "Apr 2025", topics: ["data", "evaluation"],
       html: `Presented <em>The Heap</em> at <em>FORGE</em> and also attended <em>ICSE ’25</em>, Ottawa, Canada.`,
       links: ["https://conf.researchr.org/details/forge-2025/forge-2025-benchmarking/2/The-Heap-A-Contamination-Free-Multilingual-Code-Dataset-for-Evaluating-Large-Languag"] },
   ],
