@@ -437,8 +437,6 @@ figcaption strong { font-weight: 400; }
 
 /* ============ Page 3: world map & hobbies ============ */
 
-/* Section G is a table (Table 3). */
-.interests-fig td:first-child { font-weight: 700; }
 
 /* Subtle "sample size" readout above the map */
 .fieldwork-stats {

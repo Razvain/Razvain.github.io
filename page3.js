@@ -25,12 +25,6 @@
   document.querySelectorAll(".pubdate").forEach(el =>
     (el.textContent = now.toLocaleDateString("en-US", { month: "long", year: "numeric" })));
 
-  /* ============ Hobbies ============ */
-
-  const hobbyList = $("#hobbyList");
-  (CONTENT.hobbies || []).forEach(h =>
-    hobbyList.insertAdjacentHTML("beforeend", `<tr><td>${h.name}</td><td>${h.note}</td></tr>`));
-
   /* ============ Fieldwork "sample size" counter ============ */
 
   (() => {
