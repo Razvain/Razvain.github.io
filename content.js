@@ -73,6 +73,9 @@ const CONTENT = {
 
   // ----- News (most recent first) -----
   news: [
+    { date: "Mar 2027", topics: [],
+      html: `Accepted to the Machine Learning Summer School at the Okinawa Institute of Science and Technology, Okinawa, Japan.`,
+      links: ["https://oist.github.io/mlss2027okinawa/"] },
     { date: "Jun 2027", topics: [],
       html: `Serving on the Program Committee of the <em>LangCode ’27</em> workshop, co-located with <em>NAACL ’27</em>, San Francisco, USA.`,
       links: ["https://langcode2027.github.io/"] },
@@ -88,9 +91,6 @@ const CONTENT = {
     { date: "Apr 2027", topics: [],
       html: `Co-chairing the second edition of <em>The Poisoned Chalice</em>, a Membership Inference Attack competition, co-located with <em>ICSE ’27</em>, Dublin, Ireland, after co-chairing the first at <em>FSE ’26</em>.`,
       links: ["https://poisoned-chalice.org/"] },
-    { date: "Mar 2027", topics: [],
-      html: `Accepted to the Machine Learning Summer School (<em>MLSS ’27</em>) at OIST, Okinawa, Japan.`,
-      links: ["https://oist.github.io/mlss2027okinawa/"] },
     { date: "Jul 2026", topics: ["agents", "evaluation"],
       html: `Presented my doctoral research plan on developer-aligned agent evaluation at the <em>FSE ’26 Doctoral Symposium</em>, Montreal, Canada.`,
       links: ["https://conf.researchr.org/details/fse-2026/fse-2026-doctoral-symposium/15/Reliable-and-Developer-Aligned-Evaluation-of-Agents-for-Software-Engineering"] },
