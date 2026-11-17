@@ -360,32 +360,19 @@
     }
     const gutterX = Math.max(20, docRect(sheet).left - 46);
 
+    // Thin, faint curves through the left gutter to every related item. They
+    // fade in (slightly staggered) rather than being drawn on one by one.
     relatedAnchors(tid).forEach((el, i) => {
       const t = docRect(el);
-      const sx = s.cx, sy = s.y;
-      const ex = t.left - 6, ey = t.cy;
-      const m1 = sy + (ey - sy) * 0.28, m2 = sy + (ey - sy) * 0.72;
-
+      const m1 = s.y + (t.cy - s.y) * 0.28, m2 = s.y + (t.cy - s.y) * 0.72;
       const path = document.createElementNS(SVG_NS, "path");
-      path.setAttribute("d", `M ${sx} ${sy} C ${gutterX} ${m1}, ${gutterX} ${m2}, ${ex} ${ey}`);
+      path.setAttribute("d", `M ${s.cx} ${s.y} C ${gutterX} ${m1}, ${gutterX} ${m2}, ${t.left - 6} ${t.cy}`);
       arcSvg.appendChild(path);
-
-      const dS = document.createElementNS(SVG_NS, "circle");
-      dS.setAttribute("cx", sx); dS.setAttribute("cy", sy); dS.setAttribute("r", 2.4);
-      const dE = document.createElementNS(SVG_NS, "circle");
-      dE.setAttribute("cx", ex); dE.setAttribute("cy", ey); dE.setAttribute("r", 2.4);
-      arcSvg.appendChild(dS); arcSvg.appendChild(dE);
-
       if (!reducedMotion) {
-        const len = path.getTotalLength();
-        path.style.strokeDasharray = len;
-        path.style.strokeDashoffset = len;
-        path.getBoundingClientRect(); // reflow so the transition takes
-        path.style.transition = `stroke-dashoffset 0.5s cubic-bezier(0.4,0,0.2,1) ${i * 55}ms`;
-        path.style.strokeDashoffset = "0";
-        dE.style.opacity = "0";
-        dE.style.transition = `opacity 0.2s ease ${i * 55 + 340}ms`;
-        requestAnimationFrame(() => (dE.style.opacity = "1"));
+        path.style.opacity = "0";
+        path.style.transition = `opacity 0.18s ease ${i * 25}ms`;
+        path.getBoundingClientRect();   // reflow so the transition takes
+        path.style.opacity = "";
       }
     });
 
