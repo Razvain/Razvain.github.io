@@ -46,7 +46,8 @@
     const l = arrows(links);
     return l ? `&nbsp;<span class="proof-links">${l}</span>` : "";
   };
-  // Short country codes keep every cell on one line; the full name is the tooltip.
+  // Short country codes keep every cell on one line (the full name is the
+  // tooltip); joint hosts ("A & B") go on two lines.
   const SHORT = { "The Netherlands": "NL",
                   "Germany": "DE", "USA": "US", "Australia": "AU" };
   const short = (text = "") => {
@@ -60,7 +61,7 @@
       `<tr class="group-row"><th colspan="4">${group.label}</th></tr>` +
       (group.items || []).map(e =>
         `<tr><td>${e.period}</td><td>${e.degree}${footmarks(e.links)}</td>` +
-        `<td>${short(e.institution)}</td><td>${short(e.location)}</td></tr>`).join("")).join("");
+        `<td>${short(e.institution).replace(" & ", " &amp;<br>")}</td><td>${short(e.location)}</td></tr>`).join("")).join("");
     educationList.innerHTML =
       `<figure class="paper-table edu-table"><figcaption><strong>Table 2.</strong> Degrees and selected programs.</figcaption>` +
       `<table><thead><tr><th>Period</th><th>Degree or Program</th><th>Institution</th><th>Location</th></tr></thead>` +
