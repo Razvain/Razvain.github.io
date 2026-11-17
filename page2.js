@@ -60,46 +60,46 @@
       `<tbody>${rows}</tbody></table></figure>`;
   }
 
-  // Appendices B–E are bulleted lists: "• Head (period). Text."
-  const item = (head, meta, body) =>
-    `<li><span class="runin-head">${head}</span>${meta ? ` (${meta})` : ""}. ${body}</li>`;
-  const list = (mount, items) => mount.insertAdjacentHTML("beforeend", `<ul class="paper-list">${items.join("")}</ul>`);
+  // Appendices B–D: one numbered subsection per entry, "B.1 Title (period)",
+  // with its text as a paragraph below.
+  const letter = (mount) => mount.closest("section")?.querySelector(".sec-no")?.textContent ?? "";
+  const entry = (no, title, meta, body) =>
+    `<h3 class="subsec-head"><span class="sec-no">${no}</span>${title}` +
+    (meta ? ` <span class="subsec-meta">(${meta})</span>` : "") + `</h3><p class="entry-body">${body}</p>`;
 
   /* ============ Appendix B: Teaching ============ */
 
   const teachingList = $("#teachingList");
-  if (teachingList) list(teachingList, (CONTENT.teaching || []).map(t =>
-    item([t.position || t.role, t.course].filter(Boolean).join(", "), t.period, t.what)));
+  if (teachingList) teachingList.innerHTML = (CONTENT.teaching || []).map((t, i) =>
+    entry(`${letter(teachingList)}.${i + 1}`, [t.position || t.role, t.course].filter(Boolean).join(", "), t.period, t.what)).join("");
 
   /* ============ Appendix C: Supervision ============ */
 
+  // One subsection per group (MSc, BSc); each student's name and period sit
+  // on their own line with the topic below.
   const supervisionList = $("#supervisionList");
-  if (supervisionList) (CONTENT.supervision || []).forEach(group => {
-    supervisionList.insertAdjacentHTML("beforeend", `<h3 class="subsec-head">${group.label}</h3>`);
-    // A named student leads the item; an unnamed cohort ends with its year.
-    list(supervisionList, (group.items || []).map(s => s.who
-      ? item(s.who, s.period, cites(s.topic))
-      : `<li>${cites(s.topic).replace(/\.\s*$/, "")} (${s.period}).</li>`));
-  });
+  if (supervisionList) supervisionList.innerHTML = (CONTENT.supervision || []).map((group, i) =>
+    `<h3 class="subsec-head"><span class="sec-no">${letter(supervisionList)}.${i + 1}</span>${group.label}</h3>` +
+    (group.items || []).map(s =>
+      `<p class="entry-title">${s.who ? `<b>${s.who}</b> (${s.period})` : `<b>${s.period}</b>`}</p>` +
+      `<p class="entry-body">${cites(s.topic)}</p>`).join("")).join("");
 
   /* ============ Appendix D: Experience ============ */
 
   const experienceList = $("#experienceList");
-  if (experienceList) list(experienceList, (CONTENT.experience || []).map(x =>
-    item(x.position ? [x.position, x.place].filter(Boolean).join(", ") : x.role,
-         [x.period, x.location].filter(Boolean).join("; "), x.what)));
+  if (experienceList) experienceList.innerHTML = (CONTENT.experience || []).map((x, i) =>
+    entry(`${letter(experienceList)}.${i + 1}`, x.position ? [x.position, x.place].filter(Boolean).join(", ") : x.role,
+          [x.period, x.location].filter(Boolean).join("; "), x.what)).join("");
 
   /* ============ Appendix E: Miscellany ============ */
 
-  // "• Program Committee, …, Dublin, Ireland (2027).†"
+  // Date in a narrow column beside each entry, as in §2 on p.1.
   const miscList = $("#miscList");
   if (miscList) (CONTENT.misc || []).forEach(m => {
     const li = document.createElement("li");
     const links = arrows(m.links);
-    // Skip the "(date)" when the text already names it ("… 26–27 April 2027.").
-    li.innerHTML = (m.html.includes(m.date) ? m.html
-      : `${m.html.replace(/\.\s*$/, "")} <span class="nowrap">(${m.date})</span>.`) +
-      (links ? `&nbsp;<span class="proof-links">${links}</span>` : "");
+    li.innerHTML = `<span class="proof-date">${m.date}</span>` +
+      `<span>${m.html}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
     miscList.appendChild(li);
   });
 

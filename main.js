@@ -72,9 +72,6 @@
       .concat(CONTENT.extraKeywords || [])
       .join(", ");
 
-  // Copyright year in the contact footnote: always "now".
-  document.querySelectorAll(".pubyear").forEach(el => (el.textContent = new Date().getFullYear()));
-
   /* ============ 1. Introduction (bio with live citations) ============ */
 
   const intro = $("#intro");
@@ -192,11 +189,12 @@
     tr.className = "attn-item attn-anchor";
     tr.dataset.topics = (p.topics || []).join(" ");
     const ext = p.url && p.url.startsWith("http") ? ' target="_blank" rel="noopener"' : "";
+    // Usage figure (e.g. downloads) on its own line under the type.
     const milestone = p.milestone
-      ? `; <span class="milestone" title="${p.milestoneTitle || ""}">${p.milestone}</span>` : "";
+      ? `<span class="atype milestone" title="${p.milestoneTitle || ""}">${p.milestone}</span>` : "";
     tr.innerHTML =
       `<td><a href="${p.url}"${ext}><span class="aname">${p.name}</span></a>` +
-      `<span class="atype">${p.tech}${milestone}</span></td><td>${p.description}</td>`;
+      `<span class="atype">${p.tech}</span>${milestone}</td><td>${p.description}</td>`;
     $("#artifacts").appendChild(tr);
   });
 

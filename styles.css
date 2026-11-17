@@ -339,7 +339,7 @@ figcaption strong { font-weight: 400; }
 .artifacts-table a:hover { color: var(--accent); }
 .artifacts-table a:hover .aname { text-decoration: underline; text-underline-offset: 3px; }
 .artifacts-table .aname { font-weight: 700; }
-.artifacts-table td:first-child { width: 11em; white-space: normal; font-variant-numeric: normal; }
+.artifacts-table td:first-child { width: 11em; white-space: normal; font-variant-numeric: normal; padding-right: 22px; }
 .artifacts-table .atype { display: block; font-style: italic; font-size: var(--fs-foot); color: var(--muted); }
 
 /* ============ References ============ */
@@ -396,12 +396,11 @@ figcaption strong { font-weight: 400; }
 .page-nav a { color: var(--accent); text-decoration: none; }
 .page-nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-/* Appendices B–E: bulleted lists (LaTeX itemize), "• Head (period). Text." */
-.paper-list { margin: 0 0 0.6em; padding-left: 1.3em; list-style: disc; }
-.paper-list li { margin: 0 0 0.35em; padding-left: 0.2em; text-align: left; }
-.paper-list li::marker { color: var(--ink); }
-.runin-head { font-weight: 700; }
-.nowrap { white-space: nowrap; }
+/* Appendices B–D: numbered subsections, each followed by its paragraph. */
+.subsec-head .subsec-meta { font-weight: 400; }
+.entry-title { margin: 10px 0 2px; }
+.entry-body { margin: 0 0 0.9em; text-align: justify; }
+.paper-section .entry-title, .paper-section .entry-body { text-indent: 0; }   /* each sits under its own heading */
 
 /* Tables in the booktabs style acmart uses: caption above, three rules,
    no vertical lines. */
@@ -831,15 +830,6 @@ figcaption strong { font-weight: 400; }
 /* "Received …; revised …", the last line of an ACM paper (p. 3). */
 .received { margin-top: 36px; font-size: var(--fs-small); }
 
-/* First-page footnote (p. 1): author's contact and copyright under a rule. */
-.contact-foot {
-  margin-top: 36px;
-  padding-top: 6px;
-  border-top: 1px solid var(--ink);
-  font-size: var(--fs-foot);
-  line-height: 1.45;
-  color: var(--ink);
-}
 
 /* Page foot in the running-head face; the folio side alternates as in acmart:
    right on odd pages, left on even ones. */
@@ -889,7 +879,7 @@ figcaption strong { font-weight: 400; }
   .abstract p,
   .paper-section p,
   .proof-notes li,
-  .paper-list li { text-align: left !important; }
+  .entry-body { text-align: left !important; }
   .proof-notes li { grid-template-columns: 1fr; }   /* date above its note */
 }
 
