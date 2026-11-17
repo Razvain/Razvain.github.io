@@ -161,14 +161,14 @@ const CONTENT = {
 }`,
     },
     {
-      title: "Beyond Merging: Refactoring and Code Quality Signals in Agent-Authored Pull Requests",
+      title: "Merged, but Maintained? Refactoring and Code Quality in Agent-Authored Pull Requests",
       authors: "Inaesh Joshi, Razvan Mihai Popescu, Maliheh Izadi",
       venue: "Under review", year: 2026, type: "journal",
       topics: ["agents"],
       links: {},
       tldr: "Abstract coming soon.",
       bibtex: `@article{joshi2026beyond,
-  title  = {Beyond Merging: Refactoring and Code Quality Signals in Agent-Authored Pull Requests},
+  title  = {Merged, but Maintained? Refactoring and Code Quality in Agent-Authored Pull Requests},
   author = {Joshi, Inaesh and Popescu, Razvan Mihai and Izadi, Maliheh},
   note   = {Under review},
   year   = {2026}
@@ -418,7 +418,7 @@ const CONTENT = {
       { period: "2025–2026", who: "Nawmi Nujhat",
         topic: `Benchmarking coding agents on real-world code reviews. This work led to a paper&nbsp;[[cite:SWE-Amend]].` },
       { period: "2025–2026", who: "Inaesh Joshi",
-        topic: `Refactoring and maintainability of agent-authored code in open-source repositories, in collaboration with Meta. This work culminated in a paper&nbsp;[[cite:Beyond Merging]].` },
+        topic: `Refactoring and maintainability of agent-authored code in open-source repositories, in collaboration with Meta. This work culminated in a paper&nbsp;[[cite:Merged, but Maintained?]].` },
     ] },
     { label: "4 × BSc Thesis", items: [
       { period: "2025", who: "",
