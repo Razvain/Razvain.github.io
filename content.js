@@ -338,14 +338,14 @@ const CONTENT = {
     {
       name: "MOSAIC-3M",
       topics: ["agents", "data"],
-      description: "The large-scale dataset of agent-authored pull requests behind the in-the-wild study, collecting the commits, reviews, issues, and file changes of five coding agents mined from open source.",
+      description: "A large-scale dataset of agent- and human-authored pull requests mined from open source, comprising the commits, reviews, issues, and file changes of five coding agents and human developers.",
       url: "https://huggingface.co/datasets/AISE-TUDelft/MOSAIC-agentic-3m", tech: "Dataset, GitHub mining",
     },
     {
       name: "The Heap",
       topics: ["data", "evaluation"],
       description: "A contamination-free, multilingual copyleft code corpus, deduplicated against all publicly available training datasets, so language models can be evaluated on code they were not trained on.",
-      url: "https://huggingface.co/datasets/AISE-TUDelft/the-heap", tech: "Dataset, dedup pipeline",
+      url: "https://huggingface.co/datasets/AISE-TUDelft/the-heap", tech: "Dataset, Deduplication pipeline",
       milestone: "36k+ downloads", milestoneTitle: "36,553 all-time downloads on Hugging Face",
     },
     {
@@ -419,7 +419,7 @@ const CONTENT = {
       links: ["https://conf.researchr.org/home/icse-2027/agent-2027"] },
     { date: "2027", html: `Program Committee, <em>MSR ’27 Mining Challenge</em>, co-located with <em>ICSE ’27</em>, Dublin, Ireland, 26–27 April 2027.`,
       links: ["https://2027.msrconf.org/track/msr-2027-mining-challenge"] },
-    { date: "2026 & 2027", html: `Co-chair, <em>The Poisoned Chalice</em>, a Membership Inference Attack competition — 1st edition co-located with <em>FSE ’26</em>, Montreal, Canada, and 2nd edition with <em>ICSE ’27</em>, Dublin, Ireland.`,
+    { date: "2026 & 2027", html: `Co-chair, <em>The Poisoned Chalice</em>, a Membership Inference Attack competition at <em>FSE ’26</em> and <em>ICSE ’27</em>.`,
       links: ["https://poisoned-chalice.org/"] },
     { date: "2025", html: `Web chair, <em>AgenticSE Workshop</em>, co-located with <em>ASE ’25</em>, Seoul, South Korea.`,
       links: ["https://agenticse.github.io/"] },
@@ -551,7 +551,7 @@ const CONTENT = {
   ],
 
   // ----- Footer -----
-  footerLine: "Always happy to talk about agents, benchmarks, or why evaluation is harder than it looks.",
+  footerLine: "The author welcomes discussions on coding agents, benchmarks, and the evaluation of language models for code.",
   footerLinks: [
     { label: "r.m.popescu@tudelft.nl", url: "mailto:r.m.popescu@tudelft.nl" },
     { label: "Google Scholar", url: "https://scholar.google.com/citations?user=NOQ6ZAkAAAAJ&hl=ro" },

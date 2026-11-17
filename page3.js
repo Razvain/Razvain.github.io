@@ -1,5 +1,5 @@
 /* =========================================================================
-   Design 3, page 3 — fieldwork (interactive world map) + hobbies.
+   Design 3, page 3 — travel (interactive world map).
    Map: world-map.svg (@svg-maps/world, MIT) — every country is a <path>
    with id = ISO alpha-2 code and a `name` attribute.
    ========================================================================= */
@@ -20,10 +20,6 @@
     localStorage.setItem("theme", next);
   });
 
-  // Revision date in the received line: always "now".
-  const now = new Date();
-  document.querySelectorAll(".pubdate").forEach(el =>
-    (el.textContent = now.toLocaleDateString("en-US", { month: "long", year: "numeric" })));
 
   /* ============ Fieldwork "sample size" counter ============ */
 
@@ -377,7 +373,5 @@
            (map failed to load; world-map.svg missing)</p>`;
     });
 
-  const signoffEl = $("#signoff");
-  if (signoffEl && CONTENT.signoff) signoffEl.textContent = CONTENT.signoff;
 
 })();

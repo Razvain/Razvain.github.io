@@ -806,7 +806,7 @@ figcaption strong { font-weight: 400; }
 
 /* ============ Colophon & fixed UI ============ */
 
-/* Closing beat — an end-mark and a hand-written last line */
+/* Closing end-mark (⁂) on p. 3 */
 .closing {
   margin-top: 44px;
   text-align: center;
@@ -819,18 +819,7 @@ figcaption strong { font-weight: 400; }
   color: var(--faint);
   margin-bottom: 14px;
 }
-.closing-line {
-  max-width: 34em;
-  margin: 0 auto;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: var(--fs);
-  line-height: 1.55;
-  color: var(--muted);
-}
 
-/* "Received …; revised …", the last line of an ACM paper (p. 3). */
-.received { margin-top: 36px; font-size: var(--fs-small); }
 
 
 /* Page foot in the running-head face; the folio side alternates as in acmart:

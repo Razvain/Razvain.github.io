@@ -100,7 +100,7 @@
   if (miscList) (CONTENT.misc || []).forEach(m => {
     const li = document.createElement("li");
     const links = arrows(m.links);
-    li.innerHTML = `<span class="proof-date">${m.date}</span>` +
+    li.innerHTML = `<span class="proof-date">${m.date.replace(" & ", " &amp;<br>")}</span>` +
       `<span>${m.html}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
     miscList.appendChild(li);
   });
