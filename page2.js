@@ -74,7 +74,7 @@
 
   /* ============ Appendix C: Supervision ============ */
 
-  // A heading per group (MSc, BSc). Named students are enumerated; a group with
+  // A heading per group (MSc, BSc). Named students are a bulleted list; a group with
   // one unnamed cohort carries its period in the heading, its topic below.
   const supervisionList = $("#supervisionList");
   if (supervisionList) supervisionList.innerHTML = (CONTENT.supervision || []).map(group => {
@@ -83,7 +83,7 @@
       return `<h3 class="subsec-head">${group.label} <span class="subsec-meta">(${items[0].period})</span></h3>` +
         `<p class="entry-body">${cites(items[0].topic)}</p>`;
     return `<h3 class="subsec-head">${group.label}</h3>` +
-      enumerate(items.map(s => item(s.who || s.period, s.who ? s.period : "", cites(s.topic))));
+      `<ul class="paper-enum bulleted">${items.map(s => item(s.who || s.period, s.who ? s.period : "", cites(s.topic))).join("")}</ul>`;
   }).join("");
 
   /* ============ Appendix D: Experience ============ */

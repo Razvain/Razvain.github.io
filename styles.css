@@ -400,6 +400,7 @@ figcaption strong { font-weight: 400; }
 .subsec-head .subsec-meta { font-weight: 400; }
 .paper-enum { margin: 6px 0 0.6em; padding-left: 1.6em; list-style: decimal; }
 .paper-enum li { padding-left: 0.25em; }
+.paper-enum.bulleted { list-style: disc; }
 .paper-enum li::marker { font-weight: 400; color: var(--ink); }
 .entry-title { margin: 0 0 2px; }
 .entry-body { margin: 0 0 0.9em; text-align: justify; }
