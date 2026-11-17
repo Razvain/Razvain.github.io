@@ -27,14 +27,12 @@ const CONTENT = {
     `A second focus is the [[evaluation|evaluation]] of language models for
      software engineering. As these models move from assisting developers to
      acting on their behalf, measuring their capabilities reliably becomes
-     essential. I develop evaluations that account for data contamination,
-     reflect real development practice, and capture how models behave beyond
-     isolated benchmark tasks.`,
+     essential. I develop evaluations that account for data contamination and
+     reflect how software is developed in practice.`,
 
-    `Both lines build on my earlier work. My BSc thesis on [[completion|code
-     completion]] led to research on [[interpretability|how these models
-     represent code]] internally, culminating in the automated discovery of
-     attention patterns at scale. In parallel, I examined the [[data|data these
+    `Both lines build on my earlier work. Starting from my BSc thesis on
+     [[completion|code completion]], I studied [[interpretability|how these models
+     represent code]] internally, analyzing their attention patterns at scale. In parallel, I examined the [[data|data these
      models learn from]], investigating license infringements in public training
      sets, which resulted in The Heap, a contamination-free multilingual code
      corpus.`,
