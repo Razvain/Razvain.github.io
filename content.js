@@ -72,6 +72,10 @@ const CONTENT = {
 
   // ----- News (most recent first) -----
   news: [
+    { date: "2027", topics: [],
+      html: `Serving on the Program Committee of the <em>CHASE ’27</em> workshop.` },
+    { date: "2027", topics: [],
+      html: `Serving on the Program Committee of the <em>LangCode ’27</em> workshop at <em>NAACL ’27</em>.` },
     { date: "Apr 2027", topics: [],
       html: `Serving on the Program Committee of the <em>AGENT ’27</em> workshop on agentic AI systems, co-located with <em>ICSE ’27</em>, Dublin, Ireland.`,
       links: ["https://conf.researchr.org/home/icse-2027/agent-2027"] },
@@ -121,6 +125,20 @@ const CONTENT = {
       bibtex: `@article{alkaswan2026sepia,
   title  = {SEPIA: A Dataset of Prompts from Software Engineering Research Papers},
   author = {Al-Kaswan, Ali and Popescu, Razvan Mihai and Zaidman, Andy and Izadi, Maliheh},
+  note   = {Under review},
+  year   = {2026}
+}`,
+    },
+    {
+      title: "SWE-Amend: Benchmarking Coding Agents on Real Code Review",
+      authors: "Nawmi Nujhat, Razvan Mihai Popescu, Maliheh Izadi",
+      venue: "Under review", year: 2026, type: "journal",
+      topics: ["agents", "evaluation"],
+      links: {},
+      tldr: "Abstract coming soon.",
+      bibtex: `@article{nujhat2026sweamend,
+  title  = {SWE-Amend: Benchmarking Coding Agents on Real Code Review},
+  author = {Nujhat, Nawmi and Popescu, Razvan Mihai and Izadi, Maliheh},
   note   = {Under review},
   year   = {2026}
 }`,
@@ -338,7 +356,7 @@ const CONTENT = {
     {
       name: "MOSAIC-3M",
       topics: ["agents", "data"],
-      description: "A large-scale dataset of agent- and human-authored pull requests mined from open source, comprising the commits, reviews, issues, and file changes of five coding agents and human developers.",
+      description: "A large-scale dataset of agent- and human-authored pull requests mined from GitHub, comprising the commits, reviews, issues, and file changes of five coding agents and human developers.",
       url: "https://huggingface.co/datasets/AISE-TUDelft/MOSAIC-agentic-3m", tech: "Dataset, GitHub mining",
     },
     {
@@ -395,7 +413,7 @@ const CONTENT = {
   supervision: [
     { label: "2 × MSc Thesis", items: [
       { period: "2025–", who: "Nawmi Nujhat",
-        topic: "Agentic issue resolution within dynamic software environments." },
+        topic: `Benchmarking coding agents on real-world code reviews. This work led to a paper&nbsp;[[cite:SWE-Amend]].` },
       { period: "2025–2026", who: "Inaesh Joshi",
         topic: `Refactoring and maintainability impact of coding agents on open-source repositories, with Meta. This work culminated in a paper&nbsp;[[cite:Beyond Merging]].` },
     ] },
@@ -426,7 +444,7 @@ const CONTENT = {
     { date: "2025", html: `<em>SEN Symposium</em> and <em>AIWare BootCamp</em>, Amsterdam, The Netherlands.`,
       links: ["https://www.sen-symposium.nl/", "https://www.aiwarebootcamp.io/aiware-bootcamp-europe-2025"] },
     { date: "2024–", html: `Reviewer for <em>ICSE</em>, <em>FSE</em>, <em>ASE</em>, <em>ISSTA</em>, and <em>TOSEM</em>.` },
-    { date: "2022", html: `Represented Lunar Zebro and TU Delft at the <em>International Astronautical Congress (IAC ’22)</em>, Paris, France — the only student rover team at the congress.`,
+    { date: "2022", html: `Represented Lunar Zebro and TU Delft at the <em>International Astronautical Congress (IAC ’22)</em>, Paris, France, as the only student rover team at the congress.`,
       links: ["https://www.tudelft.nl/en/stories/articles/lunar-zebro-students-take-aim-at-the-moon"] },
   ],
 
@@ -551,7 +569,7 @@ const CONTENT = {
   ],
 
   // ----- Footer -----
-  footerLine: "The author welcomes discussions on coding agents, benchmarks, and the evaluation of language models for code.",
+  footerLine: "Discussions on coding agents, benchmarks, and the evaluation of language models for code are always welcome.",
   footerLinks: [
     { label: "r.m.popescu@tudelft.nl", url: "mailto:r.m.popescu@tudelft.nl" },
     { label: "Google Scholar", url: "https://scholar.google.com/citations?user=NOQ6ZAkAAAAJ&hl=ro" },

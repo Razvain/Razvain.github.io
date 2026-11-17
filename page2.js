@@ -63,7 +63,7 @@
         `<td>${short(e.institution)}</td><td>${short(e.location)}</td></tr>`).join("")).join("");
     educationList.innerHTML =
       `<figure class="paper-table edu-table"><figcaption><strong>Table 2.</strong> Degrees and selected programs.</figcaption>` +
-      `<table><thead><tr><th>Period</th><th>Degree or program</th><th>Institution</th><th>Location</th></tr></thead>` +
+      `<table><thead><tr><th>Period</th><th>Degree or Program</th><th>Institution</th><th>Location</th></tr></thead>` +
       `<tbody>${rows}</tbody></table></figure>`;
   }
 
@@ -107,7 +107,7 @@
   if (miscList) (CONTENT.misc || []).forEach(m => {
     const li = document.createElement("li");
     const links = arrows(m.links);
-    li.innerHTML = `<span class="proof-date">${m.date.replace(" & ", " &amp;<br>")}</span>` +
+    li.innerHTML = `<span class="proof-date">${m.date.replace(" & ", "<br>")}</span>` +
       `<span>${m.html}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
     miscList.appendChild(li);
   });
