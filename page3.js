@@ -332,6 +332,24 @@
         }
       });
 
+      // Light them up one-by-one in a quick west-to-east sweep. Each visited
+      // country's fade is nudged by a small per-country delay; capped so the
+      // whole sequence stays snappy however many countries there are.
+      if (!reducedMotion) {
+        const visited = [...svg.querySelectorAll("path.visited")].map(p => {
+          let x = 0; try { const b = p.getBBox(); x = b.x + b.width / 2; } catch {}
+          return { p, x };
+        }).sort((a, b) => a.x - b.x);
+        const step = Math.min(55, 1000 / Math.max(1, visited.length - 1)); // total spread ≤ ~1s
+        visited.forEach(({ p }, i) => {
+          p.style.animationDelay = (0.1 + i * step / 1000) + "s";
+          // Re-append in west-to-east order so visited pieces paint on top of
+          // their neighbours — a country scaling up then isn't clipped by a
+          // neighbour that happened to be drawn later in the source SVG.
+          svg.appendChild(p);
+        });
+      }
+
       // Event delegation: hover moves the card, click pins it (works on touch)
       svg.addEventListener("pointermove", (e) => {
         if (pinned) return;

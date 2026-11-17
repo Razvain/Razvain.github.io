@@ -596,6 +596,42 @@ figcaption strong { font-weight: 400; }
   stroke: color-mix(in srgb, var(--accent) 52%, var(--paper));
 }
 
+/* Entrance: visited countries fade from the "not visited" grey into the accent
+   each time the page loads, rather than appearing already shaded. */
+@keyframes mapCountryLit {
+  from {
+    transform: scale(1.22);
+    fill: color-mix(in srgb, var(--ink) 9%, var(--paper));
+  }
+}
+@keyframes mapMarkLit {
+  /* Micro-states are scattered islands (Fiji) or 1px dots — scaling spreads
+     them apart instead of zooming, so they only colour-fade, no scale.
+     Start expressed as the same color-mix() form as the resting stroke (0%
+     accent == paper) so the fade stays in-gamut and never flashes an
+     oversaturated red the way animating from a raw color does. */
+  from {
+    fill: color-mix(in srgb, var(--accent) 0%, var(--paper));
+    stroke: color-mix(in srgb, var(--accent) 0%, var(--paper));
+  }
+}
+/* Each visited piece scales down into place around its own centre as it
+   colours in — like a puzzle piece settling into the map. */
+.map-mount .country.visited {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mapCountryLit 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.map-mount .country.visited.tiny,
+.map-mount .country.visited.tiny-form {
+  animation: mapMarkLit 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-mount .country.visited,
+  .map-mount .country.visited.tiny,
+  .map-mount .country.visited.tiny-form { animation: none; }
+}
+
 .map-legend {
   display: flex;
   justify-content: center;
