@@ -46,11 +46,11 @@
     const l = arrows(links);
     return l ? `&nbsp;<span class="proof-links">${l}</span>` : "";
   };
-  // Short forms keep every cell on one line; the full name is the tooltip.
-  const SHORT = { "Delft University of Technology": "TU Delft", "The Netherlands": "NL",
+  // Short country codes keep every cell on one line; the full name is the tooltip.
+  const SHORT = { "The Netherlands": "NL",
                   "Germany": "DE", "USA": "US", "Australia": "AU" };
   const short = (text = "") => {
-    const s = text.replace(/Delft University of Technology|The Netherlands|Germany|USA|Australia/g, m => SHORT[m]);
+    const s = text.replace(/The Netherlands|Germany|USA|Australia/g, m => SHORT[m]);
     return s === text ? text : `<abbr title="${text}">${s}</abbr>`;
   };
   const educationList = $("#educationList");
@@ -68,9 +68,10 @@
   }
 
   // Appendices B–D: enumerated lists ("1.", "2.", …); each item has its title
-  // and period on one line and its text below.
+  // on the left, its period (and place) on the right, and its text below.
   const item = (title, meta, body) =>
-    `<li><p class="entry-title"><b>${title}</b>${meta ? ` (${meta})` : ""}</p><p class="entry-body">${body}</p></li>`;
+    `<li><p class="entry-title"><b>${title}</b>${meta ? `<span class="entry-meta">${meta}</span>` : ""}</p>` +
+    `<p class="entry-body">${body}</p></li>`;
   const enumerate = (items) => `<ol class="paper-enum">${items.join("")}</ol>`;
 
   /* ============ Appendix B: Teaching ============ */
@@ -87,8 +88,8 @@
   if (supervisionList) supervisionList.innerHTML = (CONTENT.supervision || []).map(group => {
     const items = group.items || [];
     if (items.length === 1 && !items[0].who)
-      return `<h3 class="subsec-head">${group.label} <span class="subsec-meta">(${items[0].period})</span></h3>` +
-        `<p class="entry-body">${cites(items[0].topic)}</p>`;
+      return `<h3 class="subsec-head entry-title">${group.label}<span class="entry-meta">${items[0].period}</span></h3>` +
+        `<p class="entry-body indented">${cites(items[0].topic)}</p>`;
     return `<h3 class="subsec-head">${group.label}</h3>` +
       `<ul class="paper-enum bulleted">${items.map(s => item(s.who || s.period, s.who ? s.period : "", cites(s.topic))).join("")}</ul>`;
   }).join("");
@@ -98,7 +99,7 @@
   const experienceList = $("#experienceList");
   if (experienceList) experienceList.innerHTML = enumerate((CONTENT.experience || []).map(x =>
     item(x.position ? [x.position, x.place].filter(Boolean).join(", ") : x.role,
-         [x.period, x.location].filter(Boolean).join("; "), x.what)));
+         [x.location, x.period].filter(Boolean).join(", "), x.what)));
 
   /* ============ Appendix E: Miscellany ============ */
 

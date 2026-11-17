@@ -85,7 +85,7 @@ const CONTENT = {
       html: `Serving on the Program Committee of the <em>MSR ’27 Mining Challenge</em>, co-located with <em>ICSE ’27</em>, Dublin, Ireland.`,
       links: ["https://2027.msrconf.org/track/msr-2027-mining-challenge"] },
     { date: "Apr 2027", topics: [],
-      html: `Co-chairing the second edition of <em>The Poisoned Chalice</em>, a Membership Inference Attack competition, co-located with <em>ICSE ’27</em>, Dublin, Ireland.`,
+      html: `Co-chairing the second edition of <em>The Poisoned Chalice</em>, a Membership Inference Attack competition, co-located with <em>ICSE ’27</em>, Dublin, Ireland, after co-chairing the first at <em>FSE ’26</em>.`,
       links: ["https://poisoned-chalice.org/"] },
     { date: "Jul 2026", topics: ["agents", "evaluation"],
       html: `Presented my doctoral research plan on developer-aligned agent evaluation at the <em>FSE ’26 Doctoral Symposium</em>, Montreal, Canada.`,
@@ -358,7 +358,7 @@ const CONTENT = {
     {
       name: "MOSAIC-3M",
       topics: ["agents", "data"],
-      description: "A large-scale dataset of agent- and human-authored pull requests mined from GitHub, comprising the commits, reviews, issues, and file changes of five coding agents and human developers.",
+      description: "A large-scale dataset of agent- and human-authored pull requests mined from GitHub, comprising the commits, reviews, comments, issues, and file changes of five coding agents and human developers.",
       url: "https://huggingface.co/datasets/AISE-TUDelft/MOSAIC-agentic-3m", tech: "Dataset, GitHub mining",
     },
     {
@@ -414,10 +414,10 @@ const CONTENT = {
 
   supervision: [
     { label: "2 × MSc Thesis", items: [
-      { period: "2025–", who: "Nawmi Nujhat",
+      { period: "2025–2026", who: "Nawmi Nujhat",
         topic: `Benchmarking coding agents on real-world code reviews. This work led to a paper&nbsp;[[cite:SWE-Amend]].` },
       { period: "2025–2026", who: "Inaesh Joshi",
-        topic: `Refactoring and maintainability impact of coding agents on open-source repositories, with Meta. This work culminated in a paper&nbsp;[[cite:Beyond Merging]].` },
+        topic: `Refactoring and maintainability impact of coding agents on open-source repositories, in collaboration with Meta. This work culminated in a paper&nbsp;[[cite:Beyond Merging]].` },
     ] },
     { label: "4 × BSc Thesis", items: [
       { period: "2025", who: "",
@@ -447,7 +447,7 @@ const CONTENT = {
       links: ["https://poisoned-chalice.org/"] },
     { date: "2025", html: `Web chair, <em>AgenticSE ’25</em> workshop, co-located with <em>ASE ’25</em>, Seoul, South Korea.`,
       links: ["https://agenticse.github.io/"] },
-    { date: "2025", html: `<em>SEN Symposium</em> and <em>AIWare BootCamp</em>, Amsterdam, The Netherlands.`,
+    { date: "2025", html: `Attended <em>SEN Symposium</em> and <em>AIWare BootCamp</em>, Amsterdam, The Netherlands.`,
       links: ["https://www.sen-symposium.nl/", "https://www.aiwarebootcamp.io/aiware-bootcamp-europe-2025"] },
     { date: "2024–", html: `Reviewer for <em>ICSE</em>, <em>FSE</em>, <em>ASE</em>, <em>ISSTA</em>, and <em>TOSEM</em>.` },
     { date: "2022", html: `Represented Lunar Zebro and TU Delft at <em>IAC ’22</em>, Paris, France, as the only student rover team at the congress.`,

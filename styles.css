@@ -398,12 +398,13 @@ figcaption strong { font-weight: 400; }
 .page-nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* Appendices B–D: enumerated lists ("1.", "2.", …), title line then text. */
-.subsec-head .subsec-meta { font-weight: 400; }
 .paper-enum { margin: 6px 0 0.6em; padding-left: 1.6em; list-style: decimal; }
-.paper-enum li { padding-left: 0.25em; }
+.paper-enum li { padding-left: 0.25em; }   /* text starts at 1.85em */
 .paper-enum.bulleted { list-style: disc; }
 .paper-enum li::marker { font-weight: 400; color: var(--ink); }
-.entry-title { margin: 0 0 2px; }
+.entry-title { margin: 0 0 2px; display: flex; justify-content: space-between; align-items: baseline; gap: 1.5em; }
+.entry-meta { flex: none; font-weight: 400; font-size: var(--fs-small); color: var(--muted); font-variant-numeric: tabular-nums; }
+.entry-body.indented { margin-left: 1.85em; }   /* aligns with the list items above */
 .entry-body { margin: 0 0 0.9em; text-align: justify; }
 .paper-section .entry-title, .paper-section .entry-body { text-indent: 0; }   /* each sits under its own heading */
 
@@ -428,7 +429,7 @@ figcaption strong { font-weight: 400; }
 .paper-table th:last-child, .paper-table td:last-child { padding-right: 0; }
 .paper-table td:first-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .paper-table abbr { text-decoration: none; }
-.edu-table td:last-child { white-space: nowrap; }   /* Table 2: short locations stay on one line */
+.edu-table td:nth-child(3), .edu-table td:last-child { white-space: nowrap; }   /* Table 2: institution and location on one line */
 /* Group label inside a table, set like a booktabs \midrule + italic label. */
 .paper-table tr.group-row th {
   padding-top: 8px;
