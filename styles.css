@@ -336,8 +336,7 @@ figcaption strong { font-weight: 400; }
 /* ============ Software artifacts ============ */
 
 /* Data Availability is Table 1: artifact (with host mark), type, description. */
-.artifacts-table a { color: var(--ink); text-decoration: none; }
-.artifacts-table a:hover { color: var(--accent); }
+.artifacts-table a { color: var(--accent); text-decoration: none; }   /* purple like every other link */
 .artifacts-table a:hover .aname { text-decoration: underline; text-underline-offset: 3px; }
 .artifacts-table .aname { font-weight: 700; }
 .artifacts-table td:first-child { width: 11em; white-space: normal; font-variant-numeric: normal; padding-right: 22px; }
