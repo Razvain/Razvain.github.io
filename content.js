@@ -55,7 +55,7 @@ const CONTENT = {
     evaluation:      { label: "Evaluation & benchmarks" },
     interpretability:{ label: "Model interpretability" },
     data:            { label: "Code data & contamination" },
-    completion:      { label: "Code completion" },
+    completion:      { label: "Code generation" },
     human:           { label: "Human–AI collaboration" },
   },
 
@@ -432,7 +432,7 @@ const CONTENT = {
     { period: "2021–2023", position: "Full-Stack Developer", place: "Lunar Zebro", location: "Delft, The Netherlands",
       what: "Built the ground-segment apps the team used to drive its lunar and terrestrial rovers, with live data and video streaming and a message broker coordinating four rovers at once, in collaboration with the University of Edinburgh." },
     { period: "2022", position: "Software Engineer", place: "Feedback-Analytics", location: "The Hague, The Netherlands",
-      what: "Put together a form-logic word processor that sped up report writing, connected it to the company's survey platform, and added an automated PDF generator for delivery." },
+      what: "Developed a form-logic word processor that sped up report writing, integrated it with the company's survey platform, and added automated PDF generation for the final reports." },
   ],
 
   misc: [

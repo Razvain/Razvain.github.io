@@ -69,9 +69,10 @@
 
   // Appendices B–D: enumerated lists ("1.", "2.", …); each item has its title
   // on the left, its period (and place) on the right, and its text below.
+  const keepHyphens = (html) => html.replace(/(^|[\s>(])(\w+(?:-\w+)+)/g, '$1<span class="nowrap">$2</span>');
   const item = (title, meta, body) =>
-    `<li><p class="entry-title"><b>${title}</b>${meta ? `<span class="entry-meta">${meta}</span>` : ""}</p>` +
-    `<p class="entry-body">${body}</p></li>`;
+    `<li><p class="entry-title"><b>${keepHyphens(title)}</b>${meta ? `<span class="entry-meta">${meta}</span>` : ""}</p>` +
+    `<p class="entry-body">${keepHyphens(body)}</p></li>`;
   const enumerate = (items) => `<ol class="paper-enum">${items.join("")}</ol>`;
 
   /* ============ Appendix B: Teaching ============ */
