@@ -396,9 +396,12 @@ figcaption strong { font-weight: 400; }
 .page-nav a { color: var(--accent); text-decoration: none; }
 .page-nav a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-/* Appendices B–D: numbered subsections, each followed by its paragraph. */
+/* Appendices B–D: enumerated lists ("1.", "2.", …), title line then text. */
 .subsec-head .subsec-meta { font-weight: 400; }
-.entry-title { margin: 10px 0 2px; }
+.paper-enum { margin: 6px 0 0.6em; padding-left: 1.6em; list-style: decimal; }
+.paper-enum li { padding-left: 0.25em; }
+.paper-enum li::marker { font-weight: 400; color: var(--ink); }
+.entry-title { margin: 0 0 2px; }
 .entry-body { margin: 0 0 0.9em; text-align: justify; }
 .paper-section .entry-title, .paper-section .entry-body { text-indent: 0; }   /* each sits under its own heading */
 

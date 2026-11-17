@@ -60,36 +60,38 @@
       `<tbody>${rows}</tbody></table></figure>`;
   }
 
-  // Appendices B–D: one numbered subsection per entry, "B.1 Title (period)",
-  // with its text as a paragraph below.
-  const letter = (mount) => mount.closest("section")?.querySelector(".sec-no")?.textContent ?? "";
-  const entry = (no, title, meta, body) =>
-    `<h3 class="subsec-head"><span class="sec-no">${no}</span>${title}` +
-    (meta ? ` <span class="subsec-meta">(${meta})</span>` : "") + `</h3><p class="entry-body">${body}</p>`;
+  // Appendices B–D: enumerated lists ("1.", "2.", …); each item has its title
+  // and period on one line and its text below.
+  const item = (title, meta, body) =>
+    `<li><p class="entry-title"><b>${title}</b>${meta ? ` (${meta})` : ""}</p><p class="entry-body">${body}</p></li>`;
+  const enumerate = (items) => `<ol class="paper-enum">${items.join("")}</ol>`;
 
   /* ============ Appendix B: Teaching ============ */
 
   const teachingList = $("#teachingList");
-  if (teachingList) teachingList.innerHTML = (CONTENT.teaching || []).map((t, i) =>
-    entry(`${letter(teachingList)}.${i + 1}`, [t.position || t.role, t.course].filter(Boolean).join(", "), t.period, t.what)).join("");
+  if (teachingList) teachingList.innerHTML = enumerate((CONTENT.teaching || []).map(t =>
+    item([t.position || t.role, t.course].filter(Boolean).join(", "), t.period, t.what)));
 
   /* ============ Appendix C: Supervision ============ */
 
-  // One subsection per group (MSc, BSc); each student's name and period sit
-  // on their own line with the topic below.
+  // A heading per group (MSc, BSc). Named students are enumerated; a group with
+  // one unnamed cohort carries its period in the heading, its topic below.
   const supervisionList = $("#supervisionList");
-  if (supervisionList) supervisionList.innerHTML = (CONTENT.supervision || []).map((group, i) =>
-    `<h3 class="subsec-head"><span class="sec-no">${letter(supervisionList)}.${i + 1}</span>${group.label}</h3>` +
-    (group.items || []).map(s =>
-      `<p class="entry-title">${s.who ? `<b>${s.who}</b> (${s.period})` : `<b>${s.period}</b>`}</p>` +
-      `<p class="entry-body">${cites(s.topic)}</p>`).join("")).join("");
+  if (supervisionList) supervisionList.innerHTML = (CONTENT.supervision || []).map(group => {
+    const items = group.items || [];
+    if (items.length === 1 && !items[0].who)
+      return `<h3 class="subsec-head">${group.label} <span class="subsec-meta">(${items[0].period})</span></h3>` +
+        `<p class="entry-body">${cites(items[0].topic)}</p>`;
+    return `<h3 class="subsec-head">${group.label}</h3>` +
+      enumerate(items.map(s => item(s.who || s.period, s.who ? s.period : "", cites(s.topic))));
+  }).join("");
 
   /* ============ Appendix D: Experience ============ */
 
   const experienceList = $("#experienceList");
-  if (experienceList) experienceList.innerHTML = (CONTENT.experience || []).map((x, i) =>
-    entry(`${letter(experienceList)}.${i + 1}`, x.position ? [x.position, x.place].filter(Boolean).join(", ") : x.role,
-          [x.period, x.location].filter(Boolean).join("; "), x.what)).join("");
+  if (experienceList) experienceList.innerHTML = enumerate((CONTENT.experience || []).map(x =>
+    item(x.position ? [x.position, x.place].filter(Boolean).join(", ") : x.role,
+         [x.period, x.location].filter(Boolean).join("; "), x.what)));
 
   /* ============ Appendix E: Miscellany ============ */
 
