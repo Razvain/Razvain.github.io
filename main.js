@@ -168,6 +168,8 @@
   const host = (u) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; } };
 
   // Each note is a run-in paragraph, "Apr 2027. Serving on …", newest first.
+  // Hyphenated words ("co-located") never break at their hyphen.
+  const keepHyphens = (html) => html.replace(/(^|[\s>(])(\w+(?:-\w+)+)/g, '$1<span class="nowrap">$2</span>');
   const newsList = $("#newsList");
   CONTENT.news.forEach(n => {
     const li = document.createElement("li");
@@ -176,7 +178,7 @@
     const links = (n.links || [])
       .map(u => `<a class="proof-link" href="${u}" target="_blank" rel="noopener" title="${host(u)}" aria-label="Open on ${host(u)}">↗</a>`)
       .join("");
-    li.innerHTML = `<span class="proof-date">${n.date}</span><span>${n.html}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
+    li.innerHTML = `<span class="proof-date">${n.date}</span><span>${keepHyphens(n.html)}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
     newsList.appendChild(li);
   });
 

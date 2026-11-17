@@ -72,10 +72,12 @@ const CONTENT = {
 
   // ----- News (most recent first) -----
   news: [
-    { date: "2027", topics: [],
-      html: `Serving on the Program Committee of the <em>CHASE ’27</em> workshop.` },
-    { date: "2027", topics: [],
-      html: `Serving on the Program Committee of the <em>LangCode ’27</em> workshop at <em>NAACL ’27</em>.` },
+    { date: "Jun 2027", topics: [],
+      html: `Serving on the Program Committee of <em>LangCode ’27</em>, the First Language and Code Workshop, co-located with <em>NAACL ’27</em>, San Francisco, USA.`,
+      links: ["https://langcode2027.github.io/"] },
+    { date: "Apr 2027", topics: [],
+      html: `Serving on the Program Committee of the International Conference on Cooperative and Human Aspects of Software Engineering (<em>CHASE ’27</em>), co-located with <em>ICSE ’27</em>, Dublin, Ireland.`,
+      links: ["https://conf.researchr.org/home/chase-2027"] },
     { date: "Apr 2027", topics: [],
       html: `Serving on the Program Committee of the <em>AGENT ’27</em> workshop on agentic AI systems, co-located with <em>ICSE ’27</em>, Dublin, Ireland.`,
       links: ["https://conf.researchr.org/home/icse-2027/agent-2027"] },

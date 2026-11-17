@@ -311,6 +311,7 @@ figcaption strong { font-weight: 400; }
 /* External links on each note, set as footnote-style marks (as acmart sets
    URLs). The ↗ stays in the DOM (screen readers) but takes no space; a
    superscript † ‡ § ¶ replaces it. */
+.nowrap { white-space: nowrap; }   /* e.g. hyphenated words in lists */
 .proof-links { white-space: nowrap; margin-left: -0.2em; }  /* sit against the &nbsp; before it */
 .proof-link {
   font-family: var(--serif);

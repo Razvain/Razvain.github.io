@@ -108,7 +108,7 @@
     const li = document.createElement("li");
     const links = arrows(m.links);
     li.innerHTML = `<span class="proof-date">${m.date.replace(" & ", "<br>")}</span>` +
-      `<span>${m.html}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
+      `<span>${m.html.replace(/(^|[\s>(])(\w+(?:-\w+)+)/g, '$1<span class="nowrap">$2</span>')}${links ? `&nbsp;<span class="proof-links">${links}</span>` : ""}</span>`;
     miscList.appendChild(li);
   });
 
