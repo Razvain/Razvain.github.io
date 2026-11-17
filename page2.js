@@ -46,17 +46,24 @@
     const l = arrows(links);
     return l ? `&nbsp;<span class="proof-links">${l}</span>` : "";
   };
+  // Short forms keep every cell on one line; the full name is the tooltip.
+  const SHORT = { "Delft University of Technology": "TU Delft", "The Netherlands": "NL",
+                  "Germany": "DE", "USA": "US", "Australia": "AU" };
+  const short = (text = "") => {
+    const s = text.replace(/Delft University of Technology|The Netherlands|Germany|USA|Australia/g, m => SHORT[m]);
+    return s === text ? text : `<abbr title="${text}">${s}</abbr>`;
+  };
   const educationList = $("#educationList");
   if (educationList) {
     // One table, a labelled group of rows per education group (degrees, programs).
     const rows = (CONTENT.education || []).map(group =>
-      `<tr class="group-row"><th colspan="3">${group.label}</th></tr>` +
+      `<tr class="group-row"><th colspan="4">${group.label}</th></tr>` +
       (group.items || []).map(e =>
         `<tr><td>${e.period}</td><td>${e.degree}${footmarks(e.links)}</td>` +
-        `<td>${[e.institution, e.location].filter(Boolean).join(", ")}</td></tr>`).join("")).join("");
+        `<td>${short(e.institution)}</td><td>${short(e.location)}</td></tr>`).join("")).join("");
     educationList.innerHTML =
-      `<figure class="paper-table"><figcaption><strong>Table 2.</strong> Degrees and selected programs.</figcaption>` +
-      `<table><thead><tr><th>Period</th><th>Degree or program</th><th>Institution</th></tr></thead>` +
+      `<figure class="paper-table edu-table"><figcaption><strong>Table 2.</strong> Degrees and selected programs.</figcaption>` +
+      `<table><thead><tr><th>Period</th><th>Degree or program</th><th>Institution</th><th>Location</th></tr></thead>` +
       `<tbody>${rows}</tbody></table></figure>`;
   }
 

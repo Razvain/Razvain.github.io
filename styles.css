@@ -426,6 +426,8 @@ figcaption strong { font-weight: 400; }
 .paper-table th, .paper-table td { padding: 4px 14px 4px 0; vertical-align: top; text-align: left; }
 .paper-table th:last-child, .paper-table td:last-child { padding-right: 0; }
 .paper-table td:first-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.paper-table abbr { text-decoration: none; }
+.edu-table td:last-child { white-space: nowrap; }   /* Table 2: short locations stay on one line */
 /* Group label inside a table, set like a booktabs \midrule + italic label. */
 .paper-table tr.group-row th {
   padding-top: 8px;
