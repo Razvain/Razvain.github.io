@@ -26,10 +26,10 @@ const CONTENT = {
 
     `A second focus is the [[evaluation|evaluation]] of language models for
      software engineering. As these models move from assisting developers to
-     acting on their behalf, measuring their capabilities reliably becomes a
-     central concern. My work in this area aims at evaluations that are free of
-     data contamination, reflect real development practice, and capture how
-     models behave beyond isolated benchmark tasks.`,
+     acting on their behalf, measuring their capabilities reliably becomes
+     essential. I develop evaluations that are free of data contamination,
+     reflect real development practice, and capture how models behave beyond
+     isolated benchmark tasks.`,
 
     `Both lines build on my earlier work. My BSc thesis on [[completion|code
      completion]] led to research on [[interpretability|how these models
