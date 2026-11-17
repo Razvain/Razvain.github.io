@@ -19,35 +19,37 @@ const CONTENT = {
   /* Bio: plain text with [[topic-id|display text]] markers.
      Each marker becomes an interactive token. */
   bio: [
-    `My most recent work follows [[agents|coding agents]] into the wild, studying
-     how they shape real projects over time through code-quality
-     signals, and how developers review, trust, and collaborate with them.`,
+    `My current work studies [[agents|coding agents]] in the wild, examining how
+     autonomous agents contribute to open-source projects, how their changes
+     affect code quality and maintainability over time, and how developers
+     review, trust, and collaborate with them.`,
 
-    `The models we build are only as good as our ability to measure what matters,
-     so a large part of my work is [[evaluation|evaluation]]: reviewing how LLMs
-     are currently assessed on code, building datasets free of training-data
-     contamination, and designing agent evaluations that reflect how developers
-     <span style="hyphens:none;-webkit-hyphens:none">actually</span> work.`,
+    `A second focus is the [[evaluation|evaluation]] of language models for
+     software engineering. As these models move from assisting developers to
+     acting on their behalf, measuring their capabilities reliably becomes a
+     central concern. My work in this area aims at evaluations that are free of
+     data contamination, reflect real development practice, and capture how
+     models behave beyond isolated benchmark tasks.`,
 
-    `Both threads trace back to where I actually started. My first line of work
-     was on [[interpretability|how these models represent code]] internally,
-     which grew out of my BSc thesis on [[completion|code completion]] into
-     discovering attention patterns at scale. The [[data|data these models
-     learn from]] followed close behind: an investigation into license
-     infringements in public training sets, which led to The Heap, a
-     contamination-free multilingual corpus.`,
+    `Both lines build on my earlier work. My BSc thesis on [[completion|code
+     completion]] led to research on [[interpretability|how these models
+     represent code]] internally, culminating in the automated discovery of
+     attention patterns at scale. In parallel, I examined the [[data|data these
+     models learn from]], investigating license infringements in public training
+     sets, which resulted in The Heap, a contamination-free multilingual code
+     corpus.`,
   ],
 
   /* Abstract (Design 3 / manuscript only). Plain text — kept separate from
      the bio above so it can read differently from the Introduction. */
   abstract:
-    "I am a PhD researcher in the AISE Lab at TU Delft, a year and a half into the work, " +
-    "exploring the intersection of Large Language Models and Software Engineering. Much of it " +
-    "comes down to a deceptively hard question: <em>how reliably can we evaluate these models " +
-    "on coding tasks?</em> This paper surveys the author’s publications, artifacts, and recent " +
-    "activity, along with education and academic programs, teaching, student supervision, experience, and service, and closes " +
-    "on a lighter note, with the countries visited and a few other interests. " +
-    "Related work is cited throughout. Results are promising but, as always, more research is needed.",
+    "I am a PhD candidate in the AISE Lab at Delft University of Technology, working at the " +
+    "intersection of large language models and software engineering. My research addresses a " +
+    "central question: <em>how reliably can we evaluate these models on coding tasks, and how do " +
+    "they behave once deployed in real development workflows?</em> This paper surveys my " +
+    "publications, released artifacts, and recent activities, followed by education, teaching, " +
+    "student supervision, professional experience, and service. Related work is cited throughout. " +
+    "Results are promising but, as always, more research is needed.",
 
   // Topic ids used above must exist here.
   topics: {
