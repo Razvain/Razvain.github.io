@@ -418,7 +418,7 @@ const CONTENT = {
       { period: "2025–2026", who: "Nawmi Nujhat",
         topic: `Benchmarking coding agents on real-world code reviews. This work led to a paper&nbsp;[[cite:SWE-Amend]].` },
       { period: "2025–2026", who: "Inaesh Joshi",
-        topic: `Effects of coding agents on refactoring and maintainability in open-source repositories, in collaboration with Meta. This work culminated in a paper&nbsp;[[cite:Beyond Merging]].` },
+        topic: `Refactoring and maintainability of agent-authored code in open-source repositories, in collaboration with Meta. This work culminated in a paper&nbsp;[[cite:Beyond Merging]].` },
     ] },
     { label: "4 × BSc Thesis", items: [
       { period: "2025", who: "",
