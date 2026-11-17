@@ -21,8 +21,8 @@ const CONTENT = {
   bio: [
     `My current work studies [[agents|coding agents]] in the wild, examining how
      autonomous agents contribute to open-source projects, how their changes
-     affect code quality and maintainability over time, and how developers
-     review, trust, and collaborate with them.`,
+     affect code quality and maintainability over time, and [[human|how developers
+     review, trust, and collaborate with them]].`,
 
     `A second focus is the [[evaluation|evaluation]] of language models for
      software engineering. As these models move from assisting developers to
@@ -54,8 +54,9 @@ const CONTENT = {
     agents:          { label: "Coding agents" },
     evaluation:      { label: "Evaluation & benchmarks" },
     interpretability:{ label: "Model interpretability" },
-    data:            { label: "Code data & licensing" },
+    data:            { label: "Code data & contamination" },
     completion:      { label: "Code completion" },
+    human:           { label: "Human–AI collaboration" },
   },
 
   // Extra keywords appended to the topic-derived keyword line (casing preserved).
@@ -149,7 +150,7 @@ const CONTENT = {
       title: "Characterizing Human-Agent Dynamics in Agent-authored Pull Requests",
       authors: "Ziyou Li, Razvan Mihai Popescu, Maliheh Izadi",
       venue: "Under review", year: 2026, type: "journal",
-      topics: ["agents"],
+      topics: ["agents", "human"],
       links: {},
       tldr: "Abstract coming soon.",
       bibtex: `@article{li2026characterizing,
@@ -205,7 +206,7 @@ const CONTENT = {
       title: "Reliable and Developer-Aligned Evaluation of Agents for Software Engineering",
       authors: "Razvan Mihai Popescu",
       venue: "FSE Doctoral Symposium", year: 2026, type: "conference",
-      topics: ["agents", "evaluation"],
+      topics: ["agents", "evaluation", "human"],
       links: {},
       page: "https://dl.acm.org/doi/10.1145/3803437.3804877",
       tldr: `Large language models are rapidly moving towards closing the development cycle, transitioning from simple assistive companions to autonomous contributors deeply embedded into collaborative development environments. Despite their accelerated adoption, existing evaluation techniques are limited due to their fragmented nature and distorted projection of true model capabilities, often obtained from hypothetical syntactic scenarios. This research aims to bridge this gap by providing a comprehensive evaluation methodology for LLM-powered agents that is grounded in real-world software development practice. Our evaluation approach focuses on contamination-awareness, in-the-wild agentic behavior assessment, and trajectory-aware benchmarks and metrics capturing realistic coding contexts, human-aligned behavior, and model failure modes.`,
@@ -235,7 +236,7 @@ const CONTENT = {
       title: "Investigating Autonomous Agent Contributions in the Wild: Activity Patterns and Code Change over Time",
       authors: "Razvan Mihai Popescu, David Gros, Andrei Botocan, Rahul Pandita, Prem Devanbu, Maliheh Izadi",
       venue: "MSR", year: 2026, type: "conference",
-      topics: ["agents"],
+      topics: ["agents", "human"],
       links: {},
       page: "https://dl.acm.org/doi/10.1145/3793302.3793354",
       tldr: `The rise of large language models for code has reshaped software development. Autonomous coding agents, able to create branches, open pull requests, and perform code reviews, now actively contribute to real-world projects. Their growing role offers a unique and timely opportunity to investigate AI-driven contributions and their effects on code quality, team dynamics, and software maintainability. In this work, we construct a novel dataset of approximately 110,000 open-source pull requests, including associated commits, comments, reviews, issues, and file changes, collectively representing millions of lines of source code. We compare five popular coding agents, including OpenAI Codex, Claude Code, GitHub Copilot, Google Jules, and Devin, examining how their usage differs in various development aspects such as merge frequency, edited file types, and developer interaction signals, including comments and reviews. Furthermore, we emphasize that code authoring and review are only a small part of the larger software engineering process, as the resulting code must also be maintained and updated over time. Hence, we offer several longitudinal estimates of survival and churn rates for agent-generated versus human-authored code. Ultimately, our findings indicate an increasing agent activity in open-source projects, although their contributions are associated with more churn over time compared to human-authored code.`,
@@ -250,7 +251,7 @@ const CONTENT = {
       title: "Silent Reliance or Diligent Review? Human-Agent Engagement and Interaction Patterns in GitHub",
       authors: "Ziyou Li, Razvan Mihai Popescu, Maliheh Izadi",
       venue: "ICSE JAW", year: 2026, type: "conference",
-      topics: ["agents"],
+      topics: ["agents", "human"],
       links: {},
       page: "https://conf.researchr.org/details/icse-2026/jaws-2026-papers/17/Silent-Reliance-or-Diligent-Review-Human-Agent-Engagement-and-Interaction-Patterns-i",
       tldr: `The software engineering landscape is undergoing a fundamental shift as AI coding agents transition from passive assistants to active contributors. While agents now autonomously initiate thousands of pull requests, the sociotechnical dynamics of how humans verify, trust, and integrate agentic contributions remain a "black box". This paper presents the first large-scale empirical investigation into the human-agent collaborative efforts. By mining a dataset of 212,297 PRs authored by 12 distinct AI agents on GitHub, we characterize the emerging interactions around AI-generated code. We analyze 30,729 longitudinal interaction timelines to map how developers, stratified by seniority, engage with "AI-first" codebases. Our findings reveal a landscape of rapid but passive integration: while human triage is often near-instantaneous (median 0.2 hours), a striking 73.9% of agent PRs are merged without modification, suggesting a high degree of "silent reliance". Beyond metrics, we explore the sentiment in human-agent discourse, uncovering how developer experience shapes the rigor of AI oversight. By summarizing comment sentiment across developer seniority strata, we find that "expert" developers have a more neutral sentiment towards agent PRs, while others have a more positive take. Lastly, we conclude by outlining future research directions for how to build on this work.`,

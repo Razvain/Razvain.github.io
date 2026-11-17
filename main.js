@@ -68,7 +68,7 @@
 
   $("#keywords").innerHTML =
     `<span class="fm-label">Additional Key Words and Phrases:</span> ` +
-    Object.values(CONTENT.topics).map(t => t.label.toLowerCase())
+    Object.values(CONTENT.topics).map(t => t.label[0].toLowerCase() + t.label.slice(1))   // keep acronyms ("AI")
       .concat(CONTENT.extraKeywords || [])
       .join(", ");
 
@@ -94,6 +94,7 @@
     interpretability: { x: 0.17, y: 0.71 },
     data:             { x: 0.29, y: 0.15 },
     completion:       { x: 0.74, y: 0.21 },
+    human:            { x: 0.62, y: 0.52 },
   };
 
   // A plain scatter plot in the style of a paper figure: framed axes, inward
