@@ -205,7 +205,7 @@
 
   const email = CONTENT.footerLinks.find(l => l.url.startsWith("mailto:"));
   $("#acks").innerHTML =
-    `The author thanks supervisors Maliheh Izadi and Arie van Deursen and all coauthors ` +
+    `I thank my supervisors, Maliheh Izadi and Arie van Deursen, and all my coauthors ` +
     `for their guidance and collaboration. ${CONTENT.footerLine} ` +
     (email ? `Correspondence: <a href="${email.url}">${email.label}</a>.` : "");
 
