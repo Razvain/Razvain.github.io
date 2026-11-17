@@ -48,9 +48,10 @@
   };
   // Short country codes keep every cell on one line; the full name is the tooltip.
   const SHORT = { "The Netherlands": "NL",
-                  "Germany": "DE", "USA": "US", "Australia": "AU" };
+                  "Germany": "DE", "USA": "US", "Australia": "AU", "Japan": "JP",
+                  "Okinawa Institute of Science and Technology": "OIST" };
   const short = (text = "") => {
-    const s = text.replace(/The Netherlands|Germany|USA|Australia/g, m => SHORT[m]);
+    const s = text.replace(/Okinawa Institute of Science and Technology|The Netherlands|Germany|USA|Australia|Japan/g, m => SHORT[m]);
     return s === text ? text : `<abbr title="${text}">${s}</abbr>`;
   };
   const educationList = $("#educationList");

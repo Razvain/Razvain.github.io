@@ -380,6 +380,9 @@ figcaption strong { font-weight: 400; }
   overflow-wrap: anywhere;
 }
 .ref-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* Email addresses in the text read as links, like every other link. */
+.paper-section a[href^="mailto:"] { color: var(--accent); text-decoration: none; }
+.paper-section a[href^="mailto:"]:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 
 /* ============ Page navigation & appendices (p. 2) ============ */
@@ -428,7 +431,9 @@ figcaption strong { font-weight: 400; }
 .paper-table th:last-child, .paper-table td:last-child { padding-right: 0; }
 .paper-table td:first-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .paper-table abbr { text-decoration: none; }
-.edu-table td:nth-child(3), .edu-table td:last-child { white-space: nowrap; }   /* Table 2: institution and location on one line */
+@media (min-width: 701px) {   /* Table 2: institution and location on one line (phones may wrap) */
+  .edu-table td:nth-child(3), .edu-table td:last-child { white-space: nowrap; }
+}
 /* Group label inside a table, set like a booktabs \midrule + italic label. */
 .paper-table tr.group-row th {
   padding-top: 8px;

@@ -88,6 +88,9 @@ const CONTENT = {
     { date: "Apr 2027", topics: [],
       html: `Co-chairing the second edition of <em>The Poisoned Chalice</em>, a Membership Inference Attack competition, co-located with <em>ICSE ’27</em>, Dublin, Ireland, after co-chairing the first at <em>FSE ’26</em>.`,
       links: ["https://poisoned-chalice.org/"] },
+    { date: "Mar 2027", topics: [],
+      html: `Accepted to the Machine Learning Summer School (<em>MLSS ’27</em>) at OIST, Okinawa, Japan.`,
+      links: ["https://oist.github.io/mlss2027okinawa/"] },
     { date: "Jul 2026", topics: ["agents", "evaluation"],
       html: `Presented my doctoral research plan on developer-aligned agent evaluation at the <em>FSE ’26 Doctoral Symposium</em>, Montreal, Canada.`,
       links: ["https://conf.researchr.org/details/fse-2026/fse-2026-doctoral-symposium/15/Reliable-and-Developer-Aligned-Evaluation-of-Agents-for-Software-Engineering"] },
@@ -391,6 +394,8 @@ const CONTENT = {
       { period: "2020–2023", degree: "BSc in Computer Science and Engineering", institution: "Delft University of Technology", location: "Delft, The Netherlands" },
     ] },
     { label: "Selected Programs", items: [
+      { period: "2027", degree: "Machine Learning Summer School (MLSS)", institution: "Okinawa Institute of Science and Technology", location: "Onna, Japan",
+        links: ["https://oist.github.io/mlss2027okinawa/"] },
       { period: "2026", degree: "Dagstuhl Seminar on Evaluation of AI Models in Software Engineering", institution: "Schloss Dagstuhl", location: "Wadern, Germany",
         links: ["https://www.dagstuhl.de/en/seminars/seminar-calendar/seminar-details/26192"] },
       { period: "2026", degree: "Machine Learning Summer School (MLSS)", institution: "Columbia University & Bloomberg", location: "New York, USA",
