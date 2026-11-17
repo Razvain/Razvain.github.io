@@ -27,7 +27,7 @@ const CONTENT = {
     `A second focus is the [[evaluation|evaluation]] of language models for
      software engineering. As these models move from assisting developers to
      acting on their behalf, measuring their capabilities reliably becomes
-     essential. I develop evaluations that are free of data contamination,
+     essential. I develop evaluations that account for data contamination,
      reflect real development practice, and capture how models behave beyond
      isolated benchmark tasks.`,
 
