@@ -45,7 +45,7 @@ const CONTENT = {
     "intersection of large language models and software engineering. My research addresses a " +
     "central question: <em>how reliably can we evaluate these models on coding tasks, and how do " +
     "they behave once deployed in real development workflows?</em> This paper surveys my " +
-    "publications, released artifacts, and recent activities, followed by education, teaching, " +
+    "publications, released artifacts, and recent and upcoming activities, followed by education, teaching, " +
     "student supervision, professional experience, and service. Related work is cited throughout. " +
     "Results are promising but, as always, more research is needed.",
 
