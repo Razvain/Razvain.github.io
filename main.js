@@ -168,11 +168,18 @@
 
   const host = (u) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; } };
 
-  // Each note is a run-in paragraph, "Apr 2027. Serving on …", newest first.
+  // News: the date in a hanging column beside each note.
   // Hyphenated words ("co-located") never break at their hyphen.
   const keepHyphens = (html) => html.replace(/(^|[\s>(])(\w+(?:-\w+)+)/g, '$1<span class="nowrap">$2</span>');
   const newsList = $("#newsList");
-  CONTENT.news.forEach(n => {
+  // Newest first by date ("Jun 2027"); entries in the same month keep their
+  // order from content.js (Array.prototype.sort is stable).
+  const MONTHS = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" ");
+  const when = (d) => {
+    const [, mon, year] = /^(?:(\w{3})\w*\s+)?(\d{4})/.exec(d) || [];
+    return (+year || 0) * 12 + Math.max(0, MONTHS.indexOf(mon));
+  };
+  [...CONTENT.news].sort((a, b) => when(b.date) - when(a.date)).forEach(n => {
     const li = document.createElement("li");
     li.className = "attn-item attn-anchor";
     li.dataset.topics = (n.topics || []).join(" ");
