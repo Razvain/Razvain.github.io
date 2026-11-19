@@ -73,12 +73,12 @@ const CONTENT = {
 
   // ----- News (most recent first) -----
   news: [
-    { date: "Mar 2027", topics: [],
-      html: `Accepted to the Machine Learning Summer School at the Okinawa Institute of Science and Technology, Okinawa, Japan.`,
-      links: ["https://oist.github.io/mlss2027okinawa/"] },
     { date: "Jun 2027", topics: [],
       html: `Serving on the Program Committee of the <em>LangCode ’27</em> workshop, co-located with <em>NAACL ’27</em>, San Francisco, USA.`,
       links: ["https://langcode2027.github.io/"] },
+    { date: "Mar 2027", topics: [],
+      html: `Accepted to the Machine Learning Summer School at the Okinawa Institute of Science and Technology, Okinawa, Japan.`,
+      links: ["https://oist.github.io/mlss2027okinawa/"] },
     { date: "Apr 2027", topics: [],
       html: `Serving on the Program Committee of the <em>CHASE ’27</em> conference, co-located with <em>ICSE ’27</em>, Dublin, Ireland.`,
       links: ["https://conf.researchr.org/home/chase-2027"] },
